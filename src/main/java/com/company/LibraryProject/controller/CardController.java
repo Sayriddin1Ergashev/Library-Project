@@ -41,3 +41,6 @@ public class CardController {
     }
 
 }
+//1: JDBC -> Java Database Connectivity
+//2: Hibernate, Eclipse Link
+//3: JPA -> Java Persistence Api

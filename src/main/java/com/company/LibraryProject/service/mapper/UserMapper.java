@@ -14,7 +14,6 @@ public class UserMapper {
         user.setAge(dto.getAge());
         user.setPassword(dto.getPassword());
         user.setCardId(dto.getCardId());
-        user.setCard(dto.getCard());
         user.setGender(dto.getGender());
         user.setBirthdate(dto.getBirthdate());
         return user;
