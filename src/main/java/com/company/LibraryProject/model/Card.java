@@ -8,7 +8,6 @@ import java.time.LocalDateTime;
 
 @Getter
 @Setter
-@ToString
 public class Card {
     private Integer cardId;
     private String cardName;
