@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = ("user"))
+@RequestMapping("users")
 @RequiredArgsConstructor
 public class UserController {
     private final UserService userService;
@@ -20,7 +20,7 @@ public class UserController {
     }
 
     @GetMapping("/get")
-    public ResponseDto<UserDto> getUser(@RequestParam(value = ("id")) Integer userID) {
+    public ResponseDto<UserDto> getUser(@RequestParam(("id")) Integer userID) {
         return userService.getUser(userID);
     }
 
@@ -38,8 +38,5 @@ public class UserController {
     public ResponseDto<List<UserDto>> getAllUser() {
         return userService.getAll();
     }
-    public void data(){
-        //Hasanboy
-        //Java Developer Backend
-    }
+
 }

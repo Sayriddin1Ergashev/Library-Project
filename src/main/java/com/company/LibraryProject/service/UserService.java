@@ -27,16 +27,15 @@ public class UserService {
     private final UserRepository userRepository;
 
     public ResponseDto<UserDto> createUser(UserDto dto) {
-        if (this.cardMapper.toEntity(cardService.get(dto.getCardId()).getData()) == null) {
-            log.warn(String.format("This card %d id is not found!", dto.getCardId()));
-            return ResponseDto.<UserDto>builder()
-                    .message(String.format("This card %d id is not found!", dto.getCardId()))
-                    .code(-1)
-                    .build();
-        }
+
         try {
             User user = userMapper.toEntity(dto);
-            user.setCard(this.cardMapper.toEntity(cardService.get(dto.getCardId()).getData()));
+            if (user == null) {
+                return ResponseDto.<UserDto>builder()
+                        .code(-3)
+                        .message("Possess Error")
+                        .build();
+            }
             user.setCreatedAt(LocalDateTime.now());
             userRepository.save(user);
             log.info(String.format("This is user %d id successful created!", user.getUserId()));
@@ -70,14 +69,6 @@ public class UserService {
     }
 
     public ResponseDto<UserDto> updateUser(UserDto dto, Integer userId) {
-        if (this.cardMapper.toEntity(cardService.get(dto.getCardId()).getData()) == null) {
-            log.warn(String.format("This card %d id is not found!", dto.getCardId()));
-            return ResponseDto.<UserDto>builder()
-                    .message(String.format("This card %d id is not found!", dto.getCardId()))
-                    .code(-1)
-                    .build();
-        }
-
         Optional<User> optional = userRepository.findByUserIdAndDeletedAtIsNull(userId);
         if (optional.isEmpty()) {
             log.warn(String.format("This user %d id is not found!", userId));
@@ -88,6 +79,9 @@ public class UserService {
         }
         try {
             User user = userMapper.toEntity(dto);
+            if (user == null){
+                return null;
+            }
             user.setUserId(optional.get().getUserId());
             user.setUpdatedAt(LocalDateTime.now());
             user.setCard(this.cardMapper.toEntity(cardService.get(dto.getCardId()).getData()));
@@ -144,6 +138,10 @@ public class UserService {
                         .map(this.userMapper::toDto)
                         .toList())
                 .build();
+    }
+
+    public ResponseDto<List<UserDto>> getAllUserTwo() {
+        return null;
     }
 
 }

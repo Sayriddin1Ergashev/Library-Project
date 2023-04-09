@@ -1,9 +1,9 @@
 package com.company.LibraryProject.model;
 
-import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -12,9 +12,9 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = ("users"))
 public class User {
+
     @Id
-    @GeneratedValue(generator = "users_seq_id")
-    @SequenceGenerator(name = "users_seq_id", sequenceName = "users_seq_id", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = ("user_id"))
     private Integer userId;
     private String firstname;
