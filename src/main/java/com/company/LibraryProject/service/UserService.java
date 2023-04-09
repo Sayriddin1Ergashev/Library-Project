@@ -1,169 +1,147 @@
 package com.company.LibraryProject.service;
 
 
-import com.company.LibraryProject.dto.CardDto;
 import com.company.LibraryProject.dto.ResponseDto;
 import com.company.LibraryProject.dto.UserDto;
 import com.company.LibraryProject.model.User;
+import com.company.LibraryProject.repository.UserRepository;
+import com.company.LibraryProject.service.mapper.CardMapper;
+import com.company.LibraryProject.service.mapper.UserMapper;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Optional;
 
 @Service
+@Slf4j
+@RequiredArgsConstructor
 public class UserService {
-    private List<User> userList;
-    private Integer userIndex;
-    private CardService cardService;
 
-    public UserService(CardService cardService) {
-        this.cardService = cardService;
-        this.userList = new ArrayList<>();
-        this.userIndex = 0;
-    }
+    //DI -> Dependency Injection
+    private final CardService cardService;
+    private final CardMapper cardMapper;
+    private final UserMapper userMapper;
+    private final UserRepository userRepository;
 
     public ResponseDto<UserDto> createUser(UserDto dto) {
-        CardDto cardDto = this.cardService.get(dto.getCardId()).getData();
-        if (cardDto == null) {
+
+        try {
+            User user = userMapper.toEntity(dto);
+            if (user == null) {
+                return ResponseDto.<UserDto>builder()
+                        .code(-3)
+                        .message("Possess Error")
+                        .build();
+            }
+            user.setCreatedAt(LocalDateTime.now());
+            userRepository.save(user);
+            log.info(String.format("This is user %d id successful created!", user.getUserId()));
             return ResponseDto.<UserDto>builder()
-                    .code(-1)
-                    .message("Card is not found!")
+                    .message("User successful created!")
+                    .success(true)
+                    .build();
+        } catch (Exception e) {
+            log.info(String.format("User while saving error :: %s", e.getMessage()));
+            return ResponseDto.<UserDto>builder()
+                    .code(-3)
+                    .message(String.format("User while saving error :: %s", e.getMessage()))
                     .build();
         }
+    }
 
-        User user = toEntity(dto);
-        user.setUserId(++this.userIndex);
-        user.setCreatedAt(LocalDateTime.now());
-        this.userList.add(user);
-
+    public ResponseDto<UserDto> getUser(Integer userId) {
+        Optional<User> optional = userRepository.findByUserIdAndDeletedAtIsNull(userId);
+        if (optional.isEmpty()) {
+            log.warn(String.format("This user %d id is not found!", userId));
+            return ResponseDto.<UserDto>builder()
+                    .code(-1)
+                    .message(String.format("This user %d id is not found!", userId))
+                    .build();
+        }
         return ResponseDto.<UserDto>builder()
-                .message("User successful created!")
+                .message("OK")
                 .success(true)
+                .data(userMapper.toDto(optional.get()))
                 .build();
     }
 
-    public ResponseDto<UserDto> getUser(Integer userID) {
-        for (User user : this.userList) {
-            if (user.getUserId().equals(userID)) {
-                UserDto dto = toDto(user);
-                return ResponseDto.<UserDto>builder()
-                        .message("OK")
-                        .success(true)
-                        .data(dto)
-                        .build();
-            }
-        }
-        return ResponseDto.<UserDto>builder()
-                .message("User is not found!")
-                .success(false)
-                .build();
-    }
-
-    public ResponseDto<UserDto> updateUser(UserDto dto, Integer userID) {
-        CardDto cardDto = this.cardService.get(dto.getCardId()).getData();
-        if (cardDto == null) {
+    public ResponseDto<UserDto> updateUser(UserDto dto, Integer userId) {
+        Optional<User> optional = userRepository.findByUserIdAndDeletedAtIsNull(userId);
+        if (optional.isEmpty()) {
+            log.warn(String.format("This user %d id is not found!", userId));
             return ResponseDto.<UserDto>builder()
                     .code(-1)
-                    .message("Card is not found!")
+                    .message(String.format("This user %d id is not found!", userId))
                     .build();
         }
-
-        for (User user : this.userList) {
-            if (user.getUserId().equals(userID)) {
-                user = toEntity(dto);
-                user.setUpdatedAt(LocalDateTime.now());
-                this.userList.add(user);
-                return ResponseDto.<UserDto>builder()
-                        .message("User successful updated!")
-                        .success(true)
-                        .build();
+        try {
+            User user = userMapper.toEntity(dto);
+            if (user == null){
+                return null;
             }
+            user.setUserId(optional.get().getUserId());
+            user.setUpdatedAt(LocalDateTime.now());
+            user.setCard(this.cardMapper.toEntity(cardService.get(dto.getCardId()).getData()));
+            this.userRepository.save(user);
+            log.info(String.format("This user %d id successful updated!", user.getUserId()));
+            return ResponseDto.<UserDto>builder()
+                    .success(true)
+                    .message("OK")
+                    .data(this.userMapper.toDto(user))
+                    .build();
+        } catch (Exception e) {
+            log.info(String.format("User while saving error :: %s", e.getMessage()));
+            return ResponseDto.<UserDto>builder()
+                    .code(-3)
+                    .message(String.format("User while saving error :: %s", e.getMessage()))
+                    .build();
         }
-        return ResponseDto.<UserDto>builder()
-                .message("User is not found!")
-                .success(false)
-                .build();
     }
 
-    public ResponseDto<UserDto> delete(Integer userID) {
-        for (User user : this.userList) {
-            if (user.getUserId().equals(userID)) {
-                this.userList.remove(user);
-                return ResponseDto.<UserDto>builder()
-                        .success(true)
-                        .message("OK")
-                        .build();
-            }
+    public ResponseDto<UserDto> delete(Integer userId) {
+        Optional<User> optional = userRepository.findByUserIdAndDeletedAtIsNull(userId);
+        if (optional.isEmpty()) {
+            log.warn(String.format("This user %d id is not found!", userId));
+            return ResponseDto.<UserDto>builder()
+                    .code(-1)
+                    .message(String.format("This user %d id is not found!", userId))
+                    .build();
         }
-        return ResponseDto.<UserDto>builder()
-                .message("User is not found!")
-                .success(false)
-                .build();
+        try {
+            User user = optional.get();
+            user.setDeletedAt(LocalDateTime.now());
+            this.userRepository.save(user);
+            log.info(String.format("This user %d id successful deleted!", user.getUserId()));
+            return ResponseDto.<UserDto>builder()
+                    .message("OK")
+                    .success(true)
+                    .data(userMapper.toDto(optional.get()))
+                    .build();
+        } catch (Exception e) {
+            log.info(String.format("User while saving error :: %s", e.getMessage()));
+            return ResponseDto.<UserDto>builder()
+                    .code(-3)
+                    .message(String.format("User while saving error :: %s", e.getMessage()))
+                    .build();
+        }
     }
 
     public ResponseDto<List<UserDto>> getAll() {
         return ResponseDto.<List<UserDto>>builder()
-                .message("OK")
-                .data(this.userList
-                        .stream()
-                        .map(this::toDto)
-                        .toList()
-                )
-                .build();
-    }
-
-    //18 katta bo`lgan barcha userlarni olib keling.
-    public ResponseDto<List<UserDto>> getAgeUser() {
-        List<UserDto> userDtoList = this.userList.stream()
-                .filter(age -> {
-                    if (age.getAge() > 18) {
-                        return true;
-                    } else {
-                        return false;
-                    }
-                })
-                .map(this::toDto)
-                .toList();
-        return ResponseDto.<List<UserDto>>builder()
-                .message("OK")
                 .success(true)
-                .data(userDtoList)
+                .message("OK")
+                .data(userRepository.findAll()
+                        .stream()
+                        .map(this.userMapper::toDto)
+                        .toList())
                 .build();
     }
 
-    private User toEntity(UserDto dto) {
-        User user = new User();
-        user.setFirstname(dto.getFirstname());
-        user.setLastname(dto.getLastname());
-        user.setEmail(dto.getEmail());
-        user.setAge(dto.getAge());
-        user.setPassword(dto.getPassword());
-        user.setCardId(dto.getCardId());
-        user.setCard(dto.getCard());
-        user.setGender(dto.getGender());
-        user.setBirthdate(dto.getBirthdate());
-        return user;
+    public ResponseDto<List<UserDto>> getAllUserTwo() {
+        return null;
     }
-
-    private UserDto toDto(User user) {
-        UserDto dto = new UserDto();
-        dto.setUserId(user.getUserId());
-        dto.setLastname(user.getLastname());
-        dto.setEmail(user.getEmail());
-        dto.setFirstname(user.getFirstname());
-        dto.setPassword(user.getPassword());
-        dto.setAge(user.getAge());
-        dto.setCardId(user.getCardId());
-        dto.setCard(user.getCard());
-        dto.setGender(user.getGender());
-        dto.setBirthdate(user.getBirthdate());
-        dto.setCreatedAt(user.getCreatedAt());
-        dto.setUpdatedAt(user.getUpdatedAt());
-        return dto;
-    }
-
 
 }

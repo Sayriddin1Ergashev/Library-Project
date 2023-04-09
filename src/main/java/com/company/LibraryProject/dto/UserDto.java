@@ -19,8 +19,8 @@ public class UserDto {
     private String password;
     private Integer age;
     private Gender gender;
-    private Card card;
     private Integer cardId;
+    private Card card;
     private String phoneNumber;
     private LocalDate birthdate;
     private LocalDateTime createdAt;
