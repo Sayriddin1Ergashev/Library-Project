@@ -1,0 +1,170 @@
+                                             Spring all Annotation
+
+
+1: IoC bu Inversion of Control vazifasi barcha beanlarning obyektini bitta joyga to`plab va
+    shu joydan boshqa obyetlarga ishlaitlish uchun tayyor turadigan obyetlar saqlanadigan container.
+    IoC container ni ikkita interface and sub interface ishga tushuradi 1: BeanFactory bu interface , 2: ApplicationContext sub-interface hisoblanadi.
+
+2: DI bu Dependency Injection vazifasi bir obyektni ikkinchi obyektga qaram qilib qo`yishlik tushuniladi.
+
+3: @Bean bu faqat methodlarga beriladi. Java dasturlashda obyekt hisoblanadi. Bean bu qandaydir classning obyekti hisoblanadi.
+     Bean dastur ishga tushgandan keyin shu obyektdan foydalanishimiz uchun kerak bo`ladi.
+
+4: @Qualifier bu javada beanni nomi bo`yicha olib kelib beradi. Ya`ni biror bir classda birnchta bean method mavjud bo`lsin.
+   Mavjud bo`lgan bean methodlar ichida bir donasini ishlatish uchun @Qualifier beani kerak bo`ladi.
+
+5: @Controller bu Spring Controller faqat classda qo'llanilishi mumkin. U class veb-so'rovni ishlov beruvchi sifatida belgilash uchun ishlatiladi.
+   U asosan Spring MVC projectida ishlatiladi.
+
+6:! @ResponseBody bu tekshirgunchga qaytarilgan ob'ekt avtomatik ravishda JSONga ketma-ketlashtirilganligini va HttpResponse ob'ektiga qaytarilishini bildiradi .
+
+7: @Component bu classlarga beriladi. @Component berilgan (class, interfance, abstract class) tarkibidagi methodlar bean sifaida ko`riladi.
+    Berilgan classdan faqat obyekt olib IoC ga tashlab qo`yadi.
+
+8: @RestController bu class ga beriladi. RestController annotatsiyasi Spring MVC yordamida RESTFul veb-xizmatlarini yaratish uchun ishlatiladi.
+
+9: @Service bu class ga beriladi. Berilgan class @RestController bilan DI amalga oshiriladi service class ga asosan business logic yoziladi.
+
+10: @Repository bu class va interface ga berialdi. Berilgan interface faqat database native query yozilishiga hizmat qiladi.
+
+11: @Configuration bu classlarga beriladi. Berilgan class ichida @Bean annotation bilan methodlar yoziladi.
+    Bu methodlar bean hosil qilish uchun hizmat qiladi. Hosil qilingan bean DI hosil qilinib saqlanadi.
+
+12: @RequestMapping bu class yoki interface larga beriladi RequestMapping orqali biz API oqimini shu class yoki interface ga olib kelasak bo`ladi.
+
+13: @JpaRepository -> Spring Data JPA misolimiz uchun biz Postgresql ma'lumotlar bazasiga ulanadigan RESTful veb-xizmatini yaratamiz.
+    Biz asosiy CRUD operatsiyalarini amalga oshiramiz va biz allaqachon yaratgan namunaviy ma'lumotlar ustida ishlaymiz.
+
+14: @Slf4j
+
+15: @Lazy bu bean hisoblanib biror bir reference type ga beriladi.
+    @Lazy bean berilgan obyekt barcha ish bajarilgandan so`ng oxirida obyekt olib IoC ga tashlanadi.
+    @Lazy annotation faqat bean talab qilinadigan obyetga qo`yiladi.
+
+16: @Primary bu bir class da birnechta @Bean mavjud bo`lsa beanlar orasida asosiy bean rolini bersa bo`ladi.
+
+17: @PostConstructor bu metodlarga beriladi. PostConstructor berilgan metod dependency injection bo`lgandan keyin
+    PostConstructor berilgan method ishga tushadi.
+
+18: @PreDestroy berilgan method IoC container dan o`chiralayotgan paytida ishga
+    tushuriladigan method hisoblanadi.
+
+19: 1 - Bean @Scope(scopeName = "singleton") (class, interface, abstract class) larga beriladi.
+    (ConfigurableBeanFactory.Scope_Singleton) ko`rinishda nomlasa ham bo`ladi.
+    Berilgan classdan faqat bir marotaba obyet olinib bean hosil qilinadi va IoC conteynerga saqlanadi.
+    Ehtiyoj sezilsa shu bir dona hosil qilingan obyejtdan foydaliniladi.
+
+20: 2 - Bean @Scope(scopeName = "prototype") bu (class, interface, abstract class) larga beriladi.
+    ConfigurableBeanFactory.Scope_ProtoType ko`rinishda nomlasa ham bo`ladi.
+    Berilagn class qayerda Dependency Injection bo`lsa har biri uchun alohida alohida obyekt yaratib beradi.
+    Misol uchun TestService prototype bo`lsa TestService dan TestController va TestComponent ga DI vujudga kelsa
+    TestController bilan TestComponent alohida alohida TestService obyekti yaratilib beradi.
+
+     Bu turdagi Scope lar ya`ni (Scope(session and request)) faqat wep dasturi uchun ishlaydi chunki bu turdagi scope lar HTTP so`rovlariga bog`liq bo`lgan scopelar
+
+21: 3 - Bean @Scope(scopeName = "session") bu (class, interface, abstract class) larga beriladi.
+
+22: 3 - Bean @Scope(scopeName = "request") bu (class, interface, abstract class) larga beriladi.
+    @Scope(name = "request") beriladigan bo`ladigan bo`lsa harbitta keladigan so`rov uchun alohida-alohida obyekt yaratib beradi.
+    Manashu bitta so`rov uchun yangi obyekt yaratilishi kerak bo`lgan holatda request scope dan foydalanamiz.
+
+23: DTO -> Dat Transfer Object yani customer bilan foydalanuvchi o`rtasida ma`lumot almashinishi uchun ishlatiladigan obyekt DTO hisoblanadi.
+
+24: DAO -> Data Access Object yani Ma`lumotlarni database dan o`zgartirish, o`chirish, yangi ma`lumot qo`shish uchun ishlatiladigan object DAO deyiladi.
+    endi Spring Data yoki Hibernate oladigan bo`lsak Entity database bilan bog`lanish uchun forma DAO tushuniladi.
+
+25: Map Struct -> Map Struct tushunchasi bu o`zida bir nechta funksiyalarni saqlaydi va bu funksiyalar bizga 1 - obyektni 2 - obyektga
+    aftomat o`girishni amalga oshirib beradi. Biz shunchaki bir dona interfeys hosil qilamiz va bu kutubhona o`zi kompilatsiya vaqtida
+    huddi shu biz yaratgan interfeysni aniq implementation yaratib beradi ya`ni bu classga qarab kod generatsiya qilib beradi.
+
+26: @Mapper orqali componentModel ni ishga tushurish mumkin.
+    componentModel Yaratilgan mapper yopishishi kerak bo'lgan komponent modelini belgilaydi.
+    Agar biz qanaqadur joylarni o`zimizni logikamizdan ko`ra map qilishligimiz kerak bo`lsa interface o`rniga abstract class ishlatsak ham bo`ladi.
+    Qo'llab-quvvatlanadigan qiymatlar
+     1. default orqali mapper component modelidan foydalanmaydi, misollar odatda Mappers.getMapper(Class) orqali olinadi.
+     2. cdi bu orqali yaratgan mapper ilovaga mo'ljallangan CDI bean hosil qiladi va uni @Inject orqali olish mumkin.
+     3. spring orqali yaratilgan mapper spring bean hosil qiladi va uni @Autowired orqali olish mumkin.
+     4. jakarta orqali yaratilgan mapper @jakarta.inject.Named va @Singleton bilan izohlanadi va uni @Inject orqali olish mumkin.
+
+27: @Mapping bu bitta dto obyektini field lari boshqacha va bitta entity obyektini nomi boshqacha bo`lgan field larni dasturchi tomondan
+    qiymat berilishligi kerak bo`lgan field lar uchun foydalaniladi.
+     1. target orqali qiymat berilishligi kerak bo`lgan field.
+     2. source orqali qayerdan ma`lumot olish kerakligini belgilab beradi
+     3. expression orqali biz java code yani ifoda yozishimiz mumkin
+        masalan (java(userService.findById(account.getUserId).getData)) ko`rinishida code yozishimiz mumkin.
+     4. dateFormat orqali date qabul qilinadigan fielad ga formatini berib qo`ysa
+        entity dan mapping qilayotgan paytda berilgan format orqali o`girib beradi.
+
+28: @JsonFilter bu
+
+29: @JsonIgnoreProperties bu
+
+
+
+
+
+                                             Protocollar
+
+     HTTP -> HTTP va HTTPS protokollari bu TCP protocol oilasiga kiradi. Bunda ma`lumot yo`qotilmasligi,
+             so`rovga aniq javob qaytishligi yoki hato qaytishligi, misol uchun file jo`natilganda file to`laligicha yo`qotilmasdan borib kelishligi
+             va shunga o`hshagan request va response sifatida ishlaydigan protocol hisoblanadi.
+     TCP  -> TCP ishonchli protokol. Ya'ni, qabul qiluvchi har doim jo'natuvchiga ma'lumotlar paketi haqida ijobiy yoki salbiy tasdiq yuboradi,
+             shuning uchun jo'natuvchi har doim ma'lumotlar paketi belgilangan manzilga yetib kelganligi yoki uni qayta jo'natishi kerakligi haqida yorqin ma'lumotga ega bo'ladi.
+
+             1.TCP ma'lumotlar yuborilgan tartibda mo'ljallangan manzilga etib borishini ta'minlaydi.
+
+             2.TCP ulanishga yo'naltirilgan. TCP haqiqiy ma'lumotlarni yuborishdan oldin ikkita masofaviy nuqta o'rtasida aloqa o'rnatilishini talab qiladi.
+
+             3.TCP xatolarni tekshirish va tiklash mexanizmini taqdim etadi.
+
+             4.TCP uchdan oxirigacha aloqani ta'minlaydi.
+
+             5.TCP oqim nazorati va xizmat sifatini ta'minlaydi.
+
+             6.TCP mijoz/server nuqtadan nuqtaga rejimida ishlaydi.
+
+             7. TCP to'liq dupleks serverni ta'minlaydi, ya'ni u qabul qiluvchi va jo'natuvchi rollarini bajarishi mumkin.
+
+     UDP  -> UDP protocoli bu jonli efirlarda, streamlarda, foydalaniladi, bunda ma`lumot yo`qotilishi mumkin lekin live time ya`ni jonli efir yo`qotilmaydi.
+     WC   -> WC protocoli bu so`rov yubormaydi client va server bo`lib bog`lanadi birbiriga va bog`lanish uzulmaydi umuman.
+
+                                Central Processing Unit -> CPU
+
+ 1:   Multi programming  -> Multiprogramming bitta CPU da bir nechta programmalarni ketma ket bajarilishligini ta`minlab beradi.
+      Bitta process ish bajarilib bo`lgandan so`ng ikkinchi process ishga tushub shu jarayon to`xtovsiz davom etadi ya`ni
+      bitta process CPU ga yuklanganida ikkinchi process birinchi process yakunlashini yoki input/output ga chiqarilib yuborilishini kutadi.
+
+      Non-multi programming -> Biror-bir task CPU ga murojaat qilganda CPU taskni bajarishga tushsa
+      CPU band bo`ladi. Band bo`lgani sababli 2 - taskni olishini kutadi
+      va CPU dagi task uchun ajratilmagan joy bo`sh turadi.
+
+ 2:   Multi processing  -> 1 ta yadro bo`lganda faqat 1 dona protsessni amalga oshiriladi.
+      Multiprocessing bu 1 va undan ortid CPU ishlashini imkoniyyatini beradi.Biz beradigan tasklarni
+      bitta birnechda yadroga bo`lib berib ishlatish mumkin bo`ladi. Misol uchun kompyuterda 4 ta CPU bo`lsa va
+      bitta task bo`ladigan bo`lsa shu taskni 4 ga bo`lib bajaradi.
+      Agar qurulmamiza 1 tadan ko`p CPU bo`lsa bu Multiprocessing hisoblanadi.
+      Bir paytni o`zida barcha portsesslarni qurilmamiza yadrolar soni ko`p bo`lgan holatda shu yadroga
+      ko`pgina ishlarni berishlikni Multiprocessing taminlab bermoqda.
+      Multiprocessing parallel processing degani yani bir paytni o`zida parallel ishlarni amalga oshirish tushuniladi.
+
+ 3:   Multi tasking  -> Multitasking bu bir payni o`zida birnechta tasklarni amalga oshirish tushuniladi.
+      Task -> task,process, program. MP3, Word, Exel shunga o`xshash programmalardan foydalanish tushuniladi.
+      Bir paytni o`zida Istalgan ishni amalga oshirishlik multitasking jarayon bo`ladi.
+      Multitasking bu Multiprogramming mantiqiy davomi desak ham bo`ladi.
+      1.Multitasking bilan Multiprogramming ni bir birdan ajralib turadigan farqi shundaki
+      Multiprogrammingda bitta programdan keyin ikkinchi program ishlashligi
+      uchun birinchi program to`xtashligi kerak yoki input/output bo`lishligini kutish kerak.
+      2.Multitaskingda bitta dasturdan ikkinchi dasturga o`tishlik voqt birligida bo`lmoqda
+      ya`ni belgilab qo`yilgan voqtda birinchi dastur ishlaydi va ma`lum vaqtdan so`ng
+      ikinchi dastur ishlaydi vaho kazo shunday davom etadi.
+
+ 4:   Multi threading  -> bu CPU ning bir qismi, multi threading bitta ishlab turgan process ichida amalga oshiriladi.
+      Yani bu bitta dastur ishlab turibdi shu dastur o`zida process ichida ishlar taqsimlangan.
+      Thread(Patok) tushunchasi bu bitta dastur ichida ishlarning taqsimlashi tushuniladi.
+      Qisqa qilib aytganda bitta process ichida birnechta ishlarni amalga oshirishlik multi threading deyiladi.
+
+
+    API ning bir qismi endpoint deb yurutiladi.
+
+
+

@@ -1,53 +1,50 @@
 package com.company.LibraryProject.service.mapper;
 
-import com.company.LibraryProject.dto.ResponseDto;
 import com.company.LibraryProject.dto.UserDto;
 import com.company.LibraryProject.model.User;
 import com.company.LibraryProject.service.CardService;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-@Slf4j
 public class UserMapper {
 
-    private final CardService cardService;
     private final CardMapper cardMapper;
+    private final CardService cardService;
 
-    public User toEntity(UserDto dto) {
-        if (cardService.get(dto.getCardId()).getData() == null) {
-            log.warn(String.format("This card %d id is not found!", dto.getCardId()));
-            return null;
-        }
+    public User toEntity(UserDto dto){
         User user = new User();
-        user.setFirstname(dto.getFirstname());
-        user.setLastname(dto.getLastname());
+        user.setUserId(dto.getUserId());
+        user.setLastName(dto.getLastName());
         user.setEmail(dto.getEmail());
-        user.setAge(dto.getAge());
+        user.setFirstName(dto.getFirstName());
         user.setPassword(dto.getPassword());
-        user.setCardId(dto.getCardId());
-        user.setCard(this.cardMapper.toEntity(cardService.get(dto.getCardId()).getData()));
-        user.setGender(dto.getGender());
+        user.setPhoneNumber(dto.getPhoneNumber());
         user.setBirthdate(dto.getBirthdate());
+        user.setCardId(dto.getCardId());
+        user.setCard(cardMapper.toEntity(cardService.getCard(dto.getCardId()).getData()));
+        user.setCreatedAt(dto.getCreatedAt());
+        user.setUpdatedAt(dto.getUpdatedAt());
+        user.setDeletedAt(dto.getDeletedAt());
         return user;
     }
 
-    public UserDto toDto(User user) {
+    public UserDto toDto(User user){
         UserDto dto = new UserDto();
         dto.setUserId(user.getUserId());
-        dto.setLastname(user.getLastname());
+        dto.setFirstName(user.getFirstName());
+        dto.setLastName(user.getLastName());
         dto.setEmail(user.getEmail());
-        dto.setFirstname(user.getFirstname());
         dto.setPassword(user.getPassword());
-        dto.setAge(user.getAge());
+        dto.setPhoneNumber(user.getPhoneNumber());
+        dto.setBirthdate(user.getBirthdate());
         dto.setCardId(user.getCardId());
         dto.setCard(user.getCard());
         dto.setGender(user.getGender());
-        dto.setBirthdate(user.getBirthdate());
         dto.setCreatedAt(user.getCreatedAt());
         dto.setUpdatedAt(user.getUpdatedAt());
+        dto.setDeletedAt(user.getDeletedAt());
         return dto;
     }
 }

@@ -3,46 +3,47 @@ package com.company.LibraryProject.model;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.*;
-import java.time.LocalDate;
+import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Getter
 @Setter
 @Entity
-@Table(name = ("users"))
+@Table(name = "users")
 public class User {
-
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(generator = "user_seq_id")
+    @SequenceGenerator(name = "user_seq_id", sequenceName = "user_seq_id", allocationSize = 1)
     @Column(name = ("user_id"))
     private Integer userId;
-    private String firstname;
-    private String lastname;
+    @Column(name = ("first_name"))
+    private String firstName;
+    @Column(name = ("last_name"))
+    private String lastName;
     private String email;
     private String password;
-    @Enumerated(EnumType.STRING)
-    private Gender gender;
-    private Integer age;
     @Column(name = ("phone_number"))
     private String phoneNumber;
-    @Column(name = ("card_id"))
-    private Integer cardId;
-    @ManyToOne
-    @JoinColumn(referencedColumnName = "card_id", insertable = false, updatable = false)
-    private Card card;
-
-    @Column(name = ("birth_date"))
-    private LocalDate birthdate;
+    private LocalDateTime birthdate;
     @Column(name = ("created_at"))
     private LocalDateTime createdAt;
     @Column(name = ("updated_at"))
     private LocalDateTime updatedAt;
     @Column(name = ("deleted_at"))
     private LocalDateTime deletedAt;
-    //1: @OneToOne
-    //2: @OneToMany
-    //3: @ManyToOne
-    //4: @ManyToMany
+    @Column(name = ("card_id"))
+    private Integer cardId;
+
+    @ManyToOne()
+    @JoinColumn(referencedColumnName = "card_id", insertable = false, updatable = false)
+    private Card card;
+
+    //@Enumerated(EnumType.STRING)
+    private String gender;
+
+    //1: ManyToMany
+    //2: ManyToOne
+    //3: OneToOne
+    //4: OneToMany
 
 }

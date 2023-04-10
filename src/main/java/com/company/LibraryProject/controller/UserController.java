@@ -6,37 +6,31 @@ import com.company.LibraryProject.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
 @RequestMapping("users")
 @RequiredArgsConstructor
 public class UserController {
+
     private final UserService userService;
 
-    @PostMapping("/create")
-    public ResponseDto<UserDto> createUser(@RequestBody UserDto dto) {
+    @PostMapping(value = ("/create"))
+    public ResponseDto<UserDto> createUser(@RequestBody UserDto dto){
         return userService.createUser(dto);
     }
 
-    @GetMapping("/get")
-    public ResponseDto<UserDto> getUser(@RequestParam(("id")) Integer userID) {
-        return userService.getUser(userID);
+    @GetMapping(value = ("/get/{id}"))
+    public ResponseDto<UserDto>  getUser(@PathVariable("id") Integer userId){
+        return userService.getUser(userId);
     }
 
-    @PutMapping("/update")
-    public ResponseDto<UserDto> updateUser(@RequestBody UserDto dto, @RequestParam(value = ("id")) Integer userID) {
-        return userService.updateUser(dto, userID);
+    @PutMapping(value = "/update/{id}")
+    public ResponseDto<UserDto>  updateUser(@PathVariable("id") Integer userId,
+                           @RequestBody UserDto dto){
+        return userService.updateUser(dto, userId);
     }
 
-    @DeleteMapping("/delete")
-    public ResponseDto<UserDto> deleteUser(@RequestParam(value = ("id")) Integer userID) {
-        return userService.delete(userID);
+    @DeleteMapping(value = ("/delete/{id}"))
+    public ResponseDto<UserDto>  deleteUser(@PathVariable("id") Integer userId){
+        return userService.deleteUser(userId);
     }
-
-    @GetMapping(value = ("/get-all"))
-    public ResponseDto<List<UserDto>> getAllUser() {
-        return userService.getAll();
-    }
-
 }

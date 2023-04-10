@@ -1,0 +1,25 @@
+
+
+
+ * userId - camel-case
+ * user-id - kebab case
+ * user_id - snake case
+ * user - lower case
+ * USER - upper case
+
+
+1: final keyword variable, methodlar va class larga beriladi.
+ - Variables - o'zgaruvchilar. Final  o'zgaruvchiga qiymat beriladi va uning qiymati qayta o'zgartirib bo'lmaydi.
+ - Metods - metodlar. Final metodlarni override qilib bo'lmaydi
+ - Classes - classlar. Final class dan extends (nasl) olib bo'lmaydi va Obyekt olib bo`lmaydi.
+
+2: static keyword ishlatilinish o`rinlari.ishlatilinish.
+   blocks, variables - o'zgaruvchilar, metods - metodlar, nested classed - ichgi classlarga beriladi.
+
+   - Static block, o'zgaruvchi, metod, ....  larga  class dan ob'ekt olmasdan murojaat qilsa bo'ladi.
+   - Static block  lar asosan static o'zgaruvchilarga qiymat berish uchun ishlatiladi.
+   - Static o'zgaruvchilar  faqat global o'zgaruvchilar dir.  Local static  o'zgaruvchi  yaratib bo'lmaydi.
+   - Static qilingan metodlar  barcha o'bektlar uchun bir xil bo'ladi.  static metodlarni  ishlatish uchun classing ob'ekti kerak emas.
+     Oddiy  class ni nomi bilan ishlatib ketaveriladi.
+
+   - Static inner class - da satic o'zgaruvchi va metodlarni yaratsak bo'ladi. Bunda kelib chiqadiki Static inner class da main metod yaratish mumkin.

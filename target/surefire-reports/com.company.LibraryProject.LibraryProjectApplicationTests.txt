@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: com.company.LibraryProject.LibraryProjectApplicationTests
 -------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 7.017 s - in com.company.LibraryProject.LibraryProjectApplicationTests
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 6.424 s - in com.company.LibraryProject.LibraryProjectApplicationTests

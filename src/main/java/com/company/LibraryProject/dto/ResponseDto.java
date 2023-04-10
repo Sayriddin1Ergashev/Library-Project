@@ -1,23 +1,27 @@
 package com.company.LibraryProject.dto;
 
-import lombok.*;
+import ch.qos.logback.classic.spi.LoggingEventVO;
+import lombok.Builder;
+import lombok.Data;
 
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
+@Data
 @Builder
-public class ResponseDto<T> {
+
+public class  ResponseDto<T> {
     private boolean success;
 
     private String message;
     /*
-    * 0 - hammasi yahshi
-    * -1 - not found
-    * -2 - validation error
-    * -3 - database error
+    * 0  - it is ok
+    * -1 - database error
+    *-2  - validation error
+    *-3  - not found
     * */
+
     private int code;
 
     private T data;
+
+
+
 }
