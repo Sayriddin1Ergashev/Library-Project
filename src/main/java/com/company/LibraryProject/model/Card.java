@@ -22,6 +22,13 @@ public class Card {
     @Column(name = ("card_number"))
     private String cardNumber;
 
+    @Column(name = ("user_id"))
+    private Integer userId;
+
+    @ManyToOne
+    @JoinColumn(name = ("user_id"), insertable = false, updatable = false)
+    private User users;
+
     @Column(name = ("created_At"))
     private LocalDateTime createdAt;
 

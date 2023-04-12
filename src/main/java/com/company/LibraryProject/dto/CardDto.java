@@ -1,14 +1,13 @@
 package com.company.LibraryProject.dto;
 
+import com.company.LibraryProject.model.User;
 import lombok.Getter;
 import lombok.Setter;
 import java.time.LocalDateTime;
 
 @Getter
 @Setter
-
 public class CardDto {
-
     private Integer cardId;
     private String cardName;
     private String cardNumber;
@@ -16,3 +15,6 @@ public class CardDto {
     private LocalDateTime updatedAt;
     private LocalDateTime deletedAt;
 }
+
+
+

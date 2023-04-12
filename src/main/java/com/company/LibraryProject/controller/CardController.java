@@ -4,36 +4,36 @@ import com.company.LibraryProject.dto.CardDto;
 import com.company.LibraryProject.dto.ResponseDto;
 import com.company.LibraryProject.service.CardService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.Set;
+
 @RestController
-@RequestMapping(value = "api/v1/card")
+@RequestMapping("cards")
 @RequiredArgsConstructor
 public class CardController {
 
-
     private final CardService cardService;
 
-
-    @PostMapping(value = "/create")
-    public ResponseDto<CardDto> create(@RequestBody CardDto dto) {
-
+    @PostMapping("/create")
+    public ResponseDto<CardDto> createCard(@RequestBody CardDto dto) {
         return cardService.createCard(dto);
     }
 
-    @GetMapping(value = ("/get/{id}"))
-    public ResponseDto<CardDto> get(@PathVariable("id") Integer id) {
-
-        return cardService.getCard(id);
-    }
-    @PutMapping(value = "/update/{id}")
-    public ResponseDto<CardDto> updateCard(@RequestBody CardDto dto, @PathVariable(value = ("id")) Integer id) {
-        return cardService.updateCard(dto, id);
+    @GetMapping("/get/{id}")
+    public ResponseDto<CardDto> getCard(@PathVariable("id") Integer cardId) {
+        return cardService.getCard(cardId);
     }
 
-    @DeleteMapping(value = "/delete/{id}")
-    public ResponseDto<CardDto> deleteCard(@PathVariable(value = ("id")) Integer id){
-        return cardService.deleteCard(id);
+    @PutMapping("/update/{id}")
+    public ResponseDto<CardDto> updateCard(@RequestBody CardDto dto,
+                                           @PathVariable("id") Integer cardId) {
+        return cardService.updateCard(dto, cardId);
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseDto<CardDto> deleteCard(@PathVariable("id") Integer cardId) {
+        return cardService.deleteCard(cardId);
     }
 }

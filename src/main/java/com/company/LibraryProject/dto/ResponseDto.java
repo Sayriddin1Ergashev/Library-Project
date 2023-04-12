@@ -3,10 +3,12 @@ package com.company.LibraryProject.dto;
 import ch.qos.logback.classic.spi.LoggingEventVO;
 import lombok.Builder;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 @Builder
-
 public class  ResponseDto<T> {
     private boolean success;
 

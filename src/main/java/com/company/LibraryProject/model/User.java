@@ -4,7 +4,10 @@ import lombok.Getter;
 import lombok.Setter;
 
 import jakarta.persistence.*;
+
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -15,7 +18,7 @@ public class User {
     @GeneratedValue(generator = "user_seq_id")
     @SequenceGenerator(name = "user_seq_id", sequenceName = "user_seq_id", allocationSize = 1)
     @Column(name = ("user_id"))
-    private Integer userId;
+    private Integer userId;//userid
     @Column(name = ("first_name"))
     private String firstName;
     @Column(name = ("last_name"))
@@ -31,19 +34,18 @@ public class User {
     private LocalDateTime updatedAt;
     @Column(name = ("deleted_at"))
     private LocalDateTime deletedAt;
-    @Column(name = ("card_id"))
-    private Integer cardId;
 
-    @ManyToOne()
-    @JoinColumn(referencedColumnName = "card_id", insertable = false, updatable = false)
-    private Card card;
+    @OneToMany(mappedBy = "users", cascade = CascadeType.ALL)
+    private Set<Card> cards;
 
-    //@Enumerated(EnumType.STRING)
-    private String gender;
+    @Enumerated(EnumType.STRING)
+    private Gender gender;
+
+
 
     //1: ManyToMany
     //2: ManyToOne
-    //3: OneToOne
-    //4: OneToMany
+    //3: OneToMany
+    //4: OneToOne
 
 }

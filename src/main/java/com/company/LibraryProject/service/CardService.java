@@ -1,25 +1,40 @@
 package com.company.LibraryProject.service;
 
 import com.company.LibraryProject.dto.CardDto;
+import com.company.LibraryProject.dto.ResponseCardDto;
 import com.company.LibraryProject.dto.ResponseDto;
 import com.company.LibraryProject.model.Card;
 import com.company.LibraryProject.repository.CardRepository;
 import com.company.LibraryProject.service.mapper.CardMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class CardService {
 
-    private final CardRepository cardRepository;
-
     private final CardMapper cardMapper;
 
+    @Lazy
+    private final UserService userService;
+
+    private final CardRepository cardRepository;
+
     public ResponseDto<CardDto> createCard(CardDto dto) {
+        if (userService.getUser(dto.getUserId()).getData() == null) {
+            return ResponseDto.<CardDto>builder()
+                    .message(String.format("User with %d = id is not found!", dto.getUserId()))
+                    .code(-3)
+                    .build();
+        }
+
         try {
             Card card = cardMapper.toEntity(dto);
             card.setCreatedAt(LocalDateTime.now());
@@ -45,7 +60,7 @@ public class CardService {
             Optional<Card> optional = cardRepository.findByCardIdAndDeletedAtIsNull(card_id);
             if (optional.isEmpty()) {
                 return ResponseDto.<CardDto>builder()
-                        .message("Product is not found")
+                        .message("Card is not found!")
                         .code(-3)
                         .build();
             }
@@ -65,6 +80,13 @@ public class CardService {
     }
 
     public ResponseDto<CardDto> updateCard(CardDto dto, Integer id) {
+        if (userService.getUser(dto.getUserId()).getData() == null) {
+            return ResponseDto.<CardDto>builder()
+                    .message("User is not found!")
+                    .code(-3)
+                    .build();
+        }
+
         Optional<Card> optional = cardRepository.findByCardIdAndDeletedAtIsNull(id);
         if (optional.isEmpty()) {
             return ResponseDto.<CardDto>builder()
@@ -72,6 +94,7 @@ public class CardService {
                     .message("Card is not found!")
                     .build();
         }
+
         try {
             Card card = cardMapper.toEntity(dto);
             card.setCardId(optional.get().getCardId());

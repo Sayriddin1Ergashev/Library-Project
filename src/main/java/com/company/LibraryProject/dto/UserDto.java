@@ -1,19 +1,20 @@
 package com.company.LibraryProject.dto;
 
 import com.company.LibraryProject.model.Card;
+import com.company.LibraryProject.model.Gender;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
-
 public class UserDto {
-
     private Integer userId;
-    private String firstName;
-    private String lastName;
+    private String firstname;
+    private String lastname;
     private String email;
     private String password;
     private String phoneNumber;
@@ -21,7 +22,5 @@ public class UserDto {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private LocalDateTime deletedAt;
-    private Integer cardId;
-    private Card card;
-    private String gender;
+    private Gender gender;
 }

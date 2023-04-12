@@ -5,7 +5,6 @@ import com.company.LibraryProject.dto.ResponseDto;
 import com.company.LibraryProject.dto.UserDto;
 import com.company.LibraryProject.model.User;
 import com.company.LibraryProject.repository.UserRepository;
-import com.company.LibraryProject.service.mapper.CardMapper;
 import com.company.LibraryProject.service.mapper.UserMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -14,6 +13,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 
 @Service
@@ -21,25 +21,19 @@ import java.util.Optional;
 @Slf4j
 public class UserService {
 
-    private final CardService cardService;
-    private final CardMapper cardMapper;
     private final UserMapper userMapper;
+
     private final UserRepository userRepository;
 
-    public ResponseDto<UserDto> createUser(UserDto dto) {
-        if (cardService.getCard(dto.getCardId()).getData() == null) {
-            return ResponseDto.<UserDto>builder()
-                    .message("Card is not found!")
-                    .code(-3)
-                    .build();
-        }
-        try {
 
+    public ResponseDto<UserDto> createUser(UserDto dto) {
+
+        try {
             User user = userMapper.toEntity(dto);
             user.setCreatedAt(LocalDateTime.now());
-
             userRepository.save(user);
             log.info(String.format("Created user by id %d successfully!", user.getUserId()));
+
             return ResponseDto.<UserDto>builder()
                     .success(true)
                     .message("User successful created!")
@@ -60,6 +54,7 @@ public class UserService {
             return ResponseDto.<UserDto>builder()
                     .message("User is not found!")
                     .code(-3)
+                    .data(null)
                     .build();
         }
         return ResponseDto.<UserDto>builder()
@@ -70,14 +65,6 @@ public class UserService {
     }
 
     public ResponseDto<UserDto> updateUser(UserDto dto, Integer userId) {
-
-        if (cardService.getCard(dto.getCardId()).getData() == null) {
-            return ResponseDto.<UserDto>builder()
-                    .message("Card is not found!")
-                    .code(-3)
-                    .build();
-        }
-
         Optional<User> optional = userRepository.findByUserIdAndDeletedAtIsNull(userId);
         if (optional.isEmpty()) {
             return ResponseDto.<UserDto>builder()
@@ -124,11 +111,13 @@ public class UserService {
             user.setDeletedAt(LocalDateTime.now());
             userRepository.save(user);
             log.info("User successful deleted!");
+
             return ResponseDto.<UserDto>builder()
                     .message("OK")
                     .success(true)
                     .data(userMapper.toDto(user))
                     .build();
+
         } catch (Exception e) {
             log.warn(String.format("User while saving error :: %s", e.getMessage()));
             return ResponseDto.<UserDto>builder()
