@@ -1,38 +1,31 @@
 package com.company.LibraryProject.service.mapper;
 
 import com.company.LibraryProject.dto.CardDto;
+import com.company.LibraryProject.dto.ResponseCardDto;
 import com.company.LibraryProject.model.Card;
 import com.company.LibraryProject.service.UserService;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.springframework.beans.factory.annotation.Autowired;
 
-@Component
-@RequiredArgsConstructor
-public class CardMapper {
+@Mapper(componentModel = "spring")
+public abstract class CardMapper {
 
-    private final UserService userService;
+    @Autowired
+    protected UserService userService;
+    @Autowired
+    protected UserMapper userMapper;
 
-    private final UserMapper userMapper;
+    @Mapping(target = "createdAt", ignore = true)
+    @Mapping(target = "updatedAt", ignore = true)
+    @Mapping(target = "deletedAt", ignore = true)
+    public abstract Card toEntity(CardDto dto);
 
-    public Card toEntity(CardDto dto) {
-        Card card = new Card();
-        card.setCardId(dto.getCardId());
-        card.setUserId(dto.getUserId());
-        card.setCardNumber(dto.getCardNumber());
-        card.setCardName(dto.getCardName());
-        return card;
-    }
+    @Mapping(target = "userDto", expression = "java(userMapper.toDtoByNotCard(userService.getUser(cardDto.getUserId()).getData()))")
+    public abstract CardDto toDto(Card card);
 
-    public CardDto toDto(Card card) {
-        CardDto dto = new CardDto();
-        dto.setCardId(card.getCardId());
-        dto.setCardNumber(card.getCardNumber());
-        dto.setCardName(card.getCardName());
-        dto.setUserDto(userMapper.userDtoNotCard(card.getUsers()));
-        dto.setCreatedAt(card.getCreatedAt());
-        dto.setUpdatedAt(card.getUpdatedAt());
-        dto.setDeletedAt(card.getDeletedAt());
-        return dto;
-    }
+    public abstract ResponseCardDto toDtoByNotUser(Card card);
+
+    public abstract CardDto toEntityByNotUser(ResponseCardDto dto);
 
 }

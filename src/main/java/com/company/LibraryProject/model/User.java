@@ -35,13 +35,15 @@ public class User {
     @Column(name = ("deleted_at"))
     private LocalDateTime deletedAt;
 
-    @OneToMany(mappedBy = "users", cascade = CascadeType.ALL)
+    //One users to many cars
+    @OneToMany(mappedBy = "userId", cascade = CascadeType.ALL)
     private Set<Card> cards;
+
+    @OneToMany(mappedBy = "userId", cascade = CascadeType.ALL)
+    private Set<Orders> orders;
 
     @Enumerated(EnumType.STRING)
     private Gender gender;
-
-
 
     //1: ManyToMany
     //2: ManyToOne

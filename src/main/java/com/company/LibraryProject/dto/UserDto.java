@@ -2,6 +2,10 @@ package com.company.LibraryProject.dto;
 
 import com.company.LibraryProject.model.Card;
 import com.company.LibraryProject.model.Gender;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,14 +17,24 @@ import java.util.Set;
 @Setter
 public class UserDto {
     private Integer userId;
-    private String firstname;
-    private String lastname;
-    private String email;
-    private String password;
-    private String phoneNumber;
-    private LocalDateTime birthdate;
+    @NotBlank(message = "firstname cannot be null or empty")
+    private String firstName;//(+)
+    @NotBlank(message = "lastname cannot be null or empty")
+    private String lastName; //(+)
+    @Email(message = "Email invalid")
+    private String email;    //(+)
+    @NotBlank(message = "password cannot be null or empty")
+    @Size(min = 6, max = 10, message = "password  invalid")
+    //@Pattern(regexp = "[a-zA-Z0-9]{6}", message = "Regular expression error.")
+    //@Pattern(regexp = "[a-z]{1,3}[A-Z]{1,7}[0-9]{1,6}", message = "Regular expression error.")
+    @Pattern(regexp = "[^abc]{3}[A-Z0-9]{6}", message = "Regular expression error.")
+    private String password;//(+)
+    @NotBlank(message = "phoneNumber cannot be null or empty")
+    private String phoneNumber;//(+)
+    private Set<CardDto> cards;
+    private Gender gender;
+    private LocalDateTime birthdate;//(+)
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private LocalDateTime deletedAt;
-    private Gender gender;
 }

@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -17,10 +18,12 @@ public class Orders {
     private Integer ordersId;
     @Column(name = ("user_id"))
     private Integer userId;
-    @ManyToOne
-    @JoinColumn(name = "user_id", insertable = false, updatable = false)
-    private User user;
     private Integer total;
+
+    @OneToMany(mappedBy = "ordersId", cascade = CascadeType.ALL)
+    private Set<OrdersBook> ordersBooks;
+
+
     @Column(name = ("created_at"))
     private LocalDateTime createdAt;
     @Column(name = ("updated_at"))

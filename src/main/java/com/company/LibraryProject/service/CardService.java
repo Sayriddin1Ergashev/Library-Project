@@ -1,20 +1,19 @@
 package com.company.LibraryProject.service;
 
 import com.company.LibraryProject.dto.CardDto;
+import com.company.LibraryProject.dto.ErrorDto;
 import com.company.LibraryProject.dto.ResponseCardDto;
 import com.company.LibraryProject.dto.ResponseDto;
 import com.company.LibraryProject.model.Card;
 import com.company.LibraryProject.repository.CardRepository;
 import com.company.LibraryProject.service.mapper.CardMapper;
+import com.company.LibraryProject.service.validation.CardValidate;
 import lombok.RequiredArgsConstructor;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -22,16 +21,19 @@ public class CardService {
 
     private final CardMapper cardMapper;
 
-    @Lazy
-    private final UserService userService;
-
     private final CardRepository cardRepository;
 
+    private final CardValidate cardValidate;
+
     public ResponseDto<CardDto> createCard(CardDto dto) {
-        if (userService.getUser(dto.getUserId()).getData() == null) {
+
+        List<ErrorDto> errors = cardValidate.validate(dto);
+        if (!errors.isEmpty()){
             return ResponseDto.<CardDto>builder()
-                    .message(String.format("User with %d = id is not found!", dto.getUserId()))
-                    .code(-3)
+                    .message("Validation error")
+                    .code(-2)
+                    .data(dto)
+                    .errors(errors)
                     .build();
         }
 
@@ -46,51 +48,56 @@ public class CardService {
                     .data(cardMapper.toDto(card))
                     .build();
 
+
         } catch (Exception c) {
             return ResponseDto.<CardDto>builder()
-                    .code(-1)
-                    .message("Database Error: " + c.getMessage())
+                    .code(-3)
+                    .message("Card while saving error: " + c.getMessage())
                     .build();
 
         }
     }
 
-    public ResponseDto<CardDto> getCard(Integer card_id) {
+    public ResponseDto<CardDto> getCard(Integer cardId) {
         try {
-            Optional<Card> optional = cardRepository.findByCardIdAndDeletedAtIsNull(card_id);
+            Optional<Card> optional = cardRepository.findByCardIdAndDeletedAtIsNull(cardId);
             if (optional.isEmpty()) {
                 return ResponseDto.<CardDto>builder()
                         .message("Card is not found!")
-                        .code(-3)
+                        .code(-1)
                         .build();
             }
+
+
             return ResponseDto.<CardDto>builder()
                     .message("OK")
                     .success(true)
                     .data(cardMapper.toDto(optional.get()))
                     .build();
-
         } catch (Exception c) {
             return ResponseDto.<CardDto>builder()
-                    .code(-1)
+                    .code(-3)
                     .message("Database Error: " + c.getMessage())
+                    .data(null)
                     .build();
         }
-
     }
 
     public ResponseDto<CardDto> updateCard(CardDto dto, Integer id) {
-        if (userService.getUser(dto.getUserId()).getData() == null) {
+        List<ErrorDto> errors = cardValidate.validate(dto);
+        if (!errors.isEmpty()){
             return ResponseDto.<CardDto>builder()
-                    .message("User is not found!")
-                    .code(-3)
+                    .message("Validation error")
+                    .code(-2)
+                    .data(dto)
+                    .errors(errors)
                     .build();
         }
 
         Optional<Card> optional = cardRepository.findByCardIdAndDeletedAtIsNull(id);
         if (optional.isEmpty()) {
             return ResponseDto.<CardDto>builder()
-                    .code(-3)
+                    .code(-1)
                     .message("Card is not found!")
                     .build();
         }
@@ -110,7 +117,7 @@ public class CardService {
         } catch (Exception e) {
             return ResponseDto.<CardDto>builder()
                     .message("Card while saving error :: {}" + e.getMessage())
-                    .code(-1)
+                    .code(-3)
                     .build();
         }
     }
@@ -119,7 +126,7 @@ public class CardService {
         Optional<Card> optional = cardRepository.findByCardIdAndDeletedAtIsNull(id);
         if (optional.isEmpty()) {
             return ResponseDto.<CardDto>builder()
-                    .code(-3)
+                    .code(-1)
                     .message("Card is not found!")
                     .build();
         }
@@ -135,8 +142,21 @@ public class CardService {
         } catch (Exception e) {
             return ResponseDto.<CardDto>builder()
                     .message("Card while saving error :: {}" + e.getMessage())
-                    .code(-1)
+                    .code(-3)
                     .build();
         }
     }
+
+    public ResponseDto<List<ResponseCardDto>> getAllCardsByUserId(Integer userId) {
+        return ResponseDto.<List<ResponseCardDto>>builder()
+                .success(true)
+                .message("OK")
+                .data(cardRepository.findAllByUserIdAndDeletedAtIsNull(userId)
+                        .stream()
+                        .map(cardMapper::toDtoByNotUser)
+                        .toList())
+                .build();
+    }
+
+
 }

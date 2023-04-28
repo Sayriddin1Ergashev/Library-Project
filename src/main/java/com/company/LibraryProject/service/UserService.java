@@ -1,11 +1,13 @@
 package com.company.LibraryProject.service;
 
 
+import com.company.LibraryProject.dto.ErrorDto;
 import com.company.LibraryProject.dto.ResponseDto;
 import com.company.LibraryProject.dto.UserDto;
 import com.company.LibraryProject.model.User;
 import com.company.LibraryProject.repository.UserRepository;
 import com.company.LibraryProject.service.mapper.UserMapper;
+import com.company.LibraryProject.service.validation.UserValidate;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -25,8 +27,18 @@ public class UserService {
 
     private final UserRepository userRepository;
 
+    private final UserValidate userValidate;
 
     public ResponseDto<UserDto> createUser(UserDto dto) {
+        List<ErrorDto> errors = userValidate.validate(dto);
+        if (!errors.isEmpty()) {
+            return ResponseDto.<UserDto>builder()
+                    .message("Validation error")
+                    .data(dto)
+                    .errors(errors)
+                    .code(-2)
+                    .build();
+        }
 
         try {
             User user = userMapper.toEntity(dto);
@@ -65,6 +77,16 @@ public class UserService {
     }
 
     public ResponseDto<UserDto> updateUser(UserDto dto, Integer userId) {
+        List<ErrorDto> errors = userValidate.validate(dto);
+        if (!errors.isEmpty()) {
+            return ResponseDto.<UserDto>builder()
+                    .message("Validation error")
+                    .data(dto)
+                    .errors(errors)
+                    .code(-2)
+                    .build();
+        }
+
         Optional<User> optional = userRepository.findByUserIdAndDeletedAtIsNull(userId);
         if (optional.isEmpty()) {
             return ResponseDto.<UserDto>builder()
