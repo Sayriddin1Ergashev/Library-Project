@@ -1,6 +1,7 @@
 package com.company.LibraryProject.dto;
 
 import ch.qos.logback.classic.spi.LoggingEventVO;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Builder;
 import lombok.Data;
 import lombok.Getter;
@@ -11,6 +12,7 @@ import java.util.List;
 @Getter
 @Setter
 @Builder
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class ResponseDto<T> {
     private boolean success;
 

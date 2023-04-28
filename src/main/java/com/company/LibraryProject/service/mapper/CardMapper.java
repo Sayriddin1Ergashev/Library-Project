@@ -1,7 +1,6 @@
 package com.company.LibraryProject.service.mapper;
 
 import com.company.LibraryProject.dto.CardDto;
-import com.company.LibraryProject.dto.ResponseCardDto;
 import com.company.LibraryProject.model.Card;
 import com.company.LibraryProject.service.UserService;
 import org.mapstruct.Mapper;
@@ -21,11 +20,12 @@ public abstract class CardMapper {
     @Mapping(target = "deletedAt", ignore = true)
     public abstract Card toEntity(CardDto dto);
 
-    @Mapping(target = "userDto", expression = "java(userMapper.toDtoByNotCard(userService.getUser(cardDto.getUserId()).getData()))")
     public abstract CardDto toDto(Card card);
 
-    public abstract ResponseCardDto toDtoByNotUser(Card card);
+    @Mapping(target = "userId", ignore = true)
+    public abstract CardDto toDtoNotUserId(Card card);
 
-    public abstract CardDto toEntityByNotUser(ResponseCardDto dto);
+
+
 
 }

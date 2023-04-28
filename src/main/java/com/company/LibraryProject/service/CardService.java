@@ -2,7 +2,6 @@ package com.company.LibraryProject.service;
 
 import com.company.LibraryProject.dto.CardDto;
 import com.company.LibraryProject.dto.ErrorDto;
-import com.company.LibraryProject.dto.ResponseCardDto;
 import com.company.LibraryProject.dto.ResponseDto;
 import com.company.LibraryProject.model.Card;
 import com.company.LibraryProject.repository.CardRepository;
@@ -146,17 +145,4 @@ public class CardService {
                     .build();
         }
     }
-
-    public ResponseDto<List<ResponseCardDto>> getAllCardsByUserId(Integer userId) {
-        return ResponseDto.<List<ResponseCardDto>>builder()
-                .success(true)
-                .message("OK")
-                .data(cardRepository.findAllByUserIdAndDeletedAtIsNull(userId)
-                        .stream()
-                        .map(cardMapper::toDtoByNotUser)
-                        .toList())
-                .build();
-    }
-
-
 }

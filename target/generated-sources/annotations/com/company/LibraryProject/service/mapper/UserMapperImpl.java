@@ -1,7 +1,6 @@
 package com.company.LibraryProject.service.mapper;
 
 import com.company.LibraryProject.dto.CardDto;
-import com.company.LibraryProject.dto.ResponseUserDto;
 import com.company.LibraryProject.dto.UserDto;
 import com.company.LibraryProject.model.Card;
 import com.company.LibraryProject.model.User;
@@ -13,36 +12,11 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-04-26T19:47:19+0500",
+    date = "2023-04-28T20:22:57+0500",
     comments = "version: 1.5.3.Final, compiler: javac, environment: Java 19.0.2 (Oracle Corporation)"
 )
 @Component
 public class UserMapperImpl extends UserMapper {
-
-    @Override
-    public UserDto toDto(User user) {
-        if ( user == null ) {
-            return null;
-        }
-
-        UserDto userDto = new UserDto();
-
-        userDto.setUserId( user.getUserId() );
-        userDto.setFirstName( user.getFirstName() );
-        userDto.setLastName( user.getLastName() );
-        userDto.setEmail( user.getEmail() );
-        userDto.setPassword( user.getPassword() );
-        userDto.setPhoneNumber( user.getPhoneNumber() );
-        userDto.setGender( user.getGender() );
-        userDto.setBirthdate( user.getBirthdate() );
-        userDto.setCreatedAt( user.getCreatedAt() );
-        userDto.setUpdatedAt( user.getUpdatedAt() );
-        userDto.setDeletedAt( user.getDeletedAt() );
-
-        userDto.setCards( cardService.getAllCardsByUserId(user.getUserId()).getData().stream().map(cardMapper::toEntityByNotUser).collect(Collectors.toSet()) );
-
-        return userDto;
-    }
 
     @Override
     public User toEntity(UserDto dto) {
@@ -66,26 +40,28 @@ public class UserMapperImpl extends UserMapper {
     }
 
     @Override
-    public ResponseUserDto toDtoByNotCard(UserDto user) {
+    public UserDto toDto(User user) {
         if ( user == null ) {
             return null;
         }
 
-        ResponseUserDto responseUserDto = new ResponseUserDto();
+        UserDto userDto = new UserDto();
 
-        responseUserDto.setUserId( user.getUserId() );
-        responseUserDto.setFirstName( user.getFirstName() );
-        responseUserDto.setLastName( user.getLastName() );
-        responseUserDto.setEmail( user.getEmail() );
-        responseUserDto.setPassword( user.getPassword() );
-        responseUserDto.setPhoneNumber( user.getPhoneNumber() );
-        responseUserDto.setGender( user.getGender() );
-        responseUserDto.setBirthdate( user.getBirthdate() );
-        responseUserDto.setCreatedAt( user.getCreatedAt() );
-        responseUserDto.setUpdatedAt( user.getUpdatedAt() );
-        responseUserDto.setDeletedAt( user.getDeletedAt() );
+        userDto.setUserId( user.getUserId() );
+        userDto.setFirstName( user.getFirstName() );
+        userDto.setLastName( user.getLastName() );
+        userDto.setEmail( user.getEmail() );
+        userDto.setPassword( user.getPassword() );
+        userDto.setPhoneNumber( user.getPhoneNumber() );
+        userDto.setGender( user.getGender() );
+        userDto.setBirthdate( user.getBirthdate() );
+        userDto.setCreatedAt( user.getCreatedAt() );
+        userDto.setUpdatedAt( user.getUpdatedAt() );
+        userDto.setDeletedAt( user.getDeletedAt() );
 
-        return responseUserDto;
+        userDto.setCards( user.getCards().stream().map(cardMapper::toDtoNotUserId).collect(Collectors.toSet()) );
+
+        return userDto;
     }
 
     protected Card cardDtoToCard(CardDto cardDto) {

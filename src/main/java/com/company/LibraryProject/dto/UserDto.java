@@ -2,6 +2,7 @@ package com.company.LibraryProject.dto;
 
 import com.company.LibraryProject.model.Card;
 import com.company.LibraryProject.model.Gender;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
@@ -15,6 +16,7 @@ import java.util.Set;
 
 @Getter
 @Setter
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class UserDto {
     private Integer userId;
     @NotBlank(message = "firstname cannot be null or empty")

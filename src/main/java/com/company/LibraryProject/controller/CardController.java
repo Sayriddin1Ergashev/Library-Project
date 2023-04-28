@@ -1,7 +1,6 @@
 package com.company.LibraryProject.controller;
 
 import com.company.LibraryProject.dto.CardDto;
-import com.company.LibraryProject.dto.ResponseCardDto;
 import com.company.LibraryProject.dto.ResponseDto;
 import com.company.LibraryProject.service.CardService;
 import jakarta.validation.Valid;
@@ -38,8 +37,4 @@ public class CardController {
         return cardService.deleteCard(cardId);
     }
 
-    @GetMapping(value = ("/get-all-by-user-id/{id}"))
-    public ResponseDto<List<ResponseCardDto>> getAllCardsByUserId(@PathVariable(value = "id") Integer userId) {
-        return cardService.getAllCardsByUserId(userId);
-    }
 }
