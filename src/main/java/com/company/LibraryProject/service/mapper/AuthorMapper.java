@@ -13,8 +13,5 @@ public interface AuthorMapper {
     @Mapping(target = "authorId", ignore = true)
     Author toEntity(AuthorDto dto);
 
-    @Mapping(target = "createdAt", dateFormat = "yyyy-MM-dd")
-    @Mapping(target = "updatedAt", dateFormat = "yyyy-MM-dd")
-    @Mapping(target = "deletedAt", dateFormat = "yyyy-MM-dd")
     AuthorDto toDto(Author author);
 }

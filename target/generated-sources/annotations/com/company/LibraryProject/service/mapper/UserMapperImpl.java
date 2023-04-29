@@ -1,19 +1,15 @@
 package com.company.LibraryProject.service.mapper;
 
-import com.company.LibraryProject.dto.CardDto;
 import com.company.LibraryProject.dto.UserDto;
-import com.company.LibraryProject.model.Card;
 import com.company.LibraryProject.model.User;
-import java.util.LinkedHashSet;
-import java.util.Set;
 import java.util.stream.Collectors;
 import javax.annotation.processing.Generated;
 import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-04-28T20:22:57+0500",
-    comments = "version: 1.5.3.Final, compiler: javac, environment: Java 19.0.2 (Oracle Corporation)"
+    date = "2023-04-29T10:36:19+0500",
+    comments = "version: 1.5.3.Final, compiler: javac, environment: Java 20.0.1 (Oracle Corporation)"
 )
 @Component
 public class UserMapperImpl extends UserMapper {
@@ -33,7 +29,6 @@ public class UserMapperImpl extends UserMapper {
         user.setPassword( dto.getPassword() );
         user.setPhoneNumber( dto.getPhoneNumber() );
         user.setBirthdate( dto.getBirthdate() );
-        user.setCards( cardDtoSetToCardSet( dto.getCards() ) );
         user.setGender( dto.getGender() );
 
         return user;
@@ -62,36 +57,5 @@ public class UserMapperImpl extends UserMapper {
         userDto.setCards( user.getCards().stream().map(cardMapper::toDtoNotUserId).collect(Collectors.toSet()) );
 
         return userDto;
-    }
-
-    protected Card cardDtoToCard(CardDto cardDto) {
-        if ( cardDto == null ) {
-            return null;
-        }
-
-        Card card = new Card();
-
-        card.setCardId( cardDto.getCardId() );
-        card.setCardName( cardDto.getCardName() );
-        card.setCardNumber( cardDto.getCardNumber() );
-        card.setUserId( cardDto.getUserId() );
-        card.setCreatedAt( cardDto.getCreatedAt() );
-        card.setUpdatedAt( cardDto.getUpdatedAt() );
-        card.setDeletedAt( cardDto.getDeletedAt() );
-
-        return card;
-    }
-
-    protected Set<Card> cardDtoSetToCardSet(Set<CardDto> set) {
-        if ( set == null ) {
-            return null;
-        }
-
-        Set<Card> set1 = new LinkedHashSet<Card>( Math.max( (int) ( set.size() / .75f ) + 1, 16 ) );
-        for ( CardDto cardDto : set ) {
-            set1.add( cardDtoToCard( cardDto ) );
-        }
-
-        return set1;
     }
 }

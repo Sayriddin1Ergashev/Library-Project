@@ -1,14 +1,16 @@
 com/company/LibraryProject/model/OrdersBook.class
-com/company/LibraryProject/service/UserService.class
 com/company/LibraryProject/service/validation/UserValidate.class
+com/company/LibraryProject/service/UserService.class
 com/company/LibraryProject/dto/ExceptionHandlerResource.class
+com/company/LibraryProject/service/AuthorService.class
 com/company/LibraryProject/dto/AuthorDto.class
 com/company/LibraryProject/repository/UserRepository.class
-com/company/LibraryProject/model/Author.class
 com/company/LibraryProject/service/validation/CardValidate.class
+com/company/LibraryProject/model/Author.class
 com/company/LibraryProject/model/Card.class
 com/company/LibraryProject/service/mapper/UserMapper.class
 com/company/LibraryProject/dto/ResponseDto.class
+com/company/LibraryProject/service/validation/AuthorValidation.class
 com/company/LibraryProject/repository/AuthorRepository.class
 com/company/LibraryProject/controller/AuthorController.class
 com/company/LibraryProject/LibraryProjectApplication.class
@@ -20,8 +22,8 @@ com/company/LibraryProject/service/mapper/CardMapperImpl.class
 com/company/LibraryProject/dto/OrdersDto.class
 com/company/LibraryProject/model/User.class
 com/company/LibraryProject/model/Orders.class
-com/company/LibraryProject/controller/CardController.class
 com/company/LibraryProject/service/mapper/UserMapperImpl.class
+com/company/LibraryProject/controller/CardController.class
 com/company/LibraryProject/model/Publisher.class
 com/company/LibraryProject/dto/ErrorDto.class
 com/company/LibraryProject/model/Goals.class
@@ -35,5 +37,5 @@ com/company/LibraryProject/repository/OrdersRepository.class
 com/company/LibraryProject/controller/OrdersController.class
 com/company/LibraryProject/service/mapper/AuthorMapper.class
 com/company/LibraryProject/model/Books.class
-com/company/LibraryProject/service/CardService.class
 com/company/LibraryProject/service/mapper/OrdersMapper.class
+com/company/LibraryProject/service/CardService.class
