@@ -91,7 +91,7 @@ public class UserService {
         if (optional.isEmpty()) {
             return ResponseDto.<UserDto>builder()
                     .message("User is not found!")
-                    .code(-3)
+                    .code(-1)
                     .build();
         }
 
