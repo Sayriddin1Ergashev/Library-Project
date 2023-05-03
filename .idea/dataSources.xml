@@ -8,5 +8,12 @@
       <jdbc-url>jdbc:postgresql://localhost:5432/isystem_course_db</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
+    <data-source source="LOCAL" name="isystem_course_db@localhost [2]" uuid="5a07709f-ba75-4ec6-93d4-b3ee198369c9">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://localhost:5432/isystem_course_db</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
   </component>
 </project>

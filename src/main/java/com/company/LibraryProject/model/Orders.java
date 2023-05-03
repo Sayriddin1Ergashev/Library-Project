@@ -13,22 +13,15 @@ import java.util.Set;
 @Table(name = ("orders"))
 public class Orders {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = ("orders_id"))
+    @GeneratedValue(generator = "orders_seq_id")
+    @SequenceGenerator(name = "orders_seq_id",sequenceName = "orders_seq_id",allocationSize = 1)
     private Integer ordersId;
-    @Column(name = ("user_id"))
     private Integer userId;
     private Integer total;
-
     @OneToMany(mappedBy = "ordersId", cascade = CascadeType.ALL)
     private Set<OrdersBook> ordersBooks;
-
-
-    @Column(name = ("created_at"))
     private LocalDateTime createdAt;
-    @Column(name = ("updated_at"))
     private LocalDateTime updatedAt;
-    @Column(name = ("deleted_at"))
     private LocalDateTime deletedAt;
 
 

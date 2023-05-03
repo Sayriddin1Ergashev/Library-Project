@@ -1,5 +1,6 @@
 package com.company.LibraryProject.dto;
 
+import jakarta.validation.UnexpectedTypeException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -18,6 +19,18 @@ public class ExceptionHandlerResource {
             String rejectionValue = String.valueOf(fieldError.getRejectedValue());
             return new ErrorDto(field, message + " rejection value: " + rejectionValue);
         }).toList();
+        return ResponseEntity.badRequest().body(
+                ResponseDto.<Void>builder()
+                        .message("Validation error")
+                        .code(-2)
+                        .errors(errors)
+                        .build()
+        );
+    }
+    @ExceptionHandler
+    public ResponseEntity<ResponseDto<Void>> unexpectedTypeException(UnexpectedTypeException e){
+       List<ErrorDto> errors = null;
+       errors.add(new ErrorDto("",e.getMessage()));
         return ResponseEntity.badRequest().body(
                 ResponseDto.<Void>builder()
                         .message("Validation error")
