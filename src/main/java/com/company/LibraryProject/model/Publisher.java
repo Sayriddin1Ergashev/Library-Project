@@ -9,14 +9,16 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @Entity
-@Table(name = ("publishers"))
+@Table(name = "publisher")
 public class Publisher {
     @Id
-    @GeneratedValue(generator = "publisher_seq_id")
-    @SequenceGenerator(name = "publisher_seq_id",sequenceName = "publisher_seq_id",allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "publisher_id")
     private Integer publisherId;
     private String publisher;
     private String location;
+
+    @Column(name = "books_id")
     private Integer booksId;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;

@@ -7,12 +7,13 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestControllerAdvice
 public class ExceptionHandlerResource {
     @ExceptionHandler
-    public ResponseEntity<ResponseDto<Void>> methodArgumentNotValidException(MethodArgumentNotValidException e){
+    public ResponseEntity<ResponseDto<Void>> methodArgumentNotValidException(MethodArgumentNotValidException e) {
         List<ErrorDto> errors = e.getBindingResult().getFieldErrors().stream().map(fieldError -> {
             String field = fieldError.getField();
             String message = fieldError.getDefaultMessage();
@@ -27,10 +28,11 @@ public class ExceptionHandlerResource {
                         .build()
         );
     }
+
     @ExceptionHandler
-    public ResponseEntity<ResponseDto<Void>> unexpectedTypeException(UnexpectedTypeException e){
-       List<ErrorDto> errors = null;
-       errors.add(new ErrorDto("",e.getMessage()));
+    public ResponseEntity<ResponseDto<Void>> unexpectedTypeException(UnexpectedTypeException e) {
+        List<ErrorDto> errors = new ArrayList<>();
+        errors.add(new ErrorDto("rejection", e.getMessage()));
         return ResponseEntity.badRequest().body(
                 ResponseDto.<Void>builder()
                         .message("Validation error")

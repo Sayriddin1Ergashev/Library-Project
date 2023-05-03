@@ -18,8 +18,8 @@ public class Orders {
     private Integer ordersId;
     private Integer userId;
     private Integer total;
-    @OneToMany(mappedBy = "ordersId", cascade = CascadeType.ALL)
-    private Set<OrdersBook> ordersBooks;
+    //@OneToMany(mappedBy = "ordersId", cascade = CascadeType.ALL)
+    //private Set<OrdersBook> ordersBooks;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private LocalDateTime deletedAt;
