@@ -14,9 +14,8 @@ import java.util.Set;
 public class Orders {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = ("orders_id"))
+    @SequenceGenerator(name = "orders", sequenceName = "orders", allocationSize = 1)
     private Integer ordersId;
-    @Column(name = ("user_id"))
     private Integer userId;
     private Integer total;
 
@@ -24,11 +23,8 @@ public class Orders {
     private Set<OrdersBook> ordersBooks;
 
 
-    @Column(name = ("created_at"))
     private LocalDateTime createdAt;
-    @Column(name = ("updated_at"))
     private LocalDateTime updatedAt;
-    @Column(name = ("deleted_at"))
     private LocalDateTime deletedAt;
 
 

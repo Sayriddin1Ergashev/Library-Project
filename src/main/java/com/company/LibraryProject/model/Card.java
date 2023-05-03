@@ -16,23 +16,16 @@ public class Card {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer cardId;
 
-    @Column(name = ("card_name"))
     private String cardName;
 
-    @Column(name = ("card_number"))
     private String cardNumber;
 
-    @Column(name = ("user_id"))
     private Integer userId;
 
-    @Column(name = ("created_At"))
     private LocalDateTime createdAt;
-
-    @Column(name = ("updated_At"))
     private LocalDateTime updatedAt;
-
-    @Column(name = ("deleted_At"))
     private LocalDateTime deletedAt;
+
 
 
 }

@@ -13,10 +13,11 @@ import java.time.LocalDateTime;
 public class OrdersBook {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer orderBookId;
+    @SequenceGenerator(name = "ordersBooks", sequenceName = "ordersBooks", allocationSize = 1)
+    private Integer ordersBookId;
     private Integer ordersId;
 
-    private Integer bookId;
+    private Integer booksId;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private LocalDateTime deletedAt;

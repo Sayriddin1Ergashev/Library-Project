@@ -13,6 +13,7 @@ import java.time.LocalDateTime;
 public class Image {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @SequenceGenerator(name = "image", sequenceName = "image", allocationSize = 1)
     private Integer imageId;
     private String path;
     private String type;
