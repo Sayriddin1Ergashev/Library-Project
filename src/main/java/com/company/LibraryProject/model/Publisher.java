@@ -12,10 +12,12 @@ import java.time.LocalDateTime;
 @Table(name = ("publishers"))
 public class Publisher {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(generator = "publisher_seq_id")
+    @SequenceGenerator(name = "publisher_seq_id",sequenceName = "publisher_seq_id",allocationSize = 1)
     private Integer publisherId;
     private String publisher;
     private String location;
+    private Integer booksId;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private LocalDateTime deletedAt;
