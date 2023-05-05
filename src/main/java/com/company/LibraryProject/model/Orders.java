@@ -13,13 +13,16 @@ import java.util.Set;
 @Table(name = ("orders"))
 public class Orders {
     @Id
-    @GeneratedValue(generator = "orders_seq_id")
-    @SequenceGenerator(name = "orders_seq_id",sequenceName = "orders_seq_id",allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @SequenceGenerator(name = "orders", sequenceName = "orders", allocationSize = 1)
     private Integer ordersId;
     private Integer userId;
     private Integer total;
-    //@OneToMany(mappedBy = "ordersId", cascade = CascadeType.ALL)
-    //private Set<OrdersBook> ordersBooks;
+
+    @OneToMany(mappedBy = "ordersId", cascade = CascadeType.ALL)
+    private Set<OrdersBook> ordersBooks;
+
+
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private LocalDateTime deletedAt;

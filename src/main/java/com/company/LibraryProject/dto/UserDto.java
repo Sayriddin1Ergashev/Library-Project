@@ -1,7 +1,7 @@
 package com.company.LibraryProject.dto;
 
+import com.company.LibraryProject.model.Card;
 import com.company.LibraryProject.model.Gender;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -11,6 +11,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -24,11 +25,11 @@ public class UserDto {
     private String lastName; //(+)
     @Email(message = "Email invalid")
     private String email;    //(+)
-    @NotBlank(message = "password cannot be null or empty")
-    @Size(min = 6, max = 10, message = "password  invalid")
+  //  @NotBlank(message = "password cannot be null or empty")
+ //   @Size(min = 6, max = 10, message = "password  invalid")
     //@Pattern(regexp = "[a-zA-Z0-9]{6}", message = "Regular expression error.")
     //@Pattern(regexp = "[a-z]{1,3}[A-Z]{1,7}[0-9]{1,6}", message = "Regular expression error.")
-   // @Pattern(regexp = "[^abc]{3}[A-Z0-9]{6}", message = "Regular expression error.")
+  //  @Pattern(regexp = "[abc]{3}[A-Z0-9]{6}", message = "Regular expression error.")
     private String password;//(+)
     @NotBlank(message = "phoneNumber cannot be null or empty")
     private String phoneNumber;//(+)

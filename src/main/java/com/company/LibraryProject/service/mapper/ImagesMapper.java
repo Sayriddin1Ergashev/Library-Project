@@ -1,21 +1,17 @@
 package com.company.LibraryProject.service.mapper;
 
-import com.company.LibraryProject.dto.ImagesDto;
-import com.company.LibraryProject.model.Images;
+import com.company.LibraryProject.dto.AuthorDto;
+import com.company.LibraryProject.model.Author;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.MappingConstants;
 
-@Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
-public interface ImagesMapper {
+@Mapper(componentModel = "spring")
+public interface AuthorMapper {
     @Mapping(target = "createdAt", ignore = true)
     @Mapping(target = "updatedAt", ignore = true)
     @Mapping(target = "deletedAt", ignore = true)
-    @Mapping(target = "imageId", ignore = true)
-    Images toEntity(ImagesDto imagesDto);
+    @Mapping(target = "authorId", ignore = true)
+    Author toEntity(AuthorDto dto);
 
-    @Mapping(target = "createdAt", dateFormat = "yyyy-MM-dd")
-    @Mapping(target = "updatedAt", dateFormat = "yyyy-MM-dd")
-    @Mapping(target = "deletedAt", dateFormat = "yyyy-MM-dd")
-    ImagesDto toDto(Images images);
+    AuthorDto toDto(Author author);
 }

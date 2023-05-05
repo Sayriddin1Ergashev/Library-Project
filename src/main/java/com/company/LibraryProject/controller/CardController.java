@@ -27,8 +27,7 @@ public class CardController {
     }
 
     @PutMapping("/update/{id}")
-    public ResponseDto<CardDto> updateCard(@RequestBody CardDto dto,
-                                           @PathVariable("id") Integer cardId) {
+    public ResponseDto<CardDto> updateCard(@RequestBody CardDto dto, @PathVariable("id") Integer cardId) {
         return cardService.updateCard(dto, cardId);
     }
 

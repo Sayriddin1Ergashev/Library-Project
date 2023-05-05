@@ -14,6 +14,7 @@ public class Images {
     @Id
     @Column(name = "image_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @SequenceGenerator(name = "image", sequenceName = "image", allocationSize = 1)
     private Integer imageId;
     private String path;
     private String type;

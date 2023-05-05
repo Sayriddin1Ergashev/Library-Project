@@ -15,8 +15,6 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
-
 
 @Service
 @RequiredArgsConstructor
@@ -49,7 +47,7 @@ public class UserService {
             return ResponseDto.<UserDto>builder()
                     .success(true)
                     .message("User successful created!")
-                    .data(userMapper.toDto(user))
+                    .data(userMapper.toDtoNotId(user))
                     .build();
         } catch (Exception e) {
             log.warn(String.format("User while saving error :: %s", e.getMessage()));
@@ -91,7 +89,7 @@ public class UserService {
         if (optional.isEmpty()) {
             return ResponseDto.<UserDto>builder()
                     .message("User is not found!")
-                    .code(-3)
+                    .code(-1)
                     .build();
         }
 
@@ -99,8 +97,8 @@ public class UserService {
 
             User user = userMapper.toEntity(dto);
             user.setUserId(optional.get().getUserId());
-            user.setCreatedAt(optional.get().getCreatedAt());
             user.setDeletedAt(optional.get().getDeletedAt());
+            user.setCreatedAt(optional.get().getCreatedAt());
             user.setUpdatedAt(LocalDateTime.now());
             userRepository.save(user);
             log.info("User successful updated!");
@@ -108,7 +106,7 @@ public class UserService {
             return ResponseDto.<UserDto>builder()
                     .success(true)
                     .message("OK")
-                    .data(userMapper.toDto(user))
+                    .data(userMapper.toDtoNotId(user))
                     .build();
 
         } catch (Exception e) {
@@ -149,21 +147,4 @@ public class UserService {
         }
     }
 
-    public ResponseDto<List<UserDto>> getAll() {
-        List<UserDto> userList = userRepository.findAll()
-                .stream()
-                .map(userMapper::toDto)
-                .toList();
-        if (userList.isEmpty()) {
-            return ResponseDto.<List<UserDto>>builder()
-                    .message("Users is not found!")
-                    .code(-3)
-                    .build();
-        }
-        return ResponseDto.<List<UserDto>>builder()
-                .success(true)
-                .message("OK")
-                .data(userList)
-                .build();
-    }
 }

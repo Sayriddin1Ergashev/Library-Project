@@ -12,27 +12,21 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity
-@Table(name = "users")
+@Table(name = ("users"))
 public class User {
     @Id
     @GeneratedValue(generator = "user_seq_id")
     @SequenceGenerator(name = "user_seq_id", sequenceName = "user_seq_id", allocationSize = 1)
-    @Column(name = ("user_id"))
     private Integer userId;//userid
-    @Column(name = ("first_name"))
     private String firstName;
-    @Column(name = ("last_name"))
     private String lastName;
     private String email;
     private String password;
-    @Column(name = ("phone_number"))
     private String phoneNumber;
+
     private LocalDateTime birthdate;
-    @Column(name = ("created_at"))
     private LocalDateTime createdAt;
-    @Column(name = ("updated_at"))
     private LocalDateTime updatedAt;
-    @Column(name = ("deleted_at"))
     private LocalDateTime deletedAt;
 
     //One users to many cars

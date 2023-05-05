@@ -61,11 +61,63 @@ public class OrdersService {
     }
 
     public ResponseDto<OrdersDto> update(Integer ordersId, OrdersDto ordersDto) {
-        return null;
+        if (userService.getUser(ordersDto.getUserId()).getData() == null) {
+            return ResponseDto.<OrdersDto>builder()
+                    .message(userService.getUser(ordersDto.getUserId()).getMessage())
+                    .code(-3)
+                    .build();
+        }
+        try { Optional<Orders> optional = ordersRepository.findByOrdersIdAndDeletedAtIsNull(ordersId);
+            if (optional.isEmpty()) {
+                return ResponseDto.<OrdersDto>builder()
+                        .message("Orders is not found!")
+                        .code(-1)
+                        .build();
+            }
+            Orders orders = ordersMapper.toEntity(ordersDto);
+            orders.setUpdatedAt(LocalDateTime.now());
+            orders.setOrdersId(optional.get().getOrdersId());
+            orders.setCreatedAt(optional.get().getCreatedAt());
+            ordersRepository.save(orders);
+            return ResponseDto.<OrdersDto>builder()
+                    .success(true)
+                    .message("OK")
+                    .data(ordersMapper.toDto(orders))
+                    .build();
+        } catch (Exception e) {
+            return ResponseDto.<OrdersDto>builder()
+                    .message(String.format("Orders while saving error :: %s", e.getMessage()))
+                    .code(-1)
+                    .build();
+        }
     }
 
     public ResponseDto<OrdersDto> delete(Integer ordersId) {
-        return null;
+        try { Optional<Orders> optional = ordersRepository.findByOrdersIdAndDeletedAtIsNull(ordersId);
+            if (optional.isEmpty()) {
+                return ResponseDto.<OrdersDto>builder()
+                        .message("Orders is not found!")
+                        .code(-1)
+                        .build();
+            }
+            Orders orders = optional.get();
+            orders.setDeletedAt(LocalDateTime.now());
+            orders.setUpdatedAt(optional.get().getUpdatedAt());
+            orders.setOrdersId(optional.get().getOrdersId());
+            orders.setCreatedAt(optional.get().getCreatedAt());
+            ordersRepository.save(orders);
+            return ResponseDto.<OrdersDto>builder()
+                    .success(true)
+                    .message("OK")
+                    .data(ordersMapper.toDto(orders))
+                    .build();
+        } catch (Exception e) {
+            return ResponseDto.<OrdersDto>builder()
+                    .message(String.format("Orders while saving error :: %s", e.getMessage()))
+                    .code(-1)
+                    .build();
+        }
+
     }
 
     public ResponseDto<List<OrdersDto>> getAll() {

@@ -27,7 +27,7 @@ public class CardService {
     public ResponseDto<CardDto> createCard(CardDto dto) {
 
         List<ErrorDto> errors = cardValidate.validate(dto);
-        if (!errors.isEmpty()){
+        if (!errors.isEmpty()) {
             return ResponseDto.<CardDto>builder()
                     .message("Validation error")
                     .code(-2)
@@ -84,7 +84,7 @@ public class CardService {
 
     public ResponseDto<CardDto> updateCard(CardDto dto, Integer id) {
         List<ErrorDto> errors = cardValidate.validate(dto);
-        if (!errors.isEmpty()){
+        if (!errors.isEmpty()) {
             return ResponseDto.<CardDto>builder()
                     .message("Validation error")
                     .code(-2)

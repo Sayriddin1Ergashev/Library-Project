@@ -25,18 +25,12 @@ public abstract class UserMapper {
     @Mapping(target = "createdAt", ignore = true)
     @Mapping(target = "updatedAt", ignore = true)
     @Mapping(target = "deletedAt", ignore = true)
+  //  @Mapping(target = "cards", ignore = true)
     public abstract User toEntity(UserDto dto);
 
     @Mapping(target = "cards", expression = "java(user.getCards().stream().map(cardMapper::toDtoNotUserId).collect(Collectors.toSet()))")
     public abstract UserDto toDto(User user);
 
-    public void viewMethod(){
-        UserDto dto = new UserDto();
-        User user = new User();
-        Set<CardDto> cardDtoSet = user.getCards().stream().map(cardMapper::toDtoNotUserId).collect(Collectors.toSet());
-        dto.setCards(cardDtoSet);
-    }
 
-
-
+    public abstract  UserDto toDtoNotId(User user);
 }
