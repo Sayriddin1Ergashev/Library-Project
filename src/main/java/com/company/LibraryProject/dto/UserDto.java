@@ -28,7 +28,7 @@ public class UserDto {
     @Size(min = 6, max = 10, message = "password  invalid")
     //@Pattern(regexp = "[a-zA-Z0-9]{6}", message = "Regular expression error.")
     //@Pattern(regexp = "[a-z]{1,3}[A-Z]{1,7}[0-9]{1,6}", message = "Regular expression error.")
-    @Pattern(regexp = "[^abc]{3}[A-Z0-9]{6}", message = "Regular expression error.")
+   // @Pattern(regexp = "[^abc]{3}[A-Z0-9]{6}", message = "Regular expression error.")
     private String password;//(+)
     @NotBlank(message = "phoneNumber cannot be null or empty")
     private String phoneNumber;//(+)
