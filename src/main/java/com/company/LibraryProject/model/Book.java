@@ -22,13 +22,10 @@ public class Book {
     private Integer page;
     private Integer amount;
     private LocalDate publisherAt;
-
-    @OneToMany(mappedBy = "authorId", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "booksId", cascade = CascadeType.ALL)
     private Set<Authors> authors;
-
-    @OneToMany(mappedBy = "imageId", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "booksId", cascade = CascadeType.ALL)
     private Set<Images> images;
-
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "books_id", referencedColumnName = "books_id")
     private Goals goals;
