@@ -2,7 +2,7 @@ package com.company.LibraryProject.service;
 
 import com.company.LibraryProject.dto.AuthorDto;
 import com.company.LibraryProject.dto.ResponseDto;
-import com.company.LibraryProject.model.Author;
+import com.company.LibraryProject.model.Authors;
 import com.company.LibraryProject.repository.AuthorRepository;
 import com.company.LibraryProject.service.mapper.AuthorMapper;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +20,7 @@ public class AuthorService {
 
     public ResponseDto<AuthorDto> create(AuthorDto dto) {
         try {
-            Author author = authorMapper.toEntity(dto);
+            Authors author = authorMapper.toEntity(dto);
             author.setCreatedAt(LocalDateTime.now());
             this.authorRepository.save(author);
             return ResponseDto.<AuthorDto>builder()
@@ -40,7 +40,7 @@ public class AuthorService {
 
     public ResponseDto<AuthorDto> get(Integer authorId) {
         try {
-            Optional<Author> optional = authorRepository.findAllByAuthorIdAndDeletedAtIsNull(authorId);
+            Optional<Authors> optional = authorRepository.findAllByAuthorIdAndDeletedAtIsNull(authorId);
             if (optional.isEmpty()) {
                 return ResponseDto.<AuthorDto>builder()
                         .message("author is empty")
@@ -64,7 +64,7 @@ public class AuthorService {
     }
 
     public ResponseDto<AuthorDto> update(AuthorDto dto, Integer authorId) {
-        Optional<Author> optional = authorRepository.findAllByAuthorIdAndDeletedAtIsNull(authorId);
+        Optional<Authors> optional = authorRepository.findAllByAuthorIdAndDeletedAtIsNull(authorId);
         if (optional.isEmpty()) {
             return ResponseDto.<AuthorDto>builder()
                     .message("author not found")
@@ -72,7 +72,7 @@ public class AuthorService {
                     .build();
         }
         try {
-            Author author = authorMapper.toEntity(dto);
+            Authors author = authorMapper.toEntity(dto);
             author.setAuthorId(optional.get().getAuthorId());
             author.setCreatedAt(optional.get().getCreatedAt());
             author.setDeletedAt(optional.get().getDeletedAt());
@@ -94,7 +94,7 @@ public class AuthorService {
     }
 
     public ResponseDto<AuthorDto> delete(Integer authorId) {
-        Optional<Author> optional = authorRepository.findAllByAuthorIdAndDeletedAtIsNull(authorId);
+        Optional<Authors> optional = authorRepository.findAllByAuthorIdAndDeletedAtIsNull(authorId);
         if (optional.isEmpty()) {
             return ResponseDto.<AuthorDto>builder()
                     .message("author not found")
@@ -102,7 +102,7 @@ public class AuthorService {
                     .build();
         }
         try {
-            Author author = optional.get();
+            Authors author = optional.get();
             author.setDeletedAt(LocalDateTime.now());
             authorRepository.save(author);
             return ResponseDto.<AuthorDto>builder()

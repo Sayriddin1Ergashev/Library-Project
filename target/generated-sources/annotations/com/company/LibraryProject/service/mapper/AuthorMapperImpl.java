@@ -17,12 +17,12 @@ public class AuthorMapperImpl implements AuthorMapper {
     private final DateTimeFormatter dateTimeFormatter_yyyy_MM_dd_0159776256 = DateTimeFormatter.ofPattern( "yyyy-MM-dd" );
 
     @Override
-    public Author toEntity(AuthorDto dto) {
+    public Authors toEntity(AuthorDto dto) {
         if ( dto == null ) {
             return null;
         }
 
-        Author author = new Author();
+        Authors author = new Authors();
 
         author.setFirstname( dto.getFirstname() );
         author.setLastname( dto.getLastname() );

@@ -1,6 +1,6 @@
 package com.company.LibraryProject.repository;
 
-import com.company.LibraryProject.model.Author;
+import com.company.LibraryProject.model.Authors;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface AuthorRepository extends JpaRepository<Author, Integer> {
-    Optional<Author> findAllByAuthorIdAndDeletedAtIsNull(Integer authorId);
+public interface AuthorRepository extends JpaRepository<Authors, Integer> {
+    Optional<Authors> findAllByAuthorIdAndDeletedAtIsNull(Integer authorId);
 
 }
