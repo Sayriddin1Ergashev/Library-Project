@@ -12,7 +12,7 @@ public abstract class BookMapper {
 
     @Lazy
     @Autowired
-    protected AuthorsMapper authorsMapper;
+    protected AuthorMapper authorsMapper;
 
     @Lazy
     @Autowired
