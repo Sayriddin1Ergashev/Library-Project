@@ -3,6 +3,7 @@ package com.company.LibraryProject.controller;
 import com.company.LibraryProject.dto.OrdersDto;
 import com.company.LibraryProject.dto.ResponseDto;
 import com.company.LibraryProject.service.OrdersService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,7 +17,7 @@ public class OrdersController {
     private final OrdersService ordersService;
 
     @PostMapping(value = ("/create"))
-    public ResponseDto<OrdersDto> create(@RequestBody OrdersDto ordersDto) {
+    public ResponseDto<OrdersDto> create(@Valid @RequestBody OrdersDto ordersDto) {
         return ordersService.create(ordersDto);
     }
 
@@ -28,7 +29,7 @@ public class OrdersController {
 
     @PutMapping(value = ("/update/{id}"))
     public ResponseDto<OrdersDto> update(@PathVariable("id") Integer ordersId,
-                                         @RequestBody OrdersDto ordersDto) {
+                                         @Valid @RequestBody OrdersDto ordersDto) {
         return ordersService.update(ordersId, ordersDto);
     }
 
