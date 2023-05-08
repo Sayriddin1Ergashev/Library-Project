@@ -27,9 +27,6 @@ public abstract class BookMapper {
     protected PublisherMapper publisherMapper;
 
     public abstract Book toEntity(BooksDto dto);
-
-    //    @Mapping(target = "authorsDto", expression = "java(user.getCards().stream().map(cardMapper::toDtoNotUserId).collect(Collectors.toSet()))")
-//    public abstract BooksDto toDto(Book book);
     @Mapping(target = "authorsDto",
             expression = "java(book.getAuthors().stream().map(authorsMapper::toDtoNotAuthorId).collect(Collectors.toSet()))")
     @Mapping(target = "imagesDto",
@@ -39,7 +36,20 @@ public abstract class BookMapper {
     @Mapping(target = "publisherDto",
             expression = "java(publisherMapper.toDtoNotBookId(book.getPublisher()))")
     public abstract BooksDto toDto(Book book);
+    @Mapping(target = "createdAt", dateFormat = "yyyy-MM-dd")
+    @Mapping(target = "updatedAt", dateFormat = "yyyy-MM-dd")
+    @Mapping(target = "deletedAt", dateFormat = "yyyy-MM-dd")
+@Mapping(target = "ordersBookId",ignore = true)
+@Mapping(target = "authorsDto",
+        expression = "java(book.getAuthors().stream().map(authorsMapper::toDtoNotAuthorId).collect(Collectors.toSet()))")
+@Mapping(target = "imagesDto",
+        expression = "java(book.getImages().stream().map(imagesMapper::toDtoNotBookId).collect(Collectors.toSet()))")
+@Mapping(target = "goalsDto",
+        expression = "java(goalsMapper.toDtoNotBookId(book.getGoals()))")
+@Mapping(target = "publisherDto",
+        expression = "java(publisherMapper.toDtoNotBookId(book.getPublisher()))")
 
-
-
+    public abstract BooksDto toDtoByNotOrdersBookId(Book book);
+//TODO:OrdersBookMapperda kere bo'ldi shuning uchun yaratdim
+//TODO:toDtoByNotOrdersBookId shu metodni yaratdim book servisda create va update metodida qaytarish <kere>:date
 }

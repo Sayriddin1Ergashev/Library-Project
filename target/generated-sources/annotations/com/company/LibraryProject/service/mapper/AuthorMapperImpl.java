@@ -1,20 +1,17 @@
 package com.company.LibraryProject.service.mapper;
 
 import com.company.LibraryProject.dto.AuthorDto;
-import com.company.LibraryProject.model.Author;
-import java.time.format.DateTimeFormatter;
+import com.company.LibraryProject.model.Authors;
 import javax.annotation.processing.Generated;
 import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-05-05T14:36:30+0500",
-    comments = "version: 1.5.3.Final, compiler: javac, environment: Java 19.0.2 (Oracle Corporation)"
+    date = "2023-05-08T16:04:47+0500",
+    comments = "version: 1.5.3.Final, compiler: javac, environment: Java 20 (Oracle Corporation)"
 )
 @Component
-public class AuthorMapperImpl implements AuthorMapper {
-
-    private final DateTimeFormatter dateTimeFormatter_yyyy_MM_dd_0159776256 = DateTimeFormatter.ofPattern( "yyyy-MM-dd" );
+public class AuthorMapperImpl extends AuthorMapper {
 
     @Override
     public Authors toEntity(AuthorDto dto) {
@@ -22,36 +19,56 @@ public class AuthorMapperImpl implements AuthorMapper {
             return null;
         }
 
-        Authors author = new Authors();
+        Authors authors = new Authors();
 
-        author.setFirstname( dto.getFirstname() );
-        author.setLastname( dto.getLastname() );
-        author.setAge( dto.getAge() );
+        if ( dto.getAuthorId() != null ) {
+            authors.setAuthorId( Integer.parseInt( dto.getAuthorId() ) );
+        }
+        authors.setFirstname( dto.getFirstname() );
+        authors.setLastname( dto.getLastname() );
+        authors.setAge( dto.getAge() );
+        authors.setCreatedAt( dto.getCreatedAt() );
+        authors.setUpdatedAt( dto.getUpdatedAt() );
+        authors.setDeletedAt( dto.getDeletedAt() );
 
-        return author;
+        return authors;
     }
 
     @Override
-    public AuthorDto toDto(Author author) {
-        if ( author == null ) {
+    public AuthorDto toDto(Authors authors) {
+        if ( authors == null ) {
             return null;
         }
 
         AuthorDto authorDto = new AuthorDto();
 
-        if ( author.getCreatedAt() != null ) {
-            authorDto.setCreatedAt( dateTimeFormatter_yyyy_MM_dd_0159776256.format( author.getCreatedAt() ) );
+        if ( authors.getAuthorId() != null ) {
+            authorDto.setAuthorId( String.valueOf( authors.getAuthorId() ) );
         }
-        if ( author.getUpdatedAt() != null ) {
-            authorDto.setUpdatedAt( dateTimeFormatter_yyyy_MM_dd_0159776256.format( author.getUpdatedAt() ) );
+        authorDto.setFirstname( authors.getFirstname() );
+        authorDto.setLastname( authors.getLastname() );
+        authorDto.setAge( authors.getAge() );
+        authorDto.setCreatedAt( authors.getCreatedAt() );
+        authorDto.setUpdatedAt( authors.getUpdatedAt() );
+        authorDto.setDeletedAt( authors.getDeletedAt() );
+
+        return authorDto;
+    }
+
+    @Override
+    public AuthorDto toDtoNotAuthorId(Authors authors) {
+        if ( authors == null ) {
+            return null;
         }
-        if ( author.getDeletedAt() != null ) {
-            authorDto.setDeletedAt( dateTimeFormatter_yyyy_MM_dd_0159776256.format( author.getDeletedAt() ) );
-        }
-        authorDto.setAuthorId( author.getAuthorId() );
-        authorDto.setFirstname( author.getFirstname() );
-        authorDto.setLastname( author.getLastname() );
-        authorDto.setAge( author.getAge() );
+
+        AuthorDto authorDto = new AuthorDto();
+
+        authorDto.setFirstname( authors.getFirstname() );
+        authorDto.setLastname( authors.getLastname() );
+        authorDto.setAge( authors.getAge() );
+        authorDto.setCreatedAt( authors.getCreatedAt() );
+        authorDto.setUpdatedAt( authors.getUpdatedAt() );
+        authorDto.setDeletedAt( authors.getDeletedAt() );
 
         return authorDto;
     }

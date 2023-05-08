@@ -21,4 +21,7 @@ public abstract class GoalsMapper {
     public abstract Goals toEntity(GoalsDto goalsDto);
 
     public abstract GoalsDto toDto(Goals goals);
+    @Mapping(target = "bookId",ignore = true)
+    public abstract GoalsDto toDtoNotBookId(Goals goals);
+    //TODO: toDtoByNotOrdersBookId ni yaratdim sababi bookMapperda ishlatilgan ->bu yerda esa yuq ekan
 }

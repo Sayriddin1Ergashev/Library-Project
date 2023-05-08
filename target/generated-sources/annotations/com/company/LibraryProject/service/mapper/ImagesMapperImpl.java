@@ -8,8 +8,8 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-05-04T15:43:02+0500",
-    comments = "version: 1.5.3.Final, compiler: javac, environment: Java 19.0.2 (Oracle Corporation)"
+    date = "2023-05-08T16:04:47+0500",
+    comments = "version: 1.5.3.Final, compiler: javac, environment: Java 20 (Oracle Corporation)"
 )
 @Component
 public class ImagesMapperImpl implements ImagesMapper {
@@ -28,6 +28,7 @@ public class ImagesMapperImpl implements ImagesMapper {
         images.setType( imagesDto.getType() );
         images.setSize( imagesDto.getSize() );
         images.setToken( imagesDto.getToken() );
+        images.setBooksId( imagesDto.getBooksId() );
 
         return images;
     }
@@ -54,6 +55,33 @@ public class ImagesMapperImpl implements ImagesMapper {
         imagesDto.setType( images.getType() );
         imagesDto.setSize( images.getSize() );
         imagesDto.setToken( images.getToken() );
+        imagesDto.setBooksId( images.getBooksId() );
+
+        return imagesDto;
+    }
+
+    @Override
+    public ImagesDto toDtoNotBookId(Images images) {
+        if ( images == null ) {
+            return null;
+        }
+
+        ImagesDto imagesDto = new ImagesDto();
+
+        if ( images.getCreatedAt() != null ) {
+            imagesDto.setCreatedAt( dateTimeFormatter_yyyy_MM_dd_0159776256.format( images.getCreatedAt() ) );
+        }
+        if ( images.getUpdatedAt() != null ) {
+            imagesDto.setUpdatedAt( dateTimeFormatter_yyyy_MM_dd_0159776256.format( images.getUpdatedAt() ) );
+        }
+        if ( images.getDeletedAt() != null ) {
+            imagesDto.setDeletedAt( dateTimeFormatter_yyyy_MM_dd_0159776256.format( images.getDeletedAt() ) );
+        }
+        imagesDto.setPath( images.getPath() );
+        imagesDto.setType( images.getType() );
+        imagesDto.setSize( images.getSize() );
+        imagesDto.setToken( images.getToken() );
+        imagesDto.setBooksId( images.getBooksId() );
 
         return imagesDto;
     }

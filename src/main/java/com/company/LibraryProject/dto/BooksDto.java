@@ -28,6 +28,7 @@ public class BooksDto {
     private Integer page;
     @NotNull(message = "amount cannot be null")
     private Integer amount;
+    private Integer ordersBookId;
     private LocalDate publisherAt;
     private Set<AuthorDto> authorsDto;
     private Set<ImagesDto> imagesDto;
