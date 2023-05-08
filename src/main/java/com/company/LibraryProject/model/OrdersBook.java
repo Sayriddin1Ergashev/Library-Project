@@ -5,20 +5,25 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Getter
 @Setter
 @Entity
-@Table(name = ("orders_books"))
+@Table(name = ("ordersBooks"))
 public class OrdersBook {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @SequenceGenerator(name = "ordersBooks", sequenceName = "ordersBooks", allocationSize = 1)
+    @GeneratedValue(generator = "ordersBook_seq_id")
+    @SequenceGenerator(name = "ordersBook_seq_id",sequenceName = "ordersBook_seq_id",allocationSize = 1)
     private Integer ordersBookId;
     private Integer ordersId;
-
-    private Integer booksId;
+    @OneToMany(mappedBy = "ordersBookId",cascade = CascadeType.ALL)
+    private Set<Book>books;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private LocalDateTime deletedAt;
+    // ordersBookId   add in Book.class
+
+
+
 }

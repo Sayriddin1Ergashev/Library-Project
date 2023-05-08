@@ -7,11 +7,26 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-05-03T18:53:19+0500",
-    comments = "version: 1.5.3.Final, compiler: javac, environment: Java 20.0.1 (Oracle Corporation)"
+    date = "2023-05-08T16:04:46+0500",
+    comments = "version: 1.5.3.Final, compiler: javac, environment: Java 20 (Oracle Corporation)"
 )
 @Component
 public class GoalsMapperImpl extends GoalsMapper {
+
+    @Override
+    public Goals toEntity(GoalsDto goalsDto) {
+        if ( goalsDto == null ) {
+            return null;
+        }
+
+        Goals goals = new Goals();
+
+        goals.setGoalsId( goalsDto.getGoalsId() );
+        goals.setLanguage( goalsDto.getLanguage() );
+        goals.setDescription( goalsDto.getDescription() );
+
+        return goals;
+    }
 
     @Override
     public GoalsDto toDto(Goals goals) {
@@ -22,8 +37,8 @@ public class GoalsMapperImpl extends GoalsMapper {
         GoalsDto goalsDto = new GoalsDto();
 
         goalsDto.setGoalsId( goals.getGoalsId() );
-        goalsDto.setName( goals.getName() );
         goalsDto.setLanguage( goals.getLanguage() );
+        goalsDto.setDescription( goals.getDescription() );
         goalsDto.setCreatedAt( goals.getCreatedAt() );
         goalsDto.setUpdatedAt( goals.getUpdatedAt() );
         goalsDto.setDeletedAt( goals.getDeletedAt() );
@@ -32,22 +47,7 @@ public class GoalsMapperImpl extends GoalsMapper {
     }
 
     @Override
-    public Goals toEntity(GoalsDto dto) {
-        if ( dto == null ) {
-            return null;
-        }
-
-        Goals goals = new Goals();
-
-        goals.setGoalsId( dto.getGoalsId() );
-        goals.setName( dto.getName() );
-        goals.setLanguage( dto.getLanguage() );
-
-        return goals;
-    }
-
-    @Override
-    public GoalsDto toDtoNotId(Goals goals) {
+    public GoalsDto toDtoNotBookId(Goals goals) {
         if ( goals == null ) {
             return null;
         }
@@ -55,8 +55,8 @@ public class GoalsMapperImpl extends GoalsMapper {
         GoalsDto goalsDto = new GoalsDto();
 
         goalsDto.setGoalsId( goals.getGoalsId() );
-        goalsDto.setName( goals.getName() );
         goalsDto.setLanguage( goals.getLanguage() );
+        goalsDto.setDescription( goals.getDescription() );
         goalsDto.setCreatedAt( goals.getCreatedAt() );
         goalsDto.setUpdatedAt( goals.getUpdatedAt() );
         goalsDto.setDeletedAt( goals.getDeletedAt() );

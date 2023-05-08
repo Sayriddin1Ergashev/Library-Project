@@ -5,19 +5,23 @@ import com.company.LibraryProject.model.Goals;
 import com.company.LibraryProject.service.BookService;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-
+import org.springframework.beans.factory.annotation.Autowired;
 
 @Mapper(componentModel = "spring")
 public abstract class GoalsMapper {
 
-
-    public abstract GoalsDto toDto(Goals goals);
+    @Autowired
+    protected BookService bookService;
+    @Autowired
+    protected BookMapper bookMapper;
 
     @Mapping(target = "createdAt", ignore = true)
     @Mapping(target = "updatedAt", ignore = true)
     @Mapping(target = "deletedAt", ignore = true)
-    public abstract Goals toEntity(GoalsDto dto);
+    public abstract Goals toEntity(GoalsDto goalsDto);
 
-
-    public abstract GoalsDto toDtoNotId(Goals goals);
+    public abstract GoalsDto toDto(Goals goals);
+    @Mapping(target = "bookId",ignore = true)
+    public abstract GoalsDto toDtoNotBookId(Goals goals);
+    //TODO: toDtoByNotOrdersBookId ni yaratdim sababi bookMapperda ishlatilgan ->bu yerda esa yuq ekan
 }

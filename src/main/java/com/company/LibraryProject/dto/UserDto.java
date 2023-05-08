@@ -23,7 +23,7 @@ public class UserDto {
     private String firstName;//(+)
     @NotBlank(message = "lastname cannot be null or empty")
     private String lastName; //(+)
-    @Email(message = "Email invalid")
+//    @Email(message = "Email invalid")
     private String email;    //(+)
   //  @NotBlank(message = "password cannot be null or empty")
  //   @Size(min = 6, max = 10, message = "password  invalid")
@@ -34,6 +34,7 @@ public class UserDto {
     @NotBlank(message = "phoneNumber cannot be null or empty")
     private String phoneNumber;//(+)
     private Set<CardDto> cards;
+    private Set<OrdersDto>orders;
     private Gender gender;
     private LocalDateTime birthdate;//(+)
     private LocalDateTime createdAt;
