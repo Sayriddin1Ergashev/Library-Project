@@ -12,7 +12,7 @@ public abstract class BookMapper {
 
     @Lazy
     @Autowired
-    protected AuthorsMapper authorsMapper;
+    protected AuthorMapper authorsMapper;
 
     @Lazy
     @Autowired
@@ -30,14 +30,14 @@ public abstract class BookMapper {
 
     //    @Mapping(target = "authorsDto", expression = "java(user.getCards().stream().map(cardMapper::toDtoNotUserId).collect(Collectors.toSet()))")
 //    public abstract BooksDto toDto(Book book);
-    @Mapping(target = "authorsDto",
+/*    @Mapping(target = "authorsDto",
             expression = "java(book.getAuthors().stream().map(authorsMapper::toDtoNotAuthorId).collect(Collectors.toSet()))")
     @Mapping(target = "imagesDto",
             expression = "java(book.getImages().stream().map(imagesMapper::toDtoNotBookId).collect(Collectors.toSet()))")
     @Mapping(target = "goalsDto",
             expression = "java(goalsMapper.toDtoNotBookId(book.getGoals()))")
     @Mapping(target = "publisherDto",
-            expression = "java(publisherMapper.toDtoNotBookId(book.getPublisher()))")
+            expression = "java(publisherMapper.toDtoNotBookId(book.getPublisher()))")*/
     public abstract BooksDto toDto(Book book);
 
 

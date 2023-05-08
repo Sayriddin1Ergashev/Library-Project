@@ -3,7 +3,7 @@ package com.company.LibraryProject.service.validation;
 
 import com.company.LibraryProject.dto.ErrorDto;
 import com.company.LibraryProject.dto.GoalsDto;
-import com.company.LibraryProject.repository.GoalsRepository;
+import com.company.LibraryProject.service.BookService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -20,7 +20,7 @@ public class GoalsValidate {
 
         List<ErrorDto> errors = new ArrayList<>();
 
-        if (booksService.getBook(goalsDto.getBookId()).getData == null){
+        if (booksService.getBook(goalsDto.getBookId()).getData() == null){
             errors.add(new ErrorDto("bookId", "Book is not found!"));
         }
 
