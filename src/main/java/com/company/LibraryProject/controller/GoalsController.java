@@ -8,7 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("Goals")
+@RequestMapping("goals")// TODO: G goals kichkina xarf qilib quydim
 @RequiredArgsConstructor
 public class GoalsController {
 

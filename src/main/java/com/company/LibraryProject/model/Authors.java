@@ -9,11 +9,11 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @Entity
-@Table(name = "author")
+@Table(name = "authors") // TODO s qolib kitibdi qushib quydim
 public class Authors {
     @Id
-    @Column(name = "author_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "author_id") // TODO s qolib kitibdi qushib quydim
     private Integer authorId;
     private String firstname;
     private String lastname;
@@ -21,4 +21,6 @@ public class Authors {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private LocalDateTime deletedAt;
+
+    private Integer bookId;  // TODO: xoato tashagani uchun qushdim
 }

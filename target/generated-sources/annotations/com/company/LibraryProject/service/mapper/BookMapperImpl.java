@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-05-06T17:25:21+0500",
+    date = "2023-05-08T17:20:32+0500",
     comments = "version: 1.5.3.Final, compiler: javac, environment: Java 20.0.1 (Oracle Corporation)"
 )
 @Component
@@ -52,11 +52,6 @@ public class BookMapperImpl extends BookMapper {
         booksDto.setCreatedAt( book.getCreatedAt() );
         booksDto.setUpdatedAt( book.getUpdatedAt() );
         booksDto.setDeletedAt( book.getDeletedAt() );
-
-        booksDto.setAuthorsDto( book.getAuthors().stream().map(authorsMapper::toDtoNotAuthorId).collect(Collectors.toSet()) );
-        booksDto.setImagesDto( book.getImages().stream().map(imagesMapper::toDtoNotBookId).collect(Collectors.toSet()) );
-        booksDto.setGoalsDto( goalsMapper.toDtoNotBookId(book.getGoals()) );
-        booksDto.setPublisherDto( publisherMapper.toDtoNotBookId(book.getPublisher()) );
 
         return booksDto;
     }

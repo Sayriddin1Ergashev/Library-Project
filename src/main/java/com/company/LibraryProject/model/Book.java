@@ -22,9 +22,9 @@ public class Book {
     private Integer page;
     private Integer amount;
     private LocalDate publisherAt;
-    @OneToMany(mappedBy = "booksId", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "bookId", cascade = CascadeType.ALL)  //TODO: BOOKS DAN s ni olib tashladim
     private Set<Authors> authors;
-    @OneToMany(mappedBy = "booksId", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "bookId", cascade = CascadeType.ALL)  //TODO: BOOKS DAN s ni olib tashladim
     private Set<Images> images;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "books_id", referencedColumnName = "books_id")
