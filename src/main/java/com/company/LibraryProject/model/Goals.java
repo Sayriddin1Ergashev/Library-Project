@@ -19,7 +19,7 @@ public class Goals {
     private String language;
     private String description;
     @Column(name = "books_id")
-    private Integer booksId;
+    private Integer bookId; //TODO: books dan s ni uchirdim DTOda yuq ekan
 
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;

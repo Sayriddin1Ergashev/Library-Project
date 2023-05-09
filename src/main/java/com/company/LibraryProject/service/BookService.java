@@ -43,7 +43,7 @@ public class BookService {
             return ResponseDto.<BooksDto>builder()
                     .success(true)
                     .message("Book successful created!")
-                    .data(dto)
+                    .data(bookMapper.toDto(book)) // TODO: dto berilgan ekan toDto berdim
                     .build();
         } catch (Exception e) {
             log.warn(String.format("Book while saving error :: %s", e.getMessage()));
@@ -77,7 +77,7 @@ public class BookService {
         if (!errors.isEmpty()) {
             return ResponseDto.<BooksDto>builder()
                     .message("Validation error")
-                    .data(dto)
+              //      .data(dto)    TODO: Kerak emas uchirdim
                     .errors(errors)
                     .code(-2)
                     .build();
@@ -96,13 +96,14 @@ public class BookService {
             Book book = bookMapper.toEntity(dto);
             book.setBookId(optional.get().getBookId());
             book.setCreatedAt(optional.get().getCreatedAt());
-            book.setDeletedAt(optional.get().getDeletedAt());
+         //   book.setDeletedAt(optional.get().getDeletedAt());  TODO: kerak emas uchirdim
             book.setUpdatedAt(LocalDateTime.now());
             bookRepository.save(book);
             log.info("Book successful updated!");
 
             return ResponseDto.<BooksDto>builder()
                     .success(true)
+                    .data(bookMapper.toDto(book)) // TODO: data quyilmagan ekan qushdim
                     .message("OK")
                     .build();
 
