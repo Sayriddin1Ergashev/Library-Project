@@ -15,7 +15,6 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 
 @Service
@@ -49,7 +48,7 @@ public class UserService {
             return ResponseDto.<UserDto>builder()
                     .success(true)
                     .message("User successful created!")
-                    .data(userMapper.toDto(user))
+                    .data(userMapper.toDtoByNotCards(user))
                     .build();
         } catch (Exception e) {
             log.warn(String.format("User while saving error :: %s", e.getMessage()));
@@ -59,7 +58,7 @@ public class UserService {
                     .build();
         }
     }
-
+//TODO: create va update metodlarini date sida  toDtoByNotCards metodini qaytardim :sababi
     public ResponseDto<UserDto> getUser(Integer userId) {
         Optional<User> optional = userRepository.findByUserIdAndDeletedAtIsNull(userId);
         if (optional.isEmpty()) {
@@ -108,7 +107,7 @@ public class UserService {
             return ResponseDto.<UserDto>builder()
                     .success(true)
                     .message("OK")
-                    .data(userMapper.toDto(user))
+                    .data(userMapper.toDtoByNotCards(user))
                     .build();
 
         } catch (Exception e) {

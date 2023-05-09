@@ -19,6 +19,7 @@ public class Images {
     private String type;
     private Integer size;
     private String token;
+    private Integer booksId;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private LocalDateTime deletedAt;

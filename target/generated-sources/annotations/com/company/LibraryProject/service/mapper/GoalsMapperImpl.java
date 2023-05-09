@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-05-09T11:48:19+0500",
+    date = "2023-05-08T16:04:46+0500",
     comments = "version: 1.5.3.Final, compiler: javac, environment: Java 20 (Oracle Corporation)"
 )
 @Component
@@ -30,6 +30,24 @@ public class GoalsMapperImpl extends GoalsMapper {
 
     @Override
     public GoalsDto toDto(Goals goals) {
+        if ( goals == null ) {
+            return null;
+        }
+
+        GoalsDto goalsDto = new GoalsDto();
+
+        goalsDto.setGoalsId( goals.getGoalsId() );
+        goalsDto.setLanguage( goals.getLanguage() );
+        goalsDto.setDescription( goals.getDescription() );
+        goalsDto.setCreatedAt( goals.getCreatedAt() );
+        goalsDto.setUpdatedAt( goals.getUpdatedAt() );
+        goalsDto.setDeletedAt( goals.getDeletedAt() );
+
+        return goalsDto;
+    }
+
+    @Override
+    public GoalsDto toDtoNotBookId(Goals goals) {
         if ( goals == null ) {
             return null;
         }

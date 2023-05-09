@@ -21,7 +21,6 @@ public class OrdersController {
         return ordersService.create(ordersDto);
     }
 
-    //localhost:8080/get/1
     @GetMapping(value = ("/get/{id}"))
     public ResponseDto<OrdersDto> get(@PathVariable("id") Integer ordersId) {
         return ordersService.get(ordersId);
