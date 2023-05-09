@@ -22,6 +22,9 @@ public class BookValidate {
         if(dto.getPage()<=0){
             errors.add(new ErrorDto("page", "Pages cannot be negative or zero"));
         }
+        if (bookRepository.existsByNameAndDeletedAtIsNull(dto.getName())){
+            errors.add(new ErrorDto("name", "This is book name already exist!"));
+        }
         return errors;
     }
 }

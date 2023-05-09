@@ -7,6 +7,7 @@ import com.company.LibraryProject.model.Card;
 import com.company.LibraryProject.model.Orders;
 import com.company.LibraryProject.model.User;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.LinkedHashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -15,11 +16,13 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-05-08T16:04:46+0500",
+    date = "2023-05-09T20:14:00+0500",
     comments = "version: 1.5.3.Final, compiler: javac, environment: Java 20 (Oracle Corporation)"
 )
 @Component
 public class UserMapperImpl extends UserMapper {
+
+    private final DateTimeFormatter dateTimeFormatter_yyyy_MM_dd_0159776256 = DateTimeFormatter.ofPattern( "yyyy-MM-dd" );
 
     @Override
     public User toEntity(UserDto dto) {
@@ -51,6 +54,15 @@ public class UserMapperImpl extends UserMapper {
 
         UserDto userDto = new UserDto();
 
+        if ( user.getCreatedAt() != null ) {
+            userDto.setCreatedAt( dateTimeFormatter_yyyy_MM_dd_0159776256.format( user.getCreatedAt() ) );
+        }
+        if ( user.getUpdatedAt() != null ) {
+            userDto.setUpdatedAt( dateTimeFormatter_yyyy_MM_dd_0159776256.format( user.getUpdatedAt() ) );
+        }
+        if ( user.getDeletedAt() != null ) {
+            userDto.setDeletedAt( dateTimeFormatter_yyyy_MM_dd_0159776256.format( user.getDeletedAt() ) );
+        }
         userDto.setUserId( user.getUserId() );
         userDto.setFirstName( user.getFirstName() );
         userDto.setLastName( user.getLastName() );
@@ -59,9 +71,6 @@ public class UserMapperImpl extends UserMapper {
         userDto.setPhoneNumber( user.getPhoneNumber() );
         userDto.setGender( user.getGender() );
         userDto.setBirthdate( user.getBirthdate() );
-        userDto.setCreatedAt( user.getCreatedAt() );
-        userDto.setUpdatedAt( user.getUpdatedAt() );
-        userDto.setDeletedAt( user.getDeletedAt() );
 
         userDto.setCards( user.getCards().stream().map(cardMapper::toDtoNotUserId).collect(Collectors.toSet()) );
         userDto.setOrders( user.getOrders().stream().map(ordersMapper::toDtoNotUserId).collect(Collectors.toSet()) );
@@ -77,6 +86,15 @@ public class UserMapperImpl extends UserMapper {
 
         UserDto userDto = new UserDto();
 
+        if ( user.getCreatedAt() != null ) {
+            userDto.setCreatedAt( dateTimeFormatter_yyyy_MM_dd_0159776256.format( user.getCreatedAt() ) );
+        }
+        if ( user.getUpdatedAt() != null ) {
+            userDto.setUpdatedAt( dateTimeFormatter_yyyy_MM_dd_0159776256.format( user.getUpdatedAt() ) );
+        }
+        if ( user.getDeletedAt() != null ) {
+            userDto.setDeletedAt( dateTimeFormatter_yyyy_MM_dd_0159776256.format( user.getDeletedAt() ) );
+        }
         userDto.setUserId( user.getUserId() );
         userDto.setFirstName( user.getFirstName() );
         userDto.setLastName( user.getLastName() );
@@ -85,9 +103,6 @@ public class UserMapperImpl extends UserMapper {
         userDto.setPhoneNumber( user.getPhoneNumber() );
         userDto.setGender( user.getGender() );
         userDto.setBirthdate( user.getBirthdate() );
-        userDto.setCreatedAt( user.getCreatedAt() );
-        userDto.setUpdatedAt( user.getUpdatedAt() );
-        userDto.setDeletedAt( user.getDeletedAt() );
 
         return userDto;
     }
@@ -103,9 +118,15 @@ public class UserMapperImpl extends UserMapper {
         card.setCardName( cardDto.getCardName() );
         card.setCardNumber( cardDto.getCardNumber() );
         card.setUserId( cardDto.getUserId() );
-        card.setCreatedAt( cardDto.getCreatedAt() );
-        card.setUpdatedAt( cardDto.getUpdatedAt() );
-        card.setDeletedAt( cardDto.getDeletedAt() );
+        if ( cardDto.getCreatedAt() != null ) {
+            card.setCreatedAt( LocalDateTime.parse( cardDto.getCreatedAt() ) );
+        }
+        if ( cardDto.getUpdatedAt() != null ) {
+            card.setUpdatedAt( LocalDateTime.parse( cardDto.getUpdatedAt() ) );
+        }
+        if ( cardDto.getDeletedAt() != null ) {
+            card.setDeletedAt( LocalDateTime.parse( cardDto.getDeletedAt() ) );
+        }
 
         return card;
     }

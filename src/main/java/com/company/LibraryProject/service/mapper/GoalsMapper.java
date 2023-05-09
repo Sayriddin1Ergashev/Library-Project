@@ -2,26 +2,22 @@ package com.company.LibraryProject.service.mapper;
 
 import com.company.LibraryProject.dto.GoalsDto;
 import com.company.LibraryProject.model.Goals;
-import com.company.LibraryProject.service.BookService;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.springframework.beans.factory.annotation.Autowired;
 
 @Mapper(componentModel = "spring")
-public abstract class GoalsMapper {
-
-    @Autowired
-    protected BookService bookService;
-    @Autowired
-    protected BookMapper bookMapper;
-
+public  interface GoalsMapper {
     @Mapping(target = "createdAt", ignore = true)
     @Mapping(target = "updatedAt", ignore = true)
     @Mapping(target = "deletedAt", ignore = true)
-    public abstract Goals toEntity(GoalsDto goalsDto);
-
-    public abstract GoalsDto toDto(Goals goals);
+     Goals toEntity(GoalsDto goalsDto);
+    @Mapping(target = "createdAt", dateFormat = "yyyy-MM-dd")
+    @Mapping(target = "updatedAt", dateFormat = "yyyy-MM-dd")
+    @Mapping(target = "deletedAt", dateFormat = "yyyy-MM-dd")
+     GoalsDto toDto(Goals goals);
     @Mapping(target = "bookId",ignore = true)
-    public abstract GoalsDto toDtoNotBookId(Goals goals);
-    //TODO: toDtoByNotOrdersBookId ni yaratdim sababi bookMapperda ishlatilgan ->bu yerda esa yuq ekan
+    @Mapping(target = "createdAt", dateFormat = "yyyy-MM-dd")
+    @Mapping(target = "updatedAt", dateFormat = "yyyy-MM-dd")
+    @Mapping(target = "deletedAt", dateFormat = "yyyy-MM-dd")
+     GoalsDto toDtoNotBookId(Goals goals);
 }

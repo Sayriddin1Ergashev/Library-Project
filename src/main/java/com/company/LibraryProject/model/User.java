@@ -6,13 +6,12 @@ import lombok.Setter;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Set;
 
 @Getter
 @Setter
 @Entity
-@Table(name = "users")
+@Table(name = ("users"))
 public class User {
     @Id
     @GeneratedValue(generator = "user_seq_id")
@@ -34,20 +33,10 @@ public class User {
     private LocalDateTime updatedAt;
     @Column(name = ("deleted_at"))
     private LocalDateTime deletedAt;
-
-    //One users to many cars
     @OneToMany(mappedBy = "userId", cascade = CascadeType.ALL)
     private Set<Card> cards;
-
     @OneToMany(mappedBy = "userId", cascade = CascadeType.ALL)
     private Set<Orders> orders;
-
     @Enumerated(EnumType.STRING)
     private Gender gender;
-
-    //1: ManyToMany
-    //2: ManyToOne
-    //3: OneToMany
-    //4: OneToOne
-
 }

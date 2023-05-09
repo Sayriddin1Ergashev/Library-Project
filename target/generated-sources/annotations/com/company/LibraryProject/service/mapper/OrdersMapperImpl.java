@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-05-08T16:04:46+0500",
+    date = "2023-05-09T20:13:43+0500",
     comments = "version: 1.5.3.Final, compiler: javac, environment: Java 20 (Oracle Corporation)"
 )
 @Component
@@ -76,9 +76,8 @@ public class OrdersMapperImpl extends OrdersMapper {
             ordersDto.setDeletedAt( dateTimeFormatter_yyyy_MM_dd_0159776256.format( orders.getDeletedAt() ) );
         }
         ordersDto.setOrdersId( orders.getOrdersId() );
+        ordersDto.setUserId( orders.getUserId() );
         ordersDto.setTotal( orders.getTotal() );
-
-        ordersDto.setUserDto( userMapper.toDtoByNotCards(userRepository.findByUserIdAndDeletedAtIsNull(orders.getUserId()).get()) );
 
         return ordersDto;
     }

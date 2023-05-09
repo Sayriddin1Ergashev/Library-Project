@@ -129,7 +129,7 @@ public class OrdersService {
             return ResponseDto.<OrdersDto>builder()
                     .success(true)
                     .message(String.format("This is orders %d id successful deleted!",orders.getOrdersId()))
-                    .data(ordersMapper.toDto(orders))
+                    .data(ordersMapper.toDtoByNotOrdersBook(orders))
                     .build();
         } catch (Exception e) {
             log.error(String.format("Orders while saving error :: %s", e.getMessage()));

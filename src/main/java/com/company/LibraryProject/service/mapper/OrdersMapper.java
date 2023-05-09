@@ -36,9 +36,8 @@ public abstract class OrdersMapper {
     @Mapping(target = "createdAt", dateFormat = "yyyy-MM-dd")
     @Mapping(target = "updatedAt", dateFormat = "yyyy-MM-dd")
     @Mapping(target = "deletedAt", dateFormat = "yyyy-MM-dd")
-    @Mapping(target = "userId", ignore = true)
     @Mapping(target = "ordersBooksDto", ignore = true)
-    @Mapping(target = "userDto", expression = "java(userMapper.toDtoByNotCards(userRepository.findByUserIdAndDeletedAtIsNull(orders.getUserId()).get()))")
+    @Mapping(target = "userDto",ignore = true)
     public abstract OrdersDto toDtoByNotOrdersBook(Orders orders);
     @Mapping(target = "createdAt", dateFormat = "yyyy-MM-dd")
     @Mapping(target = "updatedAt", dateFormat = "yyyy-MM-dd")

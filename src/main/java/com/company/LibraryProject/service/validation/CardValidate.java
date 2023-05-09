@@ -24,7 +24,6 @@ public class CardValidate {
         if (cardRepository.existsByCardNumber(dto.getCardNumber())){
             errors.add(new ErrorDto("cardNumber","Card number already exist."));
         }
-        //....
         return errors;
     }
 }

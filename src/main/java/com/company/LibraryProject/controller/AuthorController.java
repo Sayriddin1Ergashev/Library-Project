@@ -7,8 +7,10 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
-@RequestMapping("authors")
+@RequestMapping("author")
 @RequiredArgsConstructor
 public class AuthorController {
     private final AuthorService authorService;
@@ -32,4 +34,10 @@ public class AuthorController {
     public ResponseDto<AuthorDto> deleteAuthor(@PathVariable("id") Integer authorId) {
         return authorService.delete(authorId);
     }
+
+    @GetMapping("/get-all")
+    public ResponseDto<List<AuthorDto>> getAllAuthors() {
+        return authorService.getAll();
+    }
+
 }

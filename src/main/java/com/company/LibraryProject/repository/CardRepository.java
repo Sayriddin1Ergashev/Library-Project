@@ -4,18 +4,12 @@ import com.company.LibraryProject.model.Card;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
 import java.util.Optional;
 
 @Repository
 public interface CardRepository extends JpaRepository<Card, Integer> {
 
-    //select cd from card as cd where cd.card_id = ? and cd.deleted_at is null
     Optional<Card> findByCardIdAndDeletedAtIsNull(Integer id);
-
-    //List<Card> findAllByUsers_UserIdAndDeletedAtIsNull(Integer userId);
-    List<Card> findAllByUserIdAndDeletedAtIsNull(Integer userId);
-
-    boolean existsByCardNumber(String cardNumber);
+    boolean existsByCardNumber(Long cardNumber);
 
 }

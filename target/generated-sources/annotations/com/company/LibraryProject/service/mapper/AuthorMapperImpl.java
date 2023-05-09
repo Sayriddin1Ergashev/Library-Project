@@ -2,16 +2,19 @@ package com.company.LibraryProject.service.mapper;
 
 import com.company.LibraryProject.dto.AuthorDto;
 import com.company.LibraryProject.model.Authors;
+import java.time.format.DateTimeFormatter;
 import javax.annotation.processing.Generated;
 import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-05-08T16:04:47+0500",
+    date = "2023-05-09T20:14:00+0500",
     comments = "version: 1.5.3.Final, compiler: javac, environment: Java 20 (Oracle Corporation)"
 )
 @Component
-public class AuthorMapperImpl extends AuthorMapper {
+public class AuthorMapperImpl implements AuthorMapper {
+
+    private final DateTimeFormatter dateTimeFormatter_yyyy_MM_dd_0159776256 = DateTimeFormatter.ofPattern( "yyyy-MM-dd" );
 
     @Override
     public Authors toEntity(AuthorDto dto) {
@@ -27,9 +30,7 @@ public class AuthorMapperImpl extends AuthorMapper {
         authors.setFirstname( dto.getFirstname() );
         authors.setLastname( dto.getLastname() );
         authors.setAge( dto.getAge() );
-        authors.setCreatedAt( dto.getCreatedAt() );
-        authors.setUpdatedAt( dto.getUpdatedAt() );
-        authors.setDeletedAt( dto.getDeletedAt() );
+        authors.setBookId( dto.getBookId() );
 
         return authors;
     }
@@ -42,15 +43,22 @@ public class AuthorMapperImpl extends AuthorMapper {
 
         AuthorDto authorDto = new AuthorDto();
 
+        if ( authors.getCreatedAt() != null ) {
+            authorDto.setCreatedAt( dateTimeFormatter_yyyy_MM_dd_0159776256.format( authors.getCreatedAt() ) );
+        }
+        if ( authors.getUpdatedAt() != null ) {
+            authorDto.setUpdatedAt( dateTimeFormatter_yyyy_MM_dd_0159776256.format( authors.getUpdatedAt() ) );
+        }
+        if ( authors.getDeletedAt() != null ) {
+            authorDto.setDeletedAt( dateTimeFormatter_yyyy_MM_dd_0159776256.format( authors.getDeletedAt() ) );
+        }
         if ( authors.getAuthorId() != null ) {
             authorDto.setAuthorId( String.valueOf( authors.getAuthorId() ) );
         }
         authorDto.setFirstname( authors.getFirstname() );
         authorDto.setLastname( authors.getLastname() );
         authorDto.setAge( authors.getAge() );
-        authorDto.setCreatedAt( authors.getCreatedAt() );
-        authorDto.setUpdatedAt( authors.getUpdatedAt() );
-        authorDto.setDeletedAt( authors.getDeletedAt() );
+        authorDto.setBookId( authors.getBookId() );
 
         return authorDto;
     }
@@ -63,12 +71,46 @@ public class AuthorMapperImpl extends AuthorMapper {
 
         AuthorDto authorDto = new AuthorDto();
 
+        if ( authors.getCreatedAt() != null ) {
+            authorDto.setCreatedAt( dateTimeFormatter_yyyy_MM_dd_0159776256.format( authors.getCreatedAt() ) );
+        }
+        if ( authors.getUpdatedAt() != null ) {
+            authorDto.setUpdatedAt( dateTimeFormatter_yyyy_MM_dd_0159776256.format( authors.getUpdatedAt() ) );
+        }
+        if ( authors.getDeletedAt() != null ) {
+            authorDto.setDeletedAt( dateTimeFormatter_yyyy_MM_dd_0159776256.format( authors.getDeletedAt() ) );
+        }
         authorDto.setFirstname( authors.getFirstname() );
         authorDto.setLastname( authors.getLastname() );
         authorDto.setAge( authors.getAge() );
-        authorDto.setCreatedAt( authors.getCreatedAt() );
-        authorDto.setUpdatedAt( authors.getUpdatedAt() );
-        authorDto.setDeletedAt( authors.getDeletedAt() );
+        authorDto.setBookId( authors.getBookId() );
+
+        return authorDto;
+    }
+
+    @Override
+    public AuthorDto toDtoByNotBook(Authors author) {
+        if ( author == null ) {
+            return null;
+        }
+
+        AuthorDto authorDto = new AuthorDto();
+
+        if ( author.getCreatedAt() != null ) {
+            authorDto.setCreatedAt( dateTimeFormatter_yyyy_MM_dd_0159776256.format( author.getCreatedAt() ) );
+        }
+        if ( author.getUpdatedAt() != null ) {
+            authorDto.setUpdatedAt( dateTimeFormatter_yyyy_MM_dd_0159776256.format( author.getUpdatedAt() ) );
+        }
+        if ( author.getDeletedAt() != null ) {
+            authorDto.setDeletedAt( dateTimeFormatter_yyyy_MM_dd_0159776256.format( author.getDeletedAt() ) );
+        }
+        if ( author.getAuthorId() != null ) {
+            authorDto.setAuthorId( String.valueOf( author.getAuthorId() ) );
+        }
+        authorDto.setFirstname( author.getFirstname() );
+        authorDto.setLastname( author.getLastname() );
+        authorDto.setAge( author.getAge() );
 
         return authorDto;
     }

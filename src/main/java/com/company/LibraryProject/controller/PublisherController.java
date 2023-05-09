@@ -7,9 +7,11 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("publishers")
+@RequestMapping("publisher")
 public class PublisherController {
     private final PublisherService publisherService;
 
@@ -28,5 +30,9 @@ public class PublisherController {
     @DeleteMapping("/delete/{id}")
     public ResponseDto<PublisherDto> delete(@PathVariable Integer id){
         return publisherService.deletePublisher(id);
+    }
+    @GetMapping("/get-all")
+    public ResponseDto<List<PublisherDto>> getAll(){
+        return publisherService.getAllPublisher();
     }
 }

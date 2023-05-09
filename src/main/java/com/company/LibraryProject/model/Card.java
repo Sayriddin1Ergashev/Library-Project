@@ -13,14 +13,15 @@ import java.time.LocalDateTime;
 public class Card {
     @Id
     @Column(name = ("card_id"))
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(generator = "card_seq_id")
+    @SequenceGenerator(name = "card_seq_id",sequenceName = "card_seq_id",allocationSize = 1)
     private Integer cardId;
 
     @Column(name = ("card_name"))
     private String cardName;
 
     @Column(name = ("card_number"))
-    private String cardNumber;
+    private Long cardNumber;
 
     @Column(name = ("user_id"))
     private Integer userId;

@@ -35,6 +35,7 @@
 /home/sardor/programming/Library-Project/src/main/java/com/company/LibraryProject/repository/CardRepository.java
 /home/sardor/programming/Library-Project/src/main/java/com/company/LibraryProject/dto/ImagesDto.java
 /home/sardor/programming/Library-Project/src/main/java/com/company/LibraryProject/controller/CardController.java
+/home/sardor/programming/Library-Project/src/main/java/com/company/LibraryProject/service/validation/AuthorValidate.java
 /home/sardor/programming/Library-Project/src/main/java/com/company/LibraryProject/dto/ErrorDto.java
 /home/sardor/programming/Library-Project/src/main/java/com/company/LibraryProject/dto/GoalsDto.java
 /home/sardor/programming/Library-Project/src/main/java/com/company/LibraryProject/dto/OrdersBookDto.java

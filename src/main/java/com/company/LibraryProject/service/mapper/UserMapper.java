@@ -23,12 +23,17 @@ public abstract class UserMapper {
     @Mapping(target = "updatedAt", ignore = true)
     @Mapping(target = "deletedAt", ignore = true)
     public abstract User toEntity(UserDto dto);
-
+    @Mapping(target = "createdAt", dateFormat = "yyyy-MM-dd")
+    @Mapping(target = "updatedAt", dateFormat = "yyyy-MM-dd")
+    @Mapping(target = "deletedAt", dateFormat = "yyyy-MM-dd")
     @Mapping(target = "cards", expression = "java(user.getCards().stream().map(cardMapper::toDtoNotUserId).collect(Collectors.toSet()))")
     @Mapping(target = "orders", expression = "java(user.getOrders().stream().map(ordersMapper::toDtoNotUserId).collect(Collectors.toSet()))")
     public abstract UserDto toDto(User user);
     @Mapping(target = "cards",ignore = true)
     @Mapping(target = "orders",ignore = true)
+    @Mapping(target = "createdAt", dateFormat = "yyyy-MM-dd")
+    @Mapping(target = "updatedAt", dateFormat = "yyyy-MM-dd")
+    @Mapping(target = "deletedAt", dateFormat = "yyyy-MM-dd")
     public abstract UserDto toDtoByNotCards(User user);
 
 

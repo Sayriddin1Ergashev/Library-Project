@@ -23,5 +23,4 @@ public interface ImagesMapper {
     @Mapping(target = "deletedAt", dateFormat = "yyyy-MM-dd")
     @Mapping(target = "imageId",ignore = true)
     ImagesDto toDtoNotBookId(Images images);
-    //TODO:toDtoNotBookId shu method bookMapperda ishlatilgan ekan shuning uchun yaratdaim.
 }

@@ -2,7 +2,6 @@ package com.company.LibraryProject.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -18,8 +17,8 @@ public class ImagesDto {
     private Integer size;
     @NotBlank(message = "Token cannot be empty or null!")
     private String token;
+    private BooksDto booksDto;
     private Integer booksId;
-    private BooksDto books;
     private String createdAt;
     private String updatedAt;
     private String deletedAt;

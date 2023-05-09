@@ -141,7 +141,7 @@ public class OrdersBookService {
                     .success(true)
                     .code(0)
                     .message(String.format("This is ordersBook %d id successful deleted!",ordersBook.getOrdersBookId()))
-                    .data(orderBookMapper.toDto(ordersBook))
+                    .data(orderBookMapper.toDtoByNotOrdersId(ordersBook))
                     .build();
         }catch (Exception e){
             return ResponseDto.<OrdersBookDto>builder()

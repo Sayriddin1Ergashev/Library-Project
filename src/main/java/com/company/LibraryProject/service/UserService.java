@@ -31,6 +31,7 @@ public class UserService {
     public ResponseDto<UserDto> createUser(UserDto dto) {
         List<ErrorDto> errors = userValidate.validate(dto);
         if (!errors.isEmpty()) {
+            log.warn("Validate error!");
             return ResponseDto.<UserDto>builder()
                     .message("Validation error")
                     .data(dto)
@@ -38,13 +39,11 @@ public class UserService {
                     .code(-2)
                     .build();
         }
-
         try {
             User user = userMapper.toEntity(dto);
             user.setCreatedAt(LocalDateTime.now());
             userRepository.save(user);
             log.info(String.format("Created user by id %d successfully!", user.getUserId()));
-
             return ResponseDto.<UserDto>builder()
                     .success(true)
                     .message("User successful created!")
@@ -58,16 +57,16 @@ public class UserService {
                     .build();
         }
     }
-//TODO: create va update metodlarini date sida  toDtoByNotCards metodini qaytardim :sababi
     public ResponseDto<UserDto> getUser(Integer userId) {
         Optional<User> optional = userRepository.findByUserIdAndDeletedAtIsNull(userId);
         if (optional.isEmpty()) {
+            log.warn("User is not found!");
             return ResponseDto.<UserDto>builder()
                     .message("User is not found!")
                     .code(-3)
-                    .data(null)
                     .build();
         }
+        log.info("OK");
         return ResponseDto.<UserDto>builder()
                 .success(true)
                 .message("OK")
@@ -78,6 +77,7 @@ public class UserService {
     public ResponseDto<UserDto> updateUser(UserDto dto, Integer userId) {
         List<ErrorDto> errors = userValidate.validate(dto);
         if (!errors.isEmpty()) {
+            log.warn("Validate error!");
             return ResponseDto.<UserDto>builder()
                     .message("Validation error")
                     .data(dto)
@@ -88,6 +88,7 @@ public class UserService {
 
         Optional<User> optional = userRepository.findByUserIdAndDeletedAtIsNull(userId);
         if (optional.isEmpty()) {
+            log.warn("User is not found!");
             return ResponseDto.<UserDto>builder()
                     .message("User is not found!")
                     .code(-3)
@@ -95,7 +96,6 @@ public class UserService {
         }
 
         try {
-
             User user = userMapper.toEntity(dto);
             user.setUserId(optional.get().getUserId());
             user.setCreatedAt(optional.get().getCreatedAt());
@@ -103,10 +103,10 @@ public class UserService {
             user.setUpdatedAt(LocalDateTime.now());
             userRepository.save(user);
             log.info("User successful updated!");
-
             return ResponseDto.<UserDto>builder()
                     .success(true)
-                    .message("OK")
+                    .message("User successful updated!")
+                    .code(0)
                     .data(userMapper.toDtoByNotCards(user))
                     .build();
 
@@ -122,6 +122,7 @@ public class UserService {
     public ResponseDto<UserDto> deleteUser(Integer userId) {
         Optional<User> optional = userRepository.findByUserIdAndDeletedAtIsNull(userId);
         if (optional.isEmpty()) {
+            log.warn("User is not found!");
             return ResponseDto.<UserDto>builder()
                     .message("User is not found!")
                     .code(-3)
@@ -132,13 +133,11 @@ public class UserService {
             user.setDeletedAt(LocalDateTime.now());
             userRepository.save(user);
             log.info("User successful deleted!");
-
             return ResponseDto.<UserDto>builder()
-                    .message("OK")
+                    .message("User successful deleted!")
                     .success(true)
-                    .data(userMapper.toDto(user))
+                    .data(userMapper.toDtoByNotCards(user))
                     .build();
-
         } catch (Exception e) {
             log.warn(String.format("User while saving error :: %s", e.getMessage()));
             return ResponseDto.<UserDto>builder()
@@ -147,22 +146,15 @@ public class UserService {
                     .build();
         }
     }
-
     public ResponseDto<List<UserDto>> getAll() {
-        List<UserDto> userList = userRepository.findAll()
-                .stream()
-                .map(userMapper::toDto)
-                .toList();
-        if (userList.isEmpty()) {
-            return ResponseDto.<List<UserDto>>builder()
-                    .message("Users is not found!")
-                    .code(-3)
-                    .build();
-        }
+        log.info("Ok");
         return ResponseDto.<List<UserDto>>builder()
                 .success(true)
                 .message("OK")
-                .data(userList)
+                .data(userRepository.findAll()
+                        .stream()
+                        .map(userMapper::toDto)
+                        .toList())
                 .build();
     }
 }

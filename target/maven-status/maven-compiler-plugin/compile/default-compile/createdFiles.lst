@@ -63,6 +63,7 @@ com/company/LibraryProject/service/mapper/ImagesMapperImpl.class
 com/company/LibraryProject/controller/CardController.class
 com/company/LibraryProject/model/Publisher.class
 com/company/LibraryProject/service/mapper/OrdersMapperImpl.class
+com/company/LibraryProject/service/mapper/PublisherMapperImpl.class
 com/company/LibraryProject/dto/ErrorDto.class
 com/company/LibraryProject/dto/UserDto.class
 com/company/LibraryProject/repository/PublisherRepository.class
@@ -72,5 +73,6 @@ com/company/LibraryProject/service/validation/BookValidate.class
 com/company/LibraryProject/repository/CardRepository.class
 com/company/LibraryProject/repository/OrdersRepository.class
 com/company/LibraryProject/repository/ImagesRepository.class
+com/company/LibraryProject/service/validation/AuthorValidate.class
 com/company/LibraryProject/service/CardService.class
 com/company/LibraryProject/service/mapper/OrdersMapper.class

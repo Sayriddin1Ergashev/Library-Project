@@ -9,4 +9,5 @@ import java.util.Optional;
 @Repository
 public interface PublisherRepository extends JpaRepository<Publisher, Integer> {
     Optional<Publisher> findByPublisherIdAndDeletedAtIsNull(Integer id);
+    Boolean existsByLocationAndDeletedAtIsNull(String location);
 }

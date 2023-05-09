@@ -26,6 +26,7 @@ public class BookService {
     public ResponseDto<BooksDto> createBook(BooksDto dto) {
         List<ErrorDto> errors = bookValidate.validate(dto);
         if (!errors.isEmpty()) {
+            log.warn("Validate error!");
             return ResponseDto.<BooksDto>builder()
                     .message("Validation error")
                     .data(dto)
@@ -39,31 +40,29 @@ public class BookService {
             book.setCreatedAt(LocalDateTime.now());
             bookRepository.save(book);
             log.info(String.format("Created book by id %d successfully!", book.getBookId()));
-
             return ResponseDto.<BooksDto>builder()
                     .success(true)
                     .message("Book successful created!")
-                    .data(bookMapper.toDto(book)) // TODO: dto berilgan ekan toDto berdim
+                    .data(bookMapper.toDtoByNotOrdersBookId(book))
                     .build();
         } catch (Exception e) {
             log.warn(String.format("Book while saving error :: %s", e.getMessage()));
             return ResponseDto.<BooksDto>builder()
                     .message("Book while saving error :: " + e.getMessage())
-                    .code(-1)
+                    .code(-3)
                     .build();
         }
     }
-
-
     public ResponseDto<BooksDto> getBook(Integer bookId) {
         Optional<Book> optional = bookRepository.findByBookIdAndDeletedAtIsNull(bookId);
         if (optional.isEmpty()) {
+            log.warn(String.format("This is book %d id not found!",bookId));
             return ResponseDto.<BooksDto>builder()
-                    .message("Book is not found!")
-                    .code(-3)
-                    .data(null)
+                    .message(String.format("This is book %d id not found!",bookId))
+                    .code(-1)
                     .build();
         }
+        log.info("Ok");
         return ResponseDto.<BooksDto>builder()
                 .success(true)
                 .message("OK")
@@ -75,38 +74,34 @@ public class BookService {
     public ResponseDto<BooksDto> updateBook(BooksDto dto, Integer bookId) {
         List<ErrorDto> errors = bookValidate.validate(dto);
         if (!errors.isEmpty()) {
+            log.warn("Validation error!");
             return ResponseDto.<BooksDto>builder()
-                    .message("Validation error")
-              //      .data(dto)    TODO: Kerak emas uchirdim
+                    .message("Validation error!")
                     .errors(errors)
                     .code(-2)
                     .build();
         }
-
         Optional<Book> optional = bookRepository.findByBookIdAndDeletedAtIsNull(bookId);
         if (optional.isEmpty()) {
+            log.warn("Book is not found!");
             return ResponseDto.<BooksDto>builder()
                     .message("Book is not found!")
                     .code(-3)
                     .build();
         }
-
         try {
-
             Book book = bookMapper.toEntity(dto);
             book.setBookId(optional.get().getBookId());
             book.setCreatedAt(optional.get().getCreatedAt());
-         //   book.setDeletedAt(optional.get().getDeletedAt());  TODO: kerak emas uchirdim
+            book.setDeletedAt(optional.get().getDeletedAt());
             book.setUpdatedAt(LocalDateTime.now());
             bookRepository.save(book);
             log.info("Book successful updated!");
-
             return ResponseDto.<BooksDto>builder()
                     .success(true)
-                    .data(bookMapper.toDto(book)) // TODO: data quyilmagan ekan qushdim
+                    .data(bookMapper.toDtoByNotOrdersBookId(book))
                     .message("OK")
                     .build();
-
         } catch (Exception e) {
             log.warn(String.format("Book while saving error :: %s", e.getMessage()));
             return ResponseDto.<BooksDto>builder()
@@ -115,11 +110,10 @@ public class BookService {
                     .build();
         }
     }
-
-
     public ResponseDto<BooksDto> deleteBook(Integer bookId) {
         Optional<Book> optional = bookRepository.findByBookIdAndDeletedAtIsNull(bookId);
         if (optional.isEmpty()) {
+            log.warn("Book is not found!");
             return ResponseDto.<BooksDto>builder()
                     .message("Book is not found!")
                     .code(-3)
@@ -130,13 +124,11 @@ public class BookService {
             book.setDeletedAt(LocalDateTime.now());
             bookRepository.save(book);
             log.info("Book successful deleted!");
-
             return ResponseDto.<BooksDto>builder()
                     .message("OK")
                     .success(true)
-                    .data(bookMapper.toDto(book))
+                    .data(bookMapper.toDtoByNotOrdersBookId(book))
                     .build();
-
         } catch (Exception e) {
             log.warn(String.format("Book while saving error :: %s", e.getMessage()));
             return ResponseDto.<BooksDto>builder()
@@ -144,5 +136,14 @@ public class BookService {
                     .code(-1)
                     .build();
         }
+    }
+    public ResponseDto<List<BooksDto>> getAllBook() {
+        log.info("OK");
+        return ResponseDto.<List<BooksDto>>builder()
+                .message("OK")
+                .code(0)
+                .success(true)
+                .data(bookRepository.findAll().stream().map(bookMapper::toDto).toList())
+                .build();
     }
 }

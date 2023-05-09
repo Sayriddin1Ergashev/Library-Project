@@ -6,12 +6,13 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("book")
 @RequiredArgsConstructor
 public class BookController {
     private final BookService bookService;
-
     @PostMapping("/create")
     public ResponseDto<BooksDto> create(@Valid @RequestBody BooksDto dto) {
         return bookService.createBook(dto);
@@ -23,13 +24,16 @@ public class BookController {
     }
 
     @PutMapping("/update/{id}")
-    public ResponseDto<BooksDto> update(@Valid @RequestBody BooksDto dto,  // TODO: @Valid quyilmagan ekan
+    public ResponseDto<BooksDto> update(@Valid @RequestBody BooksDto dto,
                                         @PathVariable("id") Integer bookId) {
         return bookService.updateBook(dto, bookId);
     }
-
     @DeleteMapping("/delete/{id}")
     public ResponseDto<BooksDto> delete(@PathVariable("id") Integer bookId) {
         return bookService.deleteBook(bookId);
+    }
+    @GetMapping("/get-all")
+    public ResponseDto<List<BooksDto>> getAll() {
+        return bookService.getAllBook();
     }
 }

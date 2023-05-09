@@ -22,8 +22,4 @@ public class OrdersBook {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private LocalDateTime deletedAt;
-    // ordersBookId   add in Book.class
-
-
-
 }

@@ -7,8 +7,10 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
-@RequestMapping("users")
+@RequestMapping("user")
 @RequiredArgsConstructor
 public class UserController {
 
@@ -33,5 +35,9 @@ public class UserController {
     @DeleteMapping(value = ("/delete/{id}"))
     public ResponseDto<UserDto> deleteUser(@PathVariable("id") Integer userId) {
         return userService.deleteUser(userId);
+    }
+    @GetMapping(value = ("/get-all"))
+    public ResponseDto<List<UserDto>> getAllUser() {
+        return userService.getAll();
     }
 }

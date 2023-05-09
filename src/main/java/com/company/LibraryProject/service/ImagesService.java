@@ -25,14 +25,13 @@ public class ImagesService {
     public ResponseDto<ImagesDto> create(ImagesDto imagesDto) {
         List<ErrorDto> errors=this.imageValidate.validate(imagesDto);
         if (!errors.isEmpty()){
+            log.warn("Validate error!");
             return ResponseDto.<ImagesDto>builder()
                     .message("Validate error!")
                     .code(-2)
-                    .success(false)
                     .data(imagesDto)
                     .errors(errors)
                     .build();
-
         }
         try {
             Images images = imageMapper.toEntity(imagesDto);
@@ -43,9 +42,10 @@ public class ImagesService {
                     .message(String.format("This is image %d id successful created!", images.getImageId()))
                     .code(0)
                     .success(true)
-                    .data(imageMapper.toDto(images))
+                    .data(imageMapper.toDtoNotBookId(images))
                     .build();
         } catch (Exception e) {
+            log.error(String.format("Image while saving error %s", e.getMessage()));
             return ResponseDto.<ImagesDto>builder()
                     .message(String.format("Image while saving error %s", e.getMessage()))
                     .code(-3)
@@ -56,11 +56,13 @@ public class ImagesService {
     public ResponseDto<ImagesDto> get(Integer id) {
         Optional<Images> optional = imageRepository.findByImageIdAndDeletedAtIsNull(id);
         if (optional.isEmpty()) {
+            log.warn(String.format("This is image %d id not found!", id));
             return ResponseDto.<ImagesDto>builder()
                     .message(String.format("This is image %d id not found!", id))
                     .code(-1)
                     .build();
         }
+        log.info("OK");
         return ResponseDto.<ImagesDto>builder()
                 .message("Ok")
                 .code(0)
@@ -68,10 +70,10 @@ public class ImagesService {
                 .data(imageMapper.toDto(optional.get()))
                 .build();
     }
-
     public ResponseDto<ImagesDto> update(Integer id, ImagesDto imageDto) {
         List<ErrorDto>errors=this.imageValidate.validate(imageDto);
         if (!errors.isEmpty()){
+            log.warn("Validate error!");
             return ResponseDto.<ImagesDto>builder()
                     .message("Validate error!")
                     .code(-2)
@@ -79,10 +81,10 @@ public class ImagesService {
                     .data(imageDto)
                     .errors(errors)
                     .build();
-
         }
         Optional<Images> optional = imageRepository.findByImageIdAndDeletedAtIsNull(id);
         if (optional.isEmpty()) {
+            log.warn(String.format("This is image %d id not found!", id));
             return ResponseDto.<ImagesDto>builder()
                     .message(String.format("This is image %d id not found!", id))
                     .code(-1)
@@ -92,6 +94,7 @@ public class ImagesService {
             Images images = imageMapper.toEntity(imageDto);
             images.setUpdatedAt(LocalDateTime.now());
             images.setCreatedAt(optional.get().getCreatedAt());
+            images.setDeletedAt(optional.get().getDeletedAt());
             images.setImageId(optional.get().getImageId());
             this.imageRepository.save(images);
             log.info(String.format("This is image %d id successful updated!",images.getImageId()));
@@ -99,9 +102,10 @@ public class ImagesService {
                     .message(String.format("This is image %d id successful updated!",images.getImageId()))
                     .code(0)
                     .success(true)
-                    .data(imageMapper.toDto(images))
+                    .data(imageMapper.toDtoNotBookId(images))
                     .build();
         } catch (Exception e) {
+            log.error(String.format("Image while saving error %s", e.getMessage()));
             return ResponseDto.<ImagesDto>builder()
                     .message(String.format("Image while saving error %s", e.getMessage()))
                     .code(-3)
@@ -112,6 +116,7 @@ public class ImagesService {
     public ResponseDto<ImagesDto> delete(Integer id) {
         Optional<Images> optional = imageRepository.findByImageIdAndDeletedAtIsNull(id);
         if (optional.isEmpty()) {
+            log.warn(String.format("This is image %d id not found!", id));
             return ResponseDto.<ImagesDto>builder()
                     .message(String.format("This is image %d id not found!", id))
                     .code(-1)
@@ -126,16 +131,16 @@ public class ImagesService {
                     .message(String.format("This is image %d id successful deleted!", images.getImageId()))
                     .code(0)
                     .success(true)
-                    .data(imageMapper.toDto(images))
+                    .data(imageMapper.toDtoNotBookId(images))
                     .build();
         } catch (Exception e) {
+            log.error(String.format("Image while saving error %s", e.getMessage()));
             return ResponseDto.<ImagesDto>builder()
                     .message(String.format("Image while saving error %s", e.getMessage()))
                     .code(-3)
                     .build();
         }
     }
-
     public ResponseDto<List<ImagesDto>> getAll() {
         return ResponseDto.<List<ImagesDto>>builder()
                 .message("Ok")

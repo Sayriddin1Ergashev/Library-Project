@@ -9,8 +9,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+
 @RestController
-@RequestMapping("cards")
+@RequestMapping("card")
 @RequiredArgsConstructor
 public class CardController {
 
@@ -37,4 +38,8 @@ public class CardController {
         return cardService.deleteCard(cardId);
     }
 
+    @GetMapping("/get-all")
+    public ResponseDto<List<CardDto>> getAllCard() {
+        return cardService.getAll();
+    }
 }

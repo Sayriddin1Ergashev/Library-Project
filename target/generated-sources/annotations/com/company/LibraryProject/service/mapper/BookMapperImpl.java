@@ -2,17 +2,20 @@ package com.company.LibraryProject.service.mapper;
 
 import com.company.LibraryProject.dto.BooksDto;
 import com.company.LibraryProject.model.Book;
+import java.time.format.DateTimeFormatter;
 import java.util.stream.Collectors;
 import javax.annotation.processing.Generated;
 import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-05-08T16:07:39+0500",
+    date = "2023-05-09T20:14:01+0500",
     comments = "version: 1.5.3.Final, compiler: javac, environment: Java 20 (Oracle Corporation)"
 )
 @Component
 public class BookMapperImpl extends BookMapper {
+
+    private final DateTimeFormatter dateTimeFormatter_yyyy_MM_dd_0159776256 = DateTimeFormatter.ofPattern( "yyyy-MM-dd" );
 
     @Override
     public Book toEntity(BooksDto dto) {
@@ -29,9 +32,6 @@ public class BookMapperImpl extends BookMapper {
         book.setAmount( dto.getAmount() );
         book.setPublisherAt( dto.getPublisherAt() );
         book.setOrdersBookId( dto.getOrdersBookId() );
-        book.setCreatedAt( dto.getCreatedAt() );
-        book.setUpdatedAt( dto.getUpdatedAt() );
-        book.setDeletedAt( dto.getDeletedAt() );
 
         return book;
     }
@@ -51,9 +51,15 @@ public class BookMapperImpl extends BookMapper {
         booksDto.setAmount( book.getAmount() );
         booksDto.setOrdersBookId( book.getOrdersBookId() );
         booksDto.setPublisherAt( book.getPublisherAt() );
-        booksDto.setCreatedAt( book.getCreatedAt() );
-        booksDto.setUpdatedAt( book.getUpdatedAt() );
-        booksDto.setDeletedAt( book.getDeletedAt() );
+        if ( book.getCreatedAt() != null ) {
+            booksDto.setCreatedAt( DateTimeFormatter.ISO_LOCAL_DATE_TIME.format( book.getCreatedAt() ) );
+        }
+        if ( book.getUpdatedAt() != null ) {
+            booksDto.setUpdatedAt( DateTimeFormatter.ISO_LOCAL_DATE_TIME.format( book.getUpdatedAt() ) );
+        }
+        if ( book.getDeletedAt() != null ) {
+            booksDto.setDeletedAt( DateTimeFormatter.ISO_LOCAL_DATE_TIME.format( book.getDeletedAt() ) );
+        }
 
         booksDto.setAuthorsDto( book.getAuthors().stream().map(authorsMapper::toDtoNotAuthorId).collect(Collectors.toSet()) );
         booksDto.setImagesDto( book.getImages().stream().map(imagesMapper::toDtoNotBookId).collect(Collectors.toSet()) );
@@ -71,20 +77,21 @@ public class BookMapperImpl extends BookMapper {
 
         BooksDto booksDto = new BooksDto();
 
+        if ( book.getCreatedAt() != null ) {
+            booksDto.setCreatedAt( dateTimeFormatter_yyyy_MM_dd_0159776256.format( book.getCreatedAt() ) );
+        }
+        if ( book.getUpdatedAt() != null ) {
+            booksDto.setUpdatedAt( dateTimeFormatter_yyyy_MM_dd_0159776256.format( book.getUpdatedAt() ) );
+        }
+        if ( book.getDeletedAt() != null ) {
+            booksDto.setDeletedAt( dateTimeFormatter_yyyy_MM_dd_0159776256.format( book.getDeletedAt() ) );
+        }
         booksDto.setBookId( book.getBookId() );
         booksDto.setName( book.getName() );
         booksDto.setPrice( book.getPrice() );
         booksDto.setPage( book.getPage() );
         booksDto.setAmount( book.getAmount() );
         booksDto.setPublisherAt( book.getPublisherAt() );
-        booksDto.setCreatedAt( book.getCreatedAt() );
-        booksDto.setUpdatedAt( book.getUpdatedAt() );
-        booksDto.setDeletedAt( book.getDeletedAt() );
-
-        booksDto.setAuthorsDto( book.getAuthors().stream().map(authorsMapper::toDtoNotAuthorId).collect(Collectors.toSet()) );
-        booksDto.setImagesDto( book.getImages().stream().map(imagesMapper::toDtoNotBookId).collect(Collectors.toSet()) );
-        booksDto.setGoalsDto( goalsMapper.toDtoNotBookId(book.getGoals()) );
-        booksDto.setPublisherDto( publisherMapper.toDtoNotBookId(book.getPublisher()) );
 
         return booksDto;
     }

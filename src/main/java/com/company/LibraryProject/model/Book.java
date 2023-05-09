@@ -14,7 +14,8 @@ import java.util.Set;
 @Table(name = ("books"))
 public class Book {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(generator = "book_seq_id")
+    @SequenceGenerator(name = "book_seq_id",sequenceName = "book_seq_id",allocationSize = 1)
     @Column(name = ("books_id"))
     private Integer bookId;
     private String name;
@@ -23,18 +24,16 @@ public class Book {
     private Integer amount;
     private LocalDate publisherAt;
     private Integer ordersBookId;
-    @OneToMany(mappedBy = "booksId", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "bookId", cascade = CascadeType.ALL)
     private Set<Authors> authors;
     @OneToMany(mappedBy = "booksId", cascade = CascadeType.ALL)
     private Set<Images> images;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = ("books_id"), referencedColumnName = ("books_id"))
     private Goals goals;
-
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = ("books_id"), referencedColumnName = ("books_id"))
     private Publisher publisher;
-
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private LocalDateTime deletedAt;

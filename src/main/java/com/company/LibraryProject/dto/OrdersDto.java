@@ -1,6 +1,8 @@
 package com.company.LibraryProject.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,7 +16,7 @@ public class OrdersDto {
     private Integer userId;
     private UserDto userDto;
     private Set<OrdersBookDto> ordersBooksDto;
-  //  @NotBlank(message = "Total cannot be empty or null!")
+    @NotNull(message = "Total cannot be null!")
     private Integer total;
     private String createdAt;
     private String updatedAt;
