@@ -23,6 +23,9 @@ public class AuthorValidate {
         if (authorRepository.existsByFirstnameAndDeletedAtIsNull(dto.getFirstname())){
             errorDtoList.add(new ErrorDto("firstName","This is firstName already exist!"));
         }
+        if (dto.getAge() < 18) {
+            errorDtoList.add(new ErrorDto("Age", "Age<18"));
+        }
         return errorDtoList;
     }
 }
