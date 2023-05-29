@@ -23,7 +23,7 @@ public class OrdersBookController {
         return this.ordersBookService.get(ordersBookId);
     }
     @PutMapping("/update/{id}")
-    public ResponseDto<OrdersBookDto> updateOrdersBook(@Valid @RequestBody OrdersBookDto ordersBookDto,@PathVariable(value = "id") Integer ordersBookId){
+    public ResponseDto<OrdersBookDto> updateOrdersBook(@RequestBody OrdersBookDto ordersBookDto,@PathVariable(value = "id") Integer ordersBookId){
         return this.ordersBookService.update(ordersBookDto,ordersBookId);
     }
     @DeleteMapping("/delete/{id}")

@@ -93,11 +93,9 @@ public class GoalsService {
                     .build();
         }
         try {
-            Goals goals = goalsMapper.toEntity(goalsDto);
-            goals.setGoalsId(optional.get().getGoalsId());
-            goals.setCreatedAt(optional.get().getCreatedAt());
-            goals.setDeletedAt(optional.get().getDeletedAt());
+            Goals goals = optional.get();
             goals.setUpdatedAt(LocalDateTime.now());
+            goalsMapper.update(goals,goalsDto);
             goalsRepository.save(goals);
             log.info(String.format("This is goals %d id successful updated!", goals.getGoalsId()));
             return ResponseDto.<GoalsDto>builder()

@@ -100,11 +100,9 @@ public class OrdersBookService {
                     .build();
         }
         try {
-            OrdersBook ordersBook= orderBookMapper.toEntity(ordersBookDto);
-            ordersBook.setOrdersBookId(optional.get().getOrdersBookId());
+            OrdersBook ordersBook= optional.get();
             ordersBook.setUpdatedAt(LocalDateTime.now());
-            ordersBook.setCreatedAt(optional.get().getCreatedAt());
-            ordersBook.setDeletedAt(optional.get().getDeletedAt());
+          orderBookMapper.update(ordersBook,ordersBookDto);
             this.oderBookRepository.save(ordersBook);
             log.info(String.format("This is ordersBook %d id successful updated!",ordersBook.getOrdersBookId()));
             return ResponseDto.<OrdersBookDto>builder()

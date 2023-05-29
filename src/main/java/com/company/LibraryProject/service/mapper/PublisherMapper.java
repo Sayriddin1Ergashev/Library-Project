@@ -2,8 +2,8 @@ package com.company.LibraryProject.service.mapper;
 
 import com.company.LibraryProject.dto.PublisherDto;
 import com.company.LibraryProject.model.Publisher;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
+import org.mapstruct.*;
+
 @Mapper(componentModel = "spring")
 public  interface PublisherMapper {
 
@@ -22,4 +22,6 @@ public  interface PublisherMapper {
     @Mapping(target = "updatedAt", dateFormat = "yyyy-MM-dd")
     @Mapping(target = "deletedAt", dateFormat = "yyyy-MM-dd")
      PublisherDto toDtoNotBookId(Publisher publisher);
+@BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    void update(@MappingTarget Publisher publisher,PublisherDto dto);
 }

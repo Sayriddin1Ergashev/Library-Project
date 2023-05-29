@@ -24,7 +24,7 @@ public class BookController {
     }
 
     @PutMapping("/update/{id}")
-    public ResponseDto<BooksDto> update(@Valid @RequestBody BooksDto dto,
+    public ResponseDto<BooksDto> update(@RequestBody BooksDto dto,
                                         @PathVariable("id") Integer bookId) {
         return bookService.updateBook(dto, bookId);
     }

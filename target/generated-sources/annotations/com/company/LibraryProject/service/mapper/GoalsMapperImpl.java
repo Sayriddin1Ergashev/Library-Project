@@ -2,13 +2,14 @@ package com.company.LibraryProject.service.mapper;
 
 import com.company.LibraryProject.dto.GoalsDto;
 import com.company.LibraryProject.model.Goals;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import javax.annotation.processing.Generated;
 import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-05-09T20:45:51+0500",
+    date = "2023-05-29T10:42:31+0500",
     comments = "version: 1.5.3.Final, compiler: javac, environment: Java 20 (Oracle Corporation)"
 )
 @Component
@@ -79,5 +80,34 @@ public class GoalsMapperImpl implements GoalsMapper {
         goalsDto.setDescription( goals.getDescription() );
 
         return goalsDto;
+    }
+
+    @Override
+    public void update(Goals goals, GoalsDto goalsDto) {
+        if ( goalsDto == null ) {
+            return;
+        }
+
+        if ( goalsDto.getGoalsId() != null ) {
+            goals.setGoalsId( goalsDto.getGoalsId() );
+        }
+        if ( goalsDto.getLanguage() != null ) {
+            goals.setLanguage( goalsDto.getLanguage() );
+        }
+        if ( goalsDto.getDescription() != null ) {
+            goals.setDescription( goalsDto.getDescription() );
+        }
+        if ( goalsDto.getBookId() != null ) {
+            goals.setBookId( goalsDto.getBookId() );
+        }
+        if ( goalsDto.getCreatedAt() != null ) {
+            goals.setCreatedAt( LocalDateTime.parse( goalsDto.getCreatedAt() ) );
+        }
+        if ( goalsDto.getUpdatedAt() != null ) {
+            goals.setUpdatedAt( LocalDateTime.parse( goalsDto.getUpdatedAt() ) );
+        }
+        if ( goalsDto.getDeletedAt() != null ) {
+            goals.setDeletedAt( LocalDateTime.parse( goalsDto.getDeletedAt() ) );
+        }
     }
 }

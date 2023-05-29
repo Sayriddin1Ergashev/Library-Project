@@ -24,7 +24,7 @@ public class PublisherController {
         return publisherService.getPublisher(id);
     }
     @PutMapping("/update/{id}")
-    public ResponseDto<PublisherDto> update(@Valid @RequestBody PublisherDto dto, @PathVariable Integer id){
+    public ResponseDto<PublisherDto> update(@RequestBody PublisherDto dto, @PathVariable Integer id){
         return publisherService.updatePublisher(dto, id);
     }
     @DeleteMapping("/delete/{id}")

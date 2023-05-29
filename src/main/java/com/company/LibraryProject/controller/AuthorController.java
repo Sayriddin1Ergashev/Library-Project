@@ -26,7 +26,7 @@ public class AuthorController {
     }
 
     @PutMapping("/update/{id}")
-    public ResponseDto<AuthorDto> updateAuthor(@Valid @RequestBody AuthorDto dto, @PathVariable("id") Integer authorId) {
+    public ResponseDto<AuthorDto> updateAuthor(@RequestBody AuthorDto dto, @PathVariable("id") Integer authorId) {
         return authorService.update(dto, authorId);
     }
 

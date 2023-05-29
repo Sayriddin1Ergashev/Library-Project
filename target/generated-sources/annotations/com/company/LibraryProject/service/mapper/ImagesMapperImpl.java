@@ -2,13 +2,14 @@ package com.company.LibraryProject.service.mapper;
 
 import com.company.LibraryProject.dto.ImagesDto;
 import com.company.LibraryProject.model.Images;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import javax.annotation.processing.Generated;
 import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-05-09T20:45:51+0500",
+    date = "2023-05-29T10:42:31+0500",
     comments = "version: 1.5.3.Final, compiler: javac, environment: Java 20 (Oracle Corporation)"
 )
 @Component
@@ -84,5 +85,40 @@ public class ImagesMapperImpl implements ImagesMapper {
         imagesDto.setBooksId( images.getBooksId() );
 
         return imagesDto;
+    }
+
+    @Override
+    public void update(Images images, ImagesDto imageDto) {
+        if ( imageDto == null ) {
+            return;
+        }
+
+        if ( imageDto.getImageId() != null ) {
+            images.setImageId( imageDto.getImageId() );
+        }
+        if ( imageDto.getPath() != null ) {
+            images.setPath( imageDto.getPath() );
+        }
+        if ( imageDto.getType() != null ) {
+            images.setType( imageDto.getType() );
+        }
+        if ( imageDto.getSize() != null ) {
+            images.setSize( imageDto.getSize() );
+        }
+        if ( imageDto.getToken() != null ) {
+            images.setToken( imageDto.getToken() );
+        }
+        if ( imageDto.getBooksId() != null ) {
+            images.setBooksId( imageDto.getBooksId() );
+        }
+        if ( imageDto.getCreatedAt() != null ) {
+            images.setCreatedAt( LocalDateTime.parse( imageDto.getCreatedAt() ) );
+        }
+        if ( imageDto.getUpdatedAt() != null ) {
+            images.setUpdatedAt( LocalDateTime.parse( imageDto.getUpdatedAt() ) );
+        }
+        if ( imageDto.getDeletedAt() != null ) {
+            images.setDeletedAt( LocalDateTime.parse( imageDto.getDeletedAt() ) );
+        }
     }
 }

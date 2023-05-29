@@ -103,11 +103,9 @@ public class CardService {
         }
 
         try {
-            Card card = cardMapper.toEntity(dto);
-            card.setCardId(optional.get().getCardId());
-            card.setCreatedAt(optional.get().getCreatedAt());
-            card.setDeletedAt(optional.get().getDeletedAt());
+            Card card = optional.get();
             card.setUpdatedAt(LocalDateTime.now());
+            cardMapper.update(card,dto);
             cardRepository.save(card);
             log.info(String.format("This is card %d id successful updated!",card.getCardId()));
             return ResponseDto.<CardDto>builder()

@@ -3,8 +3,7 @@ package com.company.LibraryProject.service.mapper;
 import com.company.LibraryProject.dto.OrdersDto;
 import com.company.LibraryProject.model.Orders;
 import com.company.LibraryProject.repository.UserRepository;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
+import org.mapstruct.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 
@@ -45,4 +44,6 @@ public abstract class OrdersMapper {
     @Mapping(target = "userId", ignore = true)
     @Mapping(target = "userDto", ignore = true)
     public abstract OrdersDto toDtoNotUserId(Orders orders);
+@BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    public abstract void update(@MappingTarget Orders orders, OrdersDto ordersDto);
 }

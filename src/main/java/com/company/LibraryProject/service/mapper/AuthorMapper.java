@@ -2,8 +2,8 @@ package com.company.LibraryProject.service.mapper;
 
 import com.company.LibraryProject.dto.AuthorDto;
 import com.company.LibraryProject.model.Authors;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
+import org.mapstruct.*;
+
 @Mapper(componentModel = "spring")
 public interface  AuthorMapper {
     @Mapping(target = "createdAt", ignore = true)
@@ -25,4 +25,6 @@ public interface  AuthorMapper {
     @Mapping(target = "booksDto",ignore = true)
     @Mapping(target = "bookId",ignore = true)
      AuthorDto toDtoByNotBook(Authors author) ;
+@BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    void validate(@MappingTarget Authors author, AuthorDto dto);
 }

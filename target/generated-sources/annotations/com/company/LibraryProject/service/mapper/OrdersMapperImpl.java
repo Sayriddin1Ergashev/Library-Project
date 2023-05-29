@@ -2,6 +2,7 @@ package com.company.LibraryProject.service.mapper;
 
 import com.company.LibraryProject.dto.OrdersDto;
 import com.company.LibraryProject.model.Orders;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.stream.Collectors;
 import javax.annotation.processing.Generated;
@@ -9,7 +10,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-05-09T20:45:51+0500",
+    date = "2023-05-29T10:42:31+0500",
     comments = "version: 1.5.3.Final, compiler: javac, environment: Java 20 (Oracle Corporation)"
 )
 @Component
@@ -103,5 +104,31 @@ public class OrdersMapperImpl extends OrdersMapper {
         ordersDto.setTotal( orders.getTotal() );
 
         return ordersDto;
+    }
+
+    @Override
+    public void update(Orders orders, OrdersDto ordersDto) {
+        if ( ordersDto == null ) {
+            return;
+        }
+
+        if ( ordersDto.getOrdersId() != null ) {
+            orders.setOrdersId( ordersDto.getOrdersId() );
+        }
+        if ( ordersDto.getUserId() != null ) {
+            orders.setUserId( ordersDto.getUserId() );
+        }
+        if ( ordersDto.getTotal() != null ) {
+            orders.setTotal( ordersDto.getTotal() );
+        }
+        if ( ordersDto.getCreatedAt() != null ) {
+            orders.setCreatedAt( LocalDateTime.parse( ordersDto.getCreatedAt() ) );
+        }
+        if ( ordersDto.getUpdatedAt() != null ) {
+            orders.setUpdatedAt( LocalDateTime.parse( ordersDto.getUpdatedAt() ) );
+        }
+        if ( ordersDto.getDeletedAt() != null ) {
+            orders.setDeletedAt( LocalDateTime.parse( ordersDto.getDeletedAt() ) );
+        }
     }
 }

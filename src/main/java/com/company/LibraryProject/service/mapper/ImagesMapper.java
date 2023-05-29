@@ -2,9 +2,7 @@ package com.company.LibraryProject.service.mapper;
 
 import com.company.LibraryProject.dto.ImagesDto;
 import com.company.LibraryProject.model.Images;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.MappingConstants;
+import org.mapstruct.*;
 
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
 public interface ImagesMapper {
@@ -23,4 +21,6 @@ public interface ImagesMapper {
     @Mapping(target = "deletedAt", dateFormat = "yyyy-MM-dd")
     @Mapping(target = "imageId",ignore = true)
     ImagesDto toDtoNotBookId(Images images);
+@BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    void update(@MappingTarget Images images, ImagesDto imageDto);
 }

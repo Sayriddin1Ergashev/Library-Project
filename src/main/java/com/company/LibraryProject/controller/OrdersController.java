@@ -28,7 +28,7 @@ public class OrdersController {
 
     @PutMapping(value = ("/update/{id}"))
     public ResponseDto<OrdersDto> update(@PathVariable("id") Integer ordersId,
-                                         @Valid @RequestBody OrdersDto ordersDto) {
+                                         @RequestBody OrdersDto ordersDto) {
         return ordersService.update(ordersId, ordersDto);
     }
 

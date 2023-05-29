@@ -2,8 +2,7 @@ package com.company.LibraryProject.service.mapper;
 
 import com.company.LibraryProject.dto.GoalsDto;
 import com.company.LibraryProject.model.Goals;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
+import org.mapstruct.*;
 
 @Mapper(componentModel = "spring")
 public  interface GoalsMapper {
@@ -20,4 +19,6 @@ public  interface GoalsMapper {
     @Mapping(target = "updatedAt", dateFormat = "yyyy-MM-dd")
     @Mapping(target = "deletedAt", dateFormat = "yyyy-MM-dd")
      GoalsDto toDtoNotBookId(Goals goals);
+@BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    void update(@MappingTarget Goals goals,GoalsDto goalsDto);
 }

@@ -94,11 +94,9 @@ public class PublisherService {
                         .errors(errors)
                         .build();
             }
-            Publisher publisher = publisherMapper.toEntity(dto);
-            publisher.setPublisherId(optional.get().getPublisherId());
-            publisher.setCreatedAt(optional.get().getCreatedAt());
+            Publisher publisher = optional.get();
             publisher.setUpdatedAt(LocalDateTime.now());
-            publisher.setDeletedAt(optional.get().getDeletedAt());
+            publisherMapper.update(publisher,dto);
             publisherRepository.save(publisher);
             log.info("Successful updated!");
             return ResponseDto.<PublisherDto>builder()

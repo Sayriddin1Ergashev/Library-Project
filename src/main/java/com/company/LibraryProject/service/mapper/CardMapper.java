@@ -3,8 +3,7 @@ package com.company.LibraryProject.service.mapper;
 import com.company.LibraryProject.dto.CardDto;
 import com.company.LibraryProject.model.Card;
 import com.company.LibraryProject.repository.UserRepository;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
+import org.mapstruct.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 
@@ -34,4 +33,6 @@ public abstract class CardMapper {
     @Mapping(target = "updatedAt", dateFormat = "yyyy-MM-dd")
     @Mapping(target = "deletedAt", dateFormat = "yyyy-MM-dd")
     public abstract CardDto toDtoNotUserId(Card card);
+@BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    public abstract void update(@MappingTarget Card card,CardDto dto);
 }

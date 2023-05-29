@@ -15,7 +15,7 @@ public class CardDto {
     private Integer cardId;
     @NotBlank(message = "cardName cannot be null or empty.")
     private String cardName;
-    //@Pattern(regexp = "[0-9]{16}", message = "Regular expression error.")
+   // @Pattern(regexp = "[0-9]{16}", message = "Regular expression error.")
     @NotNull(message = "cardNumber cannot be null.")
     private Long cardNumber;
     @NotNull(message = "userId cannot be null.")

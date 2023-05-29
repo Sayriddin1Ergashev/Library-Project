@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-05-09T20:45:51+0500",
+    date = "2023-05-29T10:37:04+0500",
     comments = "version: 1.5.3.Final, compiler: javac, environment: Java 20 (Oracle Corporation)"
 )
 @Component
@@ -105,6 +105,73 @@ public class UserMapperImpl extends UserMapper {
         userDto.setBirthdate( user.getBirthdate() );
 
         return userDto;
+    }
+
+    @Override
+    public void update(User user, UserDto dto) {
+        if ( dto == null ) {
+            return;
+        }
+
+        if ( dto.getUserId() != null ) {
+            user.setUserId( dto.getUserId() );
+        }
+        if ( dto.getFirstName() != null ) {
+            user.setFirstName( dto.getFirstName() );
+        }
+        if ( dto.getLastName() != null ) {
+            user.setLastName( dto.getLastName() );
+        }
+        if ( dto.getEmail() != null ) {
+            user.setEmail( dto.getEmail() );
+        }
+        if ( dto.getPassword() != null ) {
+            user.setPassword( dto.getPassword() );
+        }
+        if ( dto.getPhoneNumber() != null ) {
+            user.setPhoneNumber( dto.getPhoneNumber() );
+        }
+        if ( dto.getBirthdate() != null ) {
+            user.setBirthdate( dto.getBirthdate() );
+        }
+        if ( dto.getCreatedAt() != null ) {
+            user.setCreatedAt( LocalDateTime.parse( dto.getCreatedAt() ) );
+        }
+        if ( dto.getUpdatedAt() != null ) {
+            user.setUpdatedAt( LocalDateTime.parse( dto.getUpdatedAt() ) );
+        }
+        if ( dto.getDeletedAt() != null ) {
+            user.setDeletedAt( LocalDateTime.parse( dto.getDeletedAt() ) );
+        }
+        if ( user.getCards() != null ) {
+            Set<Card> set = cardDtoSetToCardSet( dto.getCards() );
+            if ( set != null ) {
+                user.getCards().clear();
+                user.getCards().addAll( set );
+            }
+        }
+        else {
+            Set<Card> set = cardDtoSetToCardSet( dto.getCards() );
+            if ( set != null ) {
+                user.setCards( set );
+            }
+        }
+        if ( user.getOrders() != null ) {
+            Set<Orders> set1 = ordersDtoSetToOrdersSet( dto.getOrders() );
+            if ( set1 != null ) {
+                user.getOrders().clear();
+                user.getOrders().addAll( set1 );
+            }
+        }
+        else {
+            Set<Orders> set1 = ordersDtoSetToOrdersSet( dto.getOrders() );
+            if ( set1 != null ) {
+                user.setOrders( set1 );
+            }
+        }
+        if ( dto.getGender() != null ) {
+            user.setGender( dto.getGender() );
+        }
     }
 
     protected Card cardDtoToCard(CardDto cardDto) {

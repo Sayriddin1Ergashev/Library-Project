@@ -25,7 +25,7 @@ public class GoalsController {
     }
 
     @PutMapping("/update/{id}")
-    public ResponseDto<GoalsDto> updateGoals(@Valid @RequestBody GoalsDto goalsDto, @PathVariable(value = "id") Integer id){
+    public ResponseDto<GoalsDto> updateGoals(@RequestBody GoalsDto goalsDto, @PathVariable(value = "id") Integer id){
         return goalsService.updateGoals(goalsDto,id);
     }
 

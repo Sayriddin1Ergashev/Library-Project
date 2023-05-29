@@ -27,7 +27,7 @@ public class ImagesController {
 
     @PutMapping("/update/{id}")
     public ResponseDto<ImagesDto> updateImage(@PathVariable(value = "id") Integer id,
-                                              @Valid @RequestBody ImagesDto imagesDto) {
+                                              @RequestBody ImagesDto imagesDto) {
         return this.imagesService.update(id, imagesDto);
     }
 

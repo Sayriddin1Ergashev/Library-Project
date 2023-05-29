@@ -2,13 +2,14 @@ package com.company.LibraryProject.service.mapper;
 
 import com.company.LibraryProject.dto.AuthorDto;
 import com.company.LibraryProject.model.Authors;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import javax.annotation.processing.Generated;
 import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-05-09T20:45:51+0500",
+    date = "2023-05-29T10:42:31+0500",
     comments = "version: 1.5.3.Final, compiler: javac, environment: Java 20 (Oracle Corporation)"
 )
 @Component
@@ -113,5 +114,37 @@ public class AuthorMapperImpl implements AuthorMapper {
         authorDto.setAge( author.getAge() );
 
         return authorDto;
+    }
+
+    @Override
+    public void validate(Authors author, AuthorDto dto) {
+        if ( dto == null ) {
+            return;
+        }
+
+        if ( dto.getAuthorId() != null ) {
+            author.setAuthorId( Integer.parseInt( dto.getAuthorId() ) );
+        }
+        if ( dto.getFirstname() != null ) {
+            author.setFirstname( dto.getFirstname() );
+        }
+        if ( dto.getLastname() != null ) {
+            author.setLastname( dto.getLastname() );
+        }
+        if ( dto.getAge() != null ) {
+            author.setAge( dto.getAge() );
+        }
+        if ( dto.getBookId() != null ) {
+            author.setBookId( dto.getBookId() );
+        }
+        if ( dto.getCreatedAt() != null ) {
+            author.setCreatedAt( LocalDateTime.parse( dto.getCreatedAt() ) );
+        }
+        if ( dto.getUpdatedAt() != null ) {
+            author.setUpdatedAt( LocalDateTime.parse( dto.getUpdatedAt() ) );
+        }
+        if ( dto.getDeletedAt() != null ) {
+            author.setDeletedAt( LocalDateTime.parse( dto.getDeletedAt() ) );
+        }
     }
 }

@@ -90,11 +90,9 @@ public class BookService {
                     .build();
         }
         try {
-            Book book = bookMapper.toEntity(dto);
-            book.setBookId(optional.get().getBookId());
-            book.setCreatedAt(optional.get().getCreatedAt());
-            book.setDeletedAt(optional.get().getDeletedAt());
+            Book book = optional.get();
             book.setUpdatedAt(LocalDateTime.now());
+            bookMapper.update(book,dto);
             bookRepository.save(book);
             log.info("Book successful updated!");
             return ResponseDto.<BooksDto>builder()

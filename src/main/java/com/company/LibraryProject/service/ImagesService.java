@@ -91,11 +91,9 @@ public class ImagesService {
                     .build();
         }
         try {
-            Images images = imageMapper.toEntity(imageDto);
+            Images images = optional.get();
             images.setUpdatedAt(LocalDateTime.now());
-            images.setCreatedAt(optional.get().getCreatedAt());
-            images.setDeletedAt(optional.get().getDeletedAt());
-            images.setImageId(optional.get().getImageId());
+           imageMapper.update(images,imageDto);
             this.imageRepository.save(images);
             log.info(String.format("This is image %d id successful updated!",images.getImageId()));
             return ResponseDto.<ImagesDto>builder()

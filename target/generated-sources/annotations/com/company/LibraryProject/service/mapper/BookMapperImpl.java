@@ -2,6 +2,7 @@ package com.company.LibraryProject.service.mapper;
 
 import com.company.LibraryProject.dto.BooksDto;
 import com.company.LibraryProject.model.Book;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.stream.Collectors;
 import javax.annotation.processing.Generated;
@@ -9,7 +10,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-05-09T20:45:51+0500",
+    date = "2023-05-29T10:42:30+0500",
     comments = "version: 1.5.3.Final, compiler: javac, environment: Java 20 (Oracle Corporation)"
 )
 @Component
@@ -94,5 +95,43 @@ public class BookMapperImpl extends BookMapper {
         booksDto.setPublisherAt( book.getPublisherAt() );
 
         return booksDto;
+    }
+
+    @Override
+    public void update(Book book, BooksDto dto) {
+        if ( dto == null ) {
+            return;
+        }
+
+        if ( dto.getBookId() != null ) {
+            book.setBookId( dto.getBookId() );
+        }
+        if ( dto.getName() != null ) {
+            book.setName( dto.getName() );
+        }
+        if ( dto.getPrice() != null ) {
+            book.setPrice( dto.getPrice() );
+        }
+        if ( dto.getPage() != null ) {
+            book.setPage( dto.getPage() );
+        }
+        if ( dto.getAmount() != null ) {
+            book.setAmount( dto.getAmount() );
+        }
+        if ( dto.getPublisherAt() != null ) {
+            book.setPublisherAt( dto.getPublisherAt() );
+        }
+        if ( dto.getOrdersBookId() != null ) {
+            book.setOrdersBookId( dto.getOrdersBookId() );
+        }
+        if ( dto.getCreatedAt() != null ) {
+            book.setCreatedAt( LocalDateTime.parse( dto.getCreatedAt() ) );
+        }
+        if ( dto.getUpdatedAt() != null ) {
+            book.setUpdatedAt( LocalDateTime.parse( dto.getUpdatedAt() ) );
+        }
+        if ( dto.getDeletedAt() != null ) {
+            book.setDeletedAt( LocalDateTime.parse( dto.getDeletedAt() ) );
+        }
     }
 }

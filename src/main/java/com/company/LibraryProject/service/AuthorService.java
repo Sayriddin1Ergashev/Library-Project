@@ -93,11 +93,9 @@ public class AuthorService {
                     .build();
         }
         try {
-            Authors author = authorMapper.toEntity(dto);
-            author.setAuthorId(optional.get().getAuthorId());
-            author.setCreatedAt(optional.get().getCreatedAt());
-            author.setDeletedAt(optional.get().getDeletedAt());
+            Authors author = optional.get();
             author.setUpdatedAt(LocalDateTime.now());
+            authorMapper.validate(author,dto);
             authorRepository.save(author);
             log.info(String.format("This is author %d id successful updated!", author.getAuthorId()));
             return ResponseDto.<AuthorDto>builder()

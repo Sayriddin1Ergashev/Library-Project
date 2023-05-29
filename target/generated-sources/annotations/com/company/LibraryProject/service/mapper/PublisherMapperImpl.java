@@ -2,13 +2,14 @@ package com.company.LibraryProject.service.mapper;
 
 import com.company.LibraryProject.dto.PublisherDto;
 import com.company.LibraryProject.model.Publisher;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import javax.annotation.processing.Generated;
 import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-05-09T20:45:51+0500",
+    date = "2023-05-29T10:42:31+0500",
     comments = "version: 1.5.3.Final, compiler: javac, environment: Java 20 (Oracle Corporation)"
 )
 @Component
@@ -78,5 +79,34 @@ public class PublisherMapperImpl implements PublisherMapper {
         publisherDto.setLocation( publisher.getLocation() );
 
         return publisherDto;
+    }
+
+    @Override
+    public void update(Publisher publisher, PublisherDto dto) {
+        if ( dto == null ) {
+            return;
+        }
+
+        if ( dto.getPublisherId() != null ) {
+            publisher.setPublisherId( dto.getPublisherId() );
+        }
+        if ( dto.getPublisher() != null ) {
+            publisher.setPublisher( dto.getPublisher() );
+        }
+        if ( dto.getLocation() != null ) {
+            publisher.setLocation( dto.getLocation() );
+        }
+        if ( dto.getBookId() != null ) {
+            publisher.setBookId( dto.getBookId() );
+        }
+        if ( dto.getCreatedAt() != null ) {
+            publisher.setCreatedAt( LocalDateTime.parse( dto.getCreatedAt() ) );
+        }
+        if ( dto.getUpdatedAt() != null ) {
+            publisher.setUpdatedAt( LocalDateTime.parse( dto.getUpdatedAt() ) );
+        }
+        if ( dto.getDeletedAt() != null ) {
+            publisher.setDeletedAt( LocalDateTime.parse( dto.getDeletedAt() ) );
+        }
     }
 }

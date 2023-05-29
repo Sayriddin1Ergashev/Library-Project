@@ -91,11 +91,9 @@ public class OrdersService {
                     .build();
         }
         try {
-            Orders orders = ordersMapper.toEntity(ordersDto);
+            Orders orders = optional.get();
             orders.setUpdatedAt(LocalDateTime.now());
-            orders.setCreatedAt(optional.get().getCreatedAt());
-            orders.setOrdersId(optional.get().getOrdersId());
-            orders.setDeletedAt(optional.get().getDeletedAt());
+            ordersMapper.update(orders,ordersDto);
             ordersRepository.save(orders);
             log.info(String.format("This is orders %d id successful updated!",orders.getOrdersId()));
             return ResponseDto.<OrdersDto>builder()
