@@ -27,10 +27,8 @@ public class CardService {
     private final CardValidate cardValidate;
 
     public ResponseDto<CardDto> createCard(CardDto dto) {
-
         List<ErrorDto> errors = cardValidate.validate(dto);
         if (!errors.isEmpty()){
-            log.warn("Validation error!");
             return ResponseDto.<CardDto>builder()
                     .message("Validation error!")
                     .code(-2)
@@ -42,14 +40,12 @@ public class CardService {
             Card card = cardMapper.toEntity(dto);
             card.setCreatedAt(LocalDateTime.now());
             cardRepository.save(card);
-            log.info(String.format("This is card %d id successful created!",card.getCardId()));
             return ResponseDto.<CardDto>builder()
                     .message(String.format("This is card %d id successful created!",card.getCardId()))
                     .success(true)
                     .data(cardMapper.toDtoNotUserId(card))
                     .build();
         } catch (Exception c) {
-            log.error("Card while saving error: " + c.getMessage());
             return ResponseDto.<CardDto>builder()
                     .code(-3)
                     .message("Card while saving error: " + c.getMessage())
@@ -61,7 +57,6 @@ public class CardService {
         try {
             Optional<Card> optional = cardRepository.findByCardIdAndDeletedAtIsNull(cardId);
             if (optional.isEmpty()) {
-                log.warn("Card is not found!");
                 return ResponseDto.<CardDto>builder()
                         .message("Card is not found!")
                         .code(-1)
@@ -73,7 +68,6 @@ public class CardService {
                     .data(cardMapper.toDto(optional.get()))
                     .build();
         } catch (Exception c) {
-            log.error("Database Error: " + c.getMessage());
             return ResponseDto.<CardDto>builder()
                     .code(-3)
                     .message("Database Error: " + c.getMessage())
@@ -84,7 +78,6 @@ public class CardService {
     public ResponseDto<CardDto> updateCard(CardDto dto, Integer id) {
         List<ErrorDto> errors = cardValidate.validate(dto);
         if (!errors.isEmpty()){
-            log.warn("Validation error!");
             return ResponseDto.<CardDto>builder()
                     .message("Validation error!")
                     .code(-2)
@@ -95,7 +88,6 @@ public class CardService {
 
         Optional<Card> optional = cardRepository.findByCardIdAndDeletedAtIsNull(id);
         if (optional.isEmpty()) {
-            log.warn("Card is not found!");
             return ResponseDto.<CardDto>builder()
                     .code(-1)
                     .message("Card is not found!")
@@ -107,14 +99,12 @@ public class CardService {
             card.setUpdatedAt(LocalDateTime.now());
             cardMapper.update(card,dto);
             cardRepository.save(card);
-            log.info(String.format("This is card %d id successful updated!",card.getCardId()));
             return ResponseDto.<CardDto>builder()
                     .message(String.format("This is card %d id successful updated!",card.getCardId()))
                     .success(true)
                     .data(cardMapper.toDtoNotUserId(card))
                     .build();
         } catch (Exception e) {
-            log.error(String.format("Card while saving error :: %s",e.getMessage()));
             return ResponseDto.<CardDto>builder()
                     .message("Card while saving error :: {}" + e.getMessage())
                     .code(-3)
@@ -125,7 +115,6 @@ public class CardService {
     public ResponseDto<CardDto> deleteCard(Integer id) {
         Optional<Card> optional = cardRepository.findByCardIdAndDeletedAtIsNull(id);
         if (optional.isEmpty()) {
-            log.warn("Card is not found!");
             return ResponseDto.<CardDto>builder()
                     .code(-1)
                     .message("Card is not found!")
@@ -135,14 +124,12 @@ public class CardService {
             Card card = optional.get();
             card.setDeletedAt(LocalDateTime.now());
             cardRepository.save(card);
-            log.info(String.format("This is card %d id successful deleted!",id));
             return ResponseDto.<CardDto>builder()
                     .success(true)
                     .message(String.format("This is card %d id successful deleted!",id))
                     .data(cardMapper.toDtoNotUserId(card))
                     .build();
         } catch (Exception e) {
-            log.error(String.format("Card while saving error :: %s",e.getMessage()));
             return ResponseDto.<CardDto>builder()
                     .message("Card while saving error :: {}" + e.getMessage())
                     .code(-3)
@@ -151,7 +138,6 @@ public class CardService {
     }
 
     public ResponseDto<List<CardDto>> getAll() {
-        log.info("OK");
         return ResponseDto.<List<CardDto>>builder()
                 .message("OK")
                 .code(0)

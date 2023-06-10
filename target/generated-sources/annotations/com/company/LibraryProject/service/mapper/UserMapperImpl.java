@@ -12,12 +12,13 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 import javax.annotation.processing.Generated;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-05-29T10:37:04+0500",
-    comments = "version: 1.5.3.Final, compiler: javac, environment: Java 20 (Oracle Corporation)"
+    date = "2023-06-11T02:39:51+0500",
+    comments = "version: 1.5.3.Final, compiler: javac, environment: Java 19.0.2 (Oracle Corporation)"
 )
 @Component
 public class UserMapperImpl extends UserMapper {
@@ -36,12 +37,13 @@ public class UserMapperImpl extends UserMapper {
         user.setFirstName( dto.getFirstName() );
         user.setLastName( dto.getLastName() );
         user.setEmail( dto.getEmail() );
-        user.setPassword( dto.getPassword() );
         user.setPhoneNumber( dto.getPhoneNumber() );
         user.setBirthdate( dto.getBirthdate() );
         user.setCards( cardDtoSetToCardSet( dto.getCards() ) );
         user.setOrders( ordersDtoSetToOrdersSet( dto.getOrders() ) );
         user.setGender( dto.getGender() );
+
+        user.setPassword( passwordEncoder.encode(dto.passwordEncoder) );
 
         return user;
     }
@@ -52,30 +54,30 @@ public class UserMapperImpl extends UserMapper {
             return null;
         }
 
-        UserDto userDto = new UserDto();
+        UserDto.UserDtoBuilder userDto = UserDto.builder();
 
         if ( user.getCreatedAt() != null ) {
-            userDto.setCreatedAt( dateTimeFormatter_yyyy_MM_dd_0159776256.format( user.getCreatedAt() ) );
+            userDto.createdAt( dateTimeFormatter_yyyy_MM_dd_0159776256.format( user.getCreatedAt() ) );
         }
         if ( user.getUpdatedAt() != null ) {
-            userDto.setUpdatedAt( dateTimeFormatter_yyyy_MM_dd_0159776256.format( user.getUpdatedAt() ) );
+            userDto.updatedAt( dateTimeFormatter_yyyy_MM_dd_0159776256.format( user.getUpdatedAt() ) );
         }
         if ( user.getDeletedAt() != null ) {
-            userDto.setDeletedAt( dateTimeFormatter_yyyy_MM_dd_0159776256.format( user.getDeletedAt() ) );
+            userDto.deletedAt( dateTimeFormatter_yyyy_MM_dd_0159776256.format( user.getDeletedAt() ) );
         }
-        userDto.setUserId( user.getUserId() );
-        userDto.setFirstName( user.getFirstName() );
-        userDto.setLastName( user.getLastName() );
-        userDto.setEmail( user.getEmail() );
-        userDto.setPassword( user.getPassword() );
-        userDto.setPhoneNumber( user.getPhoneNumber() );
-        userDto.setGender( user.getGender() );
-        userDto.setBirthdate( user.getBirthdate() );
+        userDto.userId( user.getUserId() );
+        userDto.firstName( user.getFirstName() );
+        userDto.lastName( user.getLastName() );
+        userDto.email( user.getEmail() );
+        userDto.password( user.getPassword() );
+        userDto.phoneNumber( user.getPhoneNumber() );
+        userDto.gender( user.getGender() );
+        userDto.birthdate( user.getBirthdate() );
 
-        userDto.setCards( user.getCards().stream().map(cardMapper::toDtoNotUserId).collect(Collectors.toSet()) );
-        userDto.setOrders( user.getOrders().stream().map(ordersMapper::toDtoNotUserId).collect(Collectors.toSet()) );
+        userDto.cards( user.getCards().stream().map(cardMapper::toDtoNotUserId).collect(Collectors.toSet()) );
+        userDto.orders( user.getOrders().stream().map(ordersMapper::toDtoNotUserId).collect(Collectors.toSet()) );
 
-        return userDto;
+        return userDto.build();
     }
 
     @Override
@@ -84,27 +86,27 @@ public class UserMapperImpl extends UserMapper {
             return null;
         }
 
-        UserDto userDto = new UserDto();
+        UserDto.UserDtoBuilder userDto = UserDto.builder();
 
         if ( user.getCreatedAt() != null ) {
-            userDto.setCreatedAt( dateTimeFormatter_yyyy_MM_dd_0159776256.format( user.getCreatedAt() ) );
+            userDto.createdAt( dateTimeFormatter_yyyy_MM_dd_0159776256.format( user.getCreatedAt() ) );
         }
         if ( user.getUpdatedAt() != null ) {
-            userDto.setUpdatedAt( dateTimeFormatter_yyyy_MM_dd_0159776256.format( user.getUpdatedAt() ) );
+            userDto.updatedAt( dateTimeFormatter_yyyy_MM_dd_0159776256.format( user.getUpdatedAt() ) );
         }
         if ( user.getDeletedAt() != null ) {
-            userDto.setDeletedAt( dateTimeFormatter_yyyy_MM_dd_0159776256.format( user.getDeletedAt() ) );
+            userDto.deletedAt( dateTimeFormatter_yyyy_MM_dd_0159776256.format( user.getDeletedAt() ) );
         }
-        userDto.setUserId( user.getUserId() );
-        userDto.setFirstName( user.getFirstName() );
-        userDto.setLastName( user.getLastName() );
-        userDto.setEmail( user.getEmail() );
-        userDto.setPassword( user.getPassword() );
-        userDto.setPhoneNumber( user.getPhoneNumber() );
-        userDto.setGender( user.getGender() );
-        userDto.setBirthdate( user.getBirthdate() );
+        userDto.userId( user.getUserId() );
+        userDto.firstName( user.getFirstName() );
+        userDto.lastName( user.getLastName() );
+        userDto.email( user.getEmail() );
+        userDto.password( user.getPassword() );
+        userDto.phoneNumber( user.getPhoneNumber() );
+        userDto.gender( user.getGender() );
+        userDto.birthdate( user.getBirthdate() );
 
-        return userDto;
+        return userDto.build();
     }
 
     @Override

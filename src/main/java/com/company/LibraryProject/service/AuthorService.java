@@ -26,7 +26,6 @@ public class AuthorService {
     public ResponseDto<AuthorDto> create(AuthorDto dto) {
         List<ErrorDto> errors = this.authorValidate.validate(dto);
         if (!errors.isEmpty()) {
-            log.warn("Validate error!");
             return ResponseDto.<AuthorDto>builder()
                     .message("Validate error!")
                     .code(-2)
@@ -38,7 +37,6 @@ public class AuthorService {
             Authors author = authorMapper.toEntity(dto);
             author.setCreatedAt(LocalDateTime.now());
             this.authorRepository.save(author);
-            log.info(String.format("This is author %d di successful created!", author.getAuthorId()));
             return ResponseDto.<AuthorDto>builder()
                     .message(String.format("This is author %d di successful created!", author.getAuthorId()))
                     .code(0)
@@ -46,7 +44,6 @@ public class AuthorService {
                     .data(authorMapper.toDtoByNotBook(author))
                     .build();
         } catch (Exception e) {
-            log.error(String.format("While saving error %s", e.getMessage()));
             return ResponseDto.<AuthorDto>builder()
                     .message(String.format("While saving error %s", e.getMessage()))
                     .code(-3)
@@ -58,13 +55,11 @@ public class AuthorService {
     public ResponseDto<AuthorDto> get(Integer authorId) {
         Optional<Authors> optional = authorRepository.findAllByAuthorIdAndDeletedAtIsNull(authorId);
         if (optional.isEmpty()) {
-            log.info(String.format("This is author %d id not found!", authorId));
             return ResponseDto.<AuthorDto>builder()
                     .message(String.format("This is author %d id not found!", authorId))
                     .code(-1)
                     .build();
         }
-        log.info("OK");
         return ResponseDto.<AuthorDto>builder()
                 .message("OK")
                 .code(0)
@@ -76,7 +71,6 @@ public class AuthorService {
     public ResponseDto<AuthorDto> update(AuthorDto dto, Integer authorId) {
         Optional<Authors> optional = authorRepository.findAllByAuthorIdAndDeletedAtIsNull(authorId);
         if (optional.isEmpty()) {
-            log.info(String.format("This is author %d id not found!", authorId));
             return ResponseDto.<AuthorDto>builder()
                     .message(String.format("This is author %d id not found!", authorId))
                     .code(-1)
@@ -84,7 +78,6 @@ public class AuthorService {
         }
         List<ErrorDto> errors = this.authorValidate.validate(dto);
         if (!errors.isEmpty()) {
-            log.warn("Validate error!");
             return ResponseDto.<AuthorDto>builder()
                     .message("Validate error!")
                     .code(-2)
@@ -97,14 +90,12 @@ public class AuthorService {
             author.setUpdatedAt(LocalDateTime.now());
             authorMapper.validate(author,dto);
             authorRepository.save(author);
-            log.info(String.format("This is author %d id successful updated!", author.getAuthorId()));
             return ResponseDto.<AuthorDto>builder()
                     .message(String.format("This is author %d id successful updated!", author.getAuthorId()))
                     .code(0)
                     .data(authorMapper.toDtoByNotBook(author))
                     .build();
         } catch (Exception e) {
-            log.error(String.format("While saving error %s", e.getMessage()));
             return ResponseDto.<AuthorDto>builder()
                     .message(String.format("While saving error %s", e.getMessage()))
                     .code(-3)
@@ -116,7 +107,6 @@ public class AuthorService {
     public ResponseDto<AuthorDto> delete(Integer authorId) {
         Optional<Authors> optional = authorRepository.findAllByAuthorIdAndDeletedAtIsNull(authorId);
         if (optional.isEmpty()) {
-            log.info(String.format("This is author %d id not found!", authorId));
             return ResponseDto.<AuthorDto>builder()
                     .message(String.format("This is author %d id not found!", authorId))
                     .code(-1)
@@ -126,14 +116,12 @@ public class AuthorService {
             Authors author = optional.get();
             author.setDeletedAt(LocalDateTime.now());
             authorRepository.save(author);
-            log.info(String.format("This is author %d id successful deleted!", author.getAuthorId()));
             return ResponseDto.<AuthorDto>builder()
                     .message(String.format("This is author %d id successful deleted!", author.getAuthorId()))
                     .code(0)
                     .data(authorMapper.toDtoByNotBook(author))
                     .build();
         } catch (Exception e) {
-            log.error(String.format("While saving error %s", e.getMessage()));
             return ResponseDto.<AuthorDto>builder()
                     .message(String.format("While saving error %s", e.getMessage()))
                     .code(-3)
@@ -144,7 +132,6 @@ public class AuthorService {
     }
 
     public ResponseDto<List<AuthorDto>> getAll() {
-        log.info("OK");
         return ResponseDto.<List<AuthorDto>>builder()
                 .message("OK")
                 .success(true)
